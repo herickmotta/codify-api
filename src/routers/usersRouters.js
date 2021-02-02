@@ -3,7 +3,7 @@ const router = require('express').Router();
 const usersController = require('../controllers/usersController');
 const signUpMiddleware = require('../middlewares/signUpMiddleware');
 
-router.post('/sign-up', signUpMiddleware, async (req, res) => {
+router.post('/signup', signUpMiddleware, async (req, res) => {
   const user = await usersController.create(req.body);
 
   const userData = {
@@ -12,7 +12,7 @@ router.post('/sign-up', signUpMiddleware, async (req, res) => {
     email: user.email,
   };
 
-  return res.send(userData).status(201);
+  return res.status(201).send(userData);
 });
 
 module.exports = router;

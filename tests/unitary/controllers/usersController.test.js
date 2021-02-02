@@ -1,14 +1,14 @@
 /* eslint-disable no-undef */
-const usersController = require('../../src/controllers/usersController');
+const usersController = require('../../../src/controllers/usersController');
 
-jest.mock('../../src/models/User');
+jest.mock('../../../src/models/User');
 jest.mock('sequelize');
 
 jest.mock('bcrypt', () => ({
   hashSync: (password) => password,
 }));
 
-const User = require('../../src/models/User');
+const User = require('../../../src/models/User');
 
 describe('signUpUser', () => {
   it('returns complete user when passed correct data', async () => {
