@@ -5,7 +5,7 @@ const NotFoundError = require('../errors/NotFoundError');
 const router = express.Router();
 
 const userSchema = require('../schemas/userSchema');
-const authController = require('../controllers/authController');
+const authenticationController = require('../controllers/authenticationController');
 const sessionController = require('../controllers/sessionController');
 
 router.post('/signin', (req, res) => {
@@ -15,7 +15,7 @@ router.post('/signin', (req, res) => {
   if (error) return res.status(422).send({ error: error.details[0].message });
 
   try {
-    const user = authController.verifyUser(signInParams);
+    const user = authenticationController.verifyUser(signInParams);
     const userSession = sessionController.createSession(user);
 
     return res.status(201).send(userSession);

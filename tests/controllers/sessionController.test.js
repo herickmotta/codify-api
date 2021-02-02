@@ -9,9 +9,6 @@ jest.mock('bcrypt', () => ({
 jest.mock('../../src/models/Session');
 const Session = require('../../src/models/Session');
 
-jest.mock('../../src/models/User');
-const User = require('../../src/models/User');
-
 describe('authenticationController.verifyUser', () => {
   it('Should throw an error if given email invalid', async () => {
     const userNotFound = null;
