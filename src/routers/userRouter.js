@@ -6,6 +6,7 @@ const router = express.Router();
 
 const userSchema = require('../schemas/userSchema');
 const authController = require('../controllers/authController');
+const sessionController = require('../controllers/sessionController');
 
 router.post('/signin', (req, res) => {
   const signInParams = req.body;
@@ -14,7 +15,8 @@ router.post('/signin', (req, res) => {
   if (error) return res.status(422).send({ error: error.details[0].message });
 
   try {
-    const userSession = authController.create(signInParams);
+    const user = authController.verifyUser(signInParams);
+    const userSession = sessionController.createSession(user);
 
     return res.status(201).send(userSession);
   } catch (exception) {
