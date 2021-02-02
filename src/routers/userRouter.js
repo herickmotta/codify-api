@@ -20,7 +20,7 @@ router.post('/signin', (req, res) => {
 
     return res.status(201).send(userSession);
   } catch (exception) {
-    if (exception instanceof NotFoundError) return res.status(404).send({ error: 'Wrong email or password' });
+    if (exception instanceof NotFoundError) return res.status(401).send({ error: 'Wrong email or password' });
 
     return res.status(500).send({ error: 'call the responsible person, routeError: /api/v1/user/signin ' });
   }
