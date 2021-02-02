@@ -1,3 +1,4 @@
+require('express-async-errors');
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
@@ -6,5 +7,14 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
+
+const usersRouters = require('./routers/usersRouters');
+
+app.use('/api/users', usersRouters);
+
+app.use((error, req, res, next) => {
+  console.log(error);
+  return res.sendStatus(500);
+});
 
 module.exports = app;
