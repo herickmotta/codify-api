@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 const User = require('../models/User');
 const userSchemas = require('../schemas/userSchemas');
 
