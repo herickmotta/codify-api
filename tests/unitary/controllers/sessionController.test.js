@@ -1,8 +1,8 @@
 /* eslint-disable no-undef */
 const sessionController = require('../../../src/controllers/sessionController');
 
-jest.mock('uuid', () => ({
-  v4: jest.fn(() => 'token_Bunitao'),
+jest.mock('jsonwebtoken', () => ({
+  sign: jest.fn(() => 'token_ultra_seguro'),
 }));
 
 jest.mock('../../../src/models/Session');
@@ -16,7 +16,7 @@ describe('sessionController.createSession', () => {
       email: 'EmailValid@email.com',
     };
     const { id, name, email } = user;
-    const token = 'token_Bunitao';
+    const token = 'token_ultra_seguro';
 
     await Session.create.mockResolvedValue({ userId: id, token });
 
