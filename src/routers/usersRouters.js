@@ -4,9 +4,15 @@ const usersController = require('../controllers/usersController');
 const signUpMiddleware = require('../middlewares/signUpMiddleware');
 
 router.post('/sign-up', signUpMiddleware, async (req, res) => {
-  usersController.create(req.body);
+  const user = await usersController.create(req.body);
 
-  return res.sendStatus(201);
+  const userData = {
+    id: user.id,
+    name: user.name,
+    email: user.email,
+  };
+
+  return res.send(userData).status(201);
 });
 
 module.exports = router;
