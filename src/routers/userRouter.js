@@ -4,9 +4,8 @@ const NotFoundError = require('../errors/NotFoundError');
 
 const router = express.Router();
 
-const userController = require('../controllers/userController');
 const userSchema = require('../schemas/userSchema');
-const sessionController = require('../controllers/sessionController');
+const authController = require('../controllers/authController');
 
 router.post('/signin', (req, res) => {
   const signInParams = req.body;
@@ -15,10 +14,9 @@ router.post('/signin', (req, res) => {
   if (error) return res.status(422).send({ error: error.details[0].message });
 
   try {
-    const user = userController.signIn(signInParams);
-    const session = sessionController.create(user.id);
+    const userSession = authController.create(signInParams);
 
-    return res.status(201).send({ ...user, token: session.token });
+    return res.status(201).send(userSession);
   } catch (exception) {
     if (exception instanceof NotFoundError) return res.status(404).send({ error: 'Wrong email or password' });
 
