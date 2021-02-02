@@ -46,7 +46,7 @@ describe('authenticationController.verifyUserEmailAndPassword', () => {
     expect(fn).rejects.toThrow(UnauthorizedError);
   });
 
-  it('Should retunr the user with password valid', async () => {
+  it('Should return the user with password valid', async () => {
     const plainPassword = 'correct_password';
     const user = {
       id: 1,
