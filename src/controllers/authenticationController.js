@@ -1,4 +1,4 @@
-const { compareSync } = require('bcrypt');
+const bcrypt = require('bcrypt');
 
 const NotFoundError = require('../errors/NotFoundError');
 const UnauthorizedError = require('../errors/UnauthorizedError');
@@ -10,7 +10,7 @@ class AuthController {
 
     if (!user) throw new NotFoundError();
 
-    if (!compareSync(password, user.password)) throw new UnauthorizedError();
+    if (!bcrypt.compareSync(password, user.password)) throw new UnauthorizedError();
 
     const { id, name } = user;
     return { id, name, email };
