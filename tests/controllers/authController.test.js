@@ -1,13 +1,11 @@
 /* eslint-disable no-undef */
 const authenticationController = require('../../src/controllers/authenticationController');
 const NotFoundError = require('../../src/errors/NotFoundError');
+const UnauthorizedError = require('../../src/errors/UnauthorizedError');
 
 jest.mock('bcrypt', () => ({
   compareSync: (curretPassword) => curretPassword === 'correct_Password',
 }));
-
-jest.mock('../../src/models/Session');
-const Session = require('../../src/models/Session');
 
 jest.mock('../../src/models/User');
 const User = require('../../src/models/User');
@@ -18,12 +16,14 @@ describe('authenticationController.verifyUser', () => {
 
     await User.findOne.mockResolvedValue(userNotFound);
 
-    const result = await authenticationController.verifyUser({
-      email: 'emailNotRegistred@test.com.br',
-      password: 'correct_Password',
-    });
+    const fn = async () => {
+      await authenticationController.verifyUser({
+        email: 'emailNotRegistred@test.com.br',
+        password: 'correct_Password',
+      });
+    };
 
-    expect(result).toThrow(NotFoundError);
+    expect(fn).rejects.toThrow(NotFoundError);
   });
 
   it('Should throw an error if given password invalid', async () => {
@@ -37,11 +37,13 @@ describe('authenticationController.verifyUser', () => {
 
     await User.findOne.mockResolvedValue(user);
 
-    const result = await authenticationController.verifyUser({
-      email: 'registredEmail@valid.com.br',
-      password: currentPassword,
-    });
+    const fn = async () => {
+      await authenticationController.verifyUser({
+        email: 'registredEmail@valid.com.br',
+        password: currentPassword,
+      });
+    };
 
-    expect(result).toThrow(NotFoundError);
+    expect(fn).rejects.toThrow(UnauthorizedError);
   });
 });
