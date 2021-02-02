@@ -5,7 +5,7 @@ const UnauthorizedError = require('../errors/UnauthorizedError');
 const User = require('../models/User');
 
 class AuthController {
-  async verifyUser({ email, password }) {
+  async verifyUserEmailAndPassword({ email, password }) {
     const user = await User.findOne({ where: { email } });
 
     if (!user) throw new NotFoundError();

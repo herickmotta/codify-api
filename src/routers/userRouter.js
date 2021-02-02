@@ -15,7 +15,7 @@ router.post('/signin', (req, res) => {
   if (error) return res.status(422).send({ error: error.details[0].message });
 
   try {
-    const user = authenticationController.verifyUser(signInParams);
+    const user = authenticationController.verifyUserEmailAndPassword(signInParams);
     const userSession = sessionController.createSession(user);
 
     return res.status(201).send(userSession);

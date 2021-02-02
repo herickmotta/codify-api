@@ -2,7 +2,7 @@
 const sessionController = require('../../../src/controllers/sessionController');
 
 jest.mock('jsonwebtoken', () => ({
-  sign: jest.fn(() => 'token_ultra_seguro'),
+  sign: () => 'token_ultra_seguro',
 }));
 
 jest.mock('../../../src/models/Session');

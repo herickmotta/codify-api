@@ -10,14 +10,14 @@ jest.mock('bcrypt', () => ({
 jest.mock('../../../src/models/User');
 const User = require('../../../src/models/User');
 
-describe('authenticationController.verifyUser', () => {
+describe('authenticationController.verifyUserEmailAndPassword', () => {
   it('Should throw an error if given email invalid', async () => {
     const userNotFound = null;
 
     await User.findOne.mockResolvedValue(userNotFound);
 
     const fn = async () => {
-      await authenticationController.verifyUser({
+      await authenticationController.verifyUserEmailAndPassword({
         email: 'emailNotRegistred@test.com.br',
         password: 'correct_password',
       });
@@ -38,7 +38,7 @@ describe('authenticationController.verifyUser', () => {
     await User.findOne.mockResolvedValue(user);
 
     const fn = async () => {
-      await authenticationController.verifyUser({
+      await authenticationController.verifyUserEmailAndPassword({
         email: 'registredEmail@valid.com.br',
         password: currentPassword,
       });
@@ -59,7 +59,7 @@ describe('authenticationController.verifyUser', () => {
 
     await User.findOne.mockResolvedValue(user);
 
-    const result = await authenticationController.verifyUser({
+    const result = await authenticationController.verifyUserEmailAndPassword({
       email: 'registredEmail@valid.com.br',
       password: plainPassword,
     });
