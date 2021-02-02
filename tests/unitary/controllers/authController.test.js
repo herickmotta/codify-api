@@ -1,6 +1,5 @@
 /* eslint-disable no-undef */
 const authenticationController = require('../../../src/controllers/authenticationController');
-const NotFoundError = require('../../../src/errors/NotFoundError');
 const UnauthorizedError = require('../../../src/errors/UnauthorizedError');
 
 jest.mock('bcrypt', () => ({
@@ -23,7 +22,7 @@ describe('authenticationController.verifyUserEmailAndPassword', () => {
       });
     };
 
-    expect(fn).rejects.toThrow(NotFoundError);
+    expect(fn).rejects.toThrow(UnauthorizedError);
   });
 
   it('Should throw an error if given password invalid', async () => {
