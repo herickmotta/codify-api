@@ -12,7 +12,7 @@ app.use(express.json());
 
 const usersRouters = require('./routers/usersRouters');
 
-app.use('/api/users', usersRouters);
+app.use('/api/v1/users', usersRouters);
 
 app.use((error, req, res, next) => {
   console.log(error);

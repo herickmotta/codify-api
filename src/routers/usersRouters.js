@@ -6,6 +6,7 @@ const authenticationController = require('../controllers/authenticationControlle
 const sessionController = require('../controllers/sessionController');
 const signUpMiddleware = require('../middlewares/signUpMiddleware');
 const UnauthorizedError = require('../errors/UnauthorizedError');
+const authenticationMiddleware = require('../middlewares/authenticationMiddleware');
 
 router.post('/signup', signUpMiddleware, async (req, res) => {
   const user = await usersController.create(req.body);
@@ -19,15 +20,16 @@ router.post('/signup', signUpMiddleware, async (req, res) => {
   return res.status(201).send(userData);
 });
 
-router.post('/signin', (req, res) => {
+router.post('/signin', async (req, res) => {
   const signInParams = req.body;
 
   const { error } = userSchemas.signIn.validate(signInParams);
   if (error) return res.status(422).send({ error: error.details[0].message });
 
   try {
-    const user = authenticationController.verifyUserEmailAndPassword(signInParams);
-    const userSession = sessionController.createSession(user);
+    const user = await authenticationController.verifyUserEmailAndPassword(signInParams);
+
+    const userSession = await sessionController.createSession(user);
 
     return res.status(201).send(userSession);
   } catch (exception) {
@@ -36,5 +38,7 @@ router.post('/signin', (req, res) => {
     return res.status(500).send({ error: 'call the responsible person, routeError: /api/v1/user/signin ' });
   }
 });
+
+router.get('/test', authenticationMiddleware, async (req, res) => res.status(200).send({ message: 'Ta liberado feio tu ta logado' }));
 
 module.exports = router;

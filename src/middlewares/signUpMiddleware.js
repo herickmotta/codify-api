@@ -3,9 +3,9 @@ const User = require('../models/User');
 const userSchemas = require('../schemas/userSchemas');
 
 async function signUpMiddleware(req, res, next) {
-  const userValidation = userSchemas.postUser.validate(req.body);
-  if (userValidation.error) {
-    return res.status(422).send({ error: userValidation.error.details[0].message });
+  const { error } = userSchemas.postUser.validate(req.body);
+  if (error) {
+    return res.status(422).send({ error: error.details[0].message });
   }
 
   delete req.body.passwordConfirmation;
