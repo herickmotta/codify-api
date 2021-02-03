@@ -29,7 +29,6 @@ router.post('/signin', async (req, res) => {
     const user = await authenticationController.verifyUserEmailAndPassword(signInParams);
 
     const userSession = await sessionController.createSession(user);
-    console.log(userSession, 'bbbbbbbbbbb');
 
     return res.status(201).send(userSession);
   } catch (exception) {
