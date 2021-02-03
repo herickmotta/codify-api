@@ -13,6 +13,7 @@ const db = new Pool({
 });
 
 beforeEach(async () => {
+  await db.query('DELETE FROM sessions;');
   await db.query('DELETE FROM users;');
 });
 
@@ -21,7 +22,7 @@ afterAll(async () => {
   await sequelize.close();
 });
 
-describe('POST /api/users/signup', () => {
+describe('POST /api/v1/users/signup', () => {
   it('Should return 422 if there is no email param', async () => {
     const body = {
       name: 'João',
@@ -29,7 +30,7 @@ describe('POST /api/users/signup', () => {
       passwordConfirmation: '12345678',
     };
 
-    const response = await agent.post('/api/users/signup').send(body);
+    const response = await agent.post('/api/v1/users/signup').send(body);
 
     expect(response.status).toBe(422);
   });
@@ -42,7 +43,7 @@ describe('POST /api/users/signup', () => {
       passwordConfirmation: '123456789',
     };
 
-    const response = await agent.post('/api/users/signup').send(body);
+    const response = await agent.post('/api/v1/users/signup').send(body);
 
     expect(response.status).toBe(422);
   });
@@ -55,7 +56,7 @@ describe('POST /api/users/signup', () => {
       passwordConfirmation: '1234567',
     };
 
-    const response = await agent.post('/api/users/signup').send(body);
+    const response = await agent.post('/api/v1/users/signup').send(body);
 
     expect(response.status).toBe(422);
   });
@@ -68,8 +69,8 @@ describe('POST /api/users/signup', () => {
       passwordConfirmation: '12345678',
     };
 
-    await agent.post('/api/users/signup').send(body);
-    const response = await agent.post('/api/users/signup').send(body);
+    await agent.post('/api/v1/users/signup').send(body);
+    const response = await agent.post('/api/v1/users/signup').send(body);
 
     expect(response.status).toBe(409);
   });
@@ -82,7 +83,7 @@ describe('POST /api/users/signup', () => {
       passwordConfirmation: '12345678',
     };
 
-    const response = await agent.post('/api/users/signup').send(body);
+    const response = await agent.post('/api/v1/users/signup').send(body);
 
     expect(response.status).toBe(201);
   });
