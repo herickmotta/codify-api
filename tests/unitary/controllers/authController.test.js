@@ -52,7 +52,7 @@ describe('authenticationController.verifyUserEmailAndPassword', () => {
       id: 1,
       name: 'userNameTest',
       email: 'registredEmail@valid.com.br',
-      password: 'hased_password',
+      password: 'hashed_password',
     };
     const { id, name, email } = user;
 
