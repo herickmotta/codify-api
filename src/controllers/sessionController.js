@@ -1,10 +1,11 @@
-const { v4: uuidv4 } = require('uuid');
-
+// const { v4: uuidv4 } = require('uuid');
+const jwt = require('jsonwebtoken');
 const Session = require('../models/Session');
 
 class SessionController {
   async createSession({ id, name, email }) {
-    const token = uuidv4();
+    const token = jwt.sign({ id }, process.env.SECRET);
+
     await Session.create({ userId: id, token });
 
     return {

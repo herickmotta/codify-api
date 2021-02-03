@@ -1,6 +1,5 @@
 /* eslint-disable no-undef */
 const authenticationController = require('../../../src/controllers/authenticationController');
-const NotFoundError = require('../../../src/errors/NotFoundError');
 const UnauthorizedError = require('../../../src/errors/UnauthorizedError');
 
 jest.mock('bcrypt', () => ({
@@ -10,20 +9,20 @@ jest.mock('bcrypt', () => ({
 jest.mock('../../../src/models/User');
 const User = require('../../../src/models/User');
 
-describe('authenticationController.verifyUser', () => {
+describe('authenticationController.verifyUserEmailAndPassword', () => {
   it('Should throw an error if given email invalid', async () => {
     const userNotFound = null;
 
     await User.findOne.mockResolvedValue(userNotFound);
 
     const fn = async () => {
-      await authenticationController.verifyUser({
+      await authenticationController.verifyUserEmailAndPassword({
         email: 'emailNotRegistred@test.com.br',
         password: 'correct_password',
       });
     };
 
-    expect(fn).rejects.toThrow(NotFoundError);
+    expect(fn).rejects.toThrow(UnauthorizedError);
   });
 
   it('Should throw an error if given password invalid', async () => {
@@ -38,7 +37,7 @@ describe('authenticationController.verifyUser', () => {
     await User.findOne.mockResolvedValue(user);
 
     const fn = async () => {
-      await authenticationController.verifyUser({
+      await authenticationController.verifyUserEmailAndPassword({
         email: 'registredEmail@valid.com.br',
         password: currentPassword,
       });
@@ -47,19 +46,19 @@ describe('authenticationController.verifyUser', () => {
     expect(fn).rejects.toThrow(UnauthorizedError);
   });
 
-  it('Should retunr the user with password valid', async () => {
+  it('Should return the user with password valid', async () => {
     const plainPassword = 'correct_password';
     const user = {
       id: 1,
       name: 'userNameTest',
       email: 'registredEmail@valid.com.br',
-      password: 'hased_password',
+      password: 'hashed_password',
     };
     const { id, name, email } = user;
 
     await User.findOne.mockResolvedValue(user);
 
-    const result = await authenticationController.verifyUser({
+    const result = await authenticationController.verifyUserEmailAndPassword({
       email: 'registredEmail@valid.com.br',
       password: plainPassword,
     });
