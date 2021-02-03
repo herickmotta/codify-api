@@ -9,6 +9,13 @@ const postUser = Joi.object({
   passwordConfirmation: Joi.ref('password'),
 });
 
+const signIn = Joi.object({
+  email: Joi.string().email().required(),
+  password: Joi.string().min(8).max(30).pattern(/^[a-zA-Z0-9]*$/)
+    .required(),
+});
+
 module.exports = {
   postUser,
+  signIn,
 };
