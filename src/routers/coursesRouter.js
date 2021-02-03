@@ -19,7 +19,7 @@ router.get('/:id', authenticationMiddleware, async (req, res) => {
 });
 
 router.get('/', authenticationMiddleware, async (req, res) => {
-  const courses = await coursesController.getAll();
+  const courses = await coursesController.getAllCourses();
 
   return res.send(courses);
 });

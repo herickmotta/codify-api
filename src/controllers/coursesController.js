@@ -10,6 +10,10 @@ class CoursesController {
 
     return course;
   }
+
+  getAllCourses() {
+    return Course.findAll();
+  }
 }
 
 module.exports = new CoursesController();
