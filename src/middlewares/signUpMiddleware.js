@@ -13,7 +13,7 @@ async function signUpMiddleware(req, res, next) {
   const { email } = req.body;
   const existingEmail = await User.findOne({ where: { email } });
   if (existingEmail) {
-    return res.sendStatus(409);
+    return res.status(409).send({ message: 'Email already in use' });
   }
 
   next();

@@ -5,14 +5,22 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 
-const app = express();
+const userRouter = require('./routers/userRouter');
+const usersRouters = require('./routers/usersRouters');
+const coursesRouter = require('./routers/coursesRouter');
 
+const app = express();
 app.use(cors());
 app.use(express.json());
 
+<<<<<<< HEAD
 const usersRouters = require('./routers/usersRouters');
 
 app.use('/api/v1/users', usersRouters);
+=======
+app.use('/api/v1/users', usersRouters);
+app.use('/api/v1/courses', coursesRouter);
+>>>>>>> origin/courses-routes
 
 app.use((error, req, res, next) => {
   console.log(error);
