@@ -4,13 +4,21 @@ const Session = require('../models/Session');
 
 class SessionController {
   async createSession({ id, name, email }) {
-    const token = jwt.sign({ id }, process.env.SECRET);
+    const data = { id };
+    const secretKey = process.env.SECRET;
+    const timeToExpires = { expiresIn: 60 * 60 * 24 * 30 };
+
+    const token = jwt.sign(data, secretKey, timeToExpires);
 
     await Session.create({ userId: id, token });
 
     return {
       id, name, email, token,
     };
+  }
+
+  findSessionByUserId(userId) {
+    return Session.findByPk(userId);
   }
 }
 
