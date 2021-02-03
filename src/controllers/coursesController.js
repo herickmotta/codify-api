@@ -1,5 +1,15 @@
 /* eslint-disable no-param-reassign */
 
-class CoursesController {}
+const Course = require('../models/Course');
+const NotFoundError = require('../errors/NotFoundError');
+
+class CoursesController {
+  async findCourseById(courseId) {
+    const course = await Course.findByPk(courseId);
+    if (!course) throw new NotFoundError();
+
+    return course;
+  }
+}
 
 module.exports = new CoursesController();

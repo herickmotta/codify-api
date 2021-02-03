@@ -39,6 +39,4 @@ router.post('/signin', async (req, res) => {
   }
 });
 
-router.get('/test', authenticationMiddleware, async (req, res) => res.status(200).send({ message: 'Ta liberado feio tu ta logado' }));
-
 module.exports = router;
