@@ -19,15 +19,17 @@ router.post('/signup', signUpMiddleware, async (req, res) => {
   return res.status(201).send(userData);
 });
 
-router.post('/signin', (req, res) => {
+router.post('/signin', async (req, res) => {
   const signInParams = req.body;
 
   const { error } = userSchemas.signIn.validate(signInParams);
   if (error) return res.status(422).send({ error: error.details[0].message });
 
   try {
-    const user = authenticationController.verifyUserEmailAndPassword(signInParams);
-    const userSession = sessionController.createSession(user);
+    const user = await authenticationController.verifyUserEmailAndPassword(signInParams);
+
+    const userSession = await sessionController.createSession(user);
+    console.log(userSession, 'bbbbbbbbbbb');
 
     return res.status(201).send(userSession);
   } catch (exception) {
