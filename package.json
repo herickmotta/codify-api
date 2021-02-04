@@ -5,7 +5,7 @@
   "main": "src/server.js",
   "scripts": {
     "test": "jest --runInBand",
-    "build": "yarn sequelize-cli db:migrate && sequelize-cli db:seed",
+    "build": "yarn sequelize-cli db:migrate && sequelize-cli db:seed:all",
     "dev": "nodemon ./src/server.js",
     "start": "node src/server.js"
   },
