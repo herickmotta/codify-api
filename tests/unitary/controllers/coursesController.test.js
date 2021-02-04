@@ -1,9 +1,6 @@
 /* eslint-disable no-undef */
 const NotFoundError = require('../../../src/errors/NotFoundError');
 const coursesController = require('../../../src/controllers/coursesController');
-// jest.mock('bcrypt', () => ({
-//   compareSync: (plainPassword) => plainPassword === 'correct_password',
-// }));
 
 jest.mock('../../../src/models/Course');
 const Course = require('../../../src/models/Course');
@@ -35,5 +32,16 @@ describe('coursesController.findCourseById', () => {
     const result = await coursesController.findCourseById(validCourseId);
 
     expect(result).toEqual(expect.objectContaining({ ...course }));
+  });
+});
+
+describe('coursesController.getAllCourses', () => {
+  it('Should return a empty array of courses when we dont have courses', async () => {
+    const courses = [];
+
+    await Course.findByPk.mockResolvedValue(courses);
+    const result = await coursesController.getAllCourses();
+
+    expect(result).toEqual(expect.objectContaining([]));
   });
 });
