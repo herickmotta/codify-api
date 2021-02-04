@@ -12,7 +12,7 @@ router.get('/:id', authenticationMiddleware, async (req, res) => {
 
     return res.status(200).send(course);
   } catch (exception) {
-    if (exception instanceof NotFoundError) return res.status(409).send({ error: 'Course not found' });
+    if (exception instanceof NotFoundError) return res.status(404).send({ error: 'Course not found' });
 
     return res.status(500).send({ error: 'call the responsible person, routeError: /api/v1/courses/:id ' });
   }
