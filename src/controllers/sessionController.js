@@ -18,7 +18,7 @@ class SessionController {
   }
 
   findSessionByUserId(userId) {
-    return Session.findByPk(userId);
+    return Session.findOne({ where: { userId } });
   }
 }
 
