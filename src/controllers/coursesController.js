@@ -12,8 +12,8 @@ class CoursesController {
     return course;
   }
 
-  getAllCourses() {
-    return Course.findAll();
+  getAllCourses(limit = null, offset = null) {
+    return Course.findAll({ limit, offset });
   }
 
   async createCourse(courseParams) {

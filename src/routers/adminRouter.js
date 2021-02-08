@@ -1,3 +1,4 @@
+/* eslint-disable prefer-destructuring */
 const router = require('express').Router();
 const coursesController = require('../controllers/coursesController');
 const ConflictError = require('../errors/ConflictError');
@@ -5,8 +6,22 @@ const NotFoundError = require('../errors/NotFoundError');
 const courseSchema = require('../schemas/courseSchemas');
 
 router.get('/courses', async (req, res) => {
-  const courses = await coursesController.getAllCourses();
-  res.send(courses);
+  let limit = null;
+  let offset = null;
+
+  if (req.query.range) {
+    const range = JSON.parse(req.query.range);
+    limit = range[1] - range[0] + 1;
+    offset = range[0];
+  }
+
+  const courses = await coursesController.getAllCourses(limit, offset);
+  const total = (await coursesController.getAllCourses()).length;
+  res.set({
+    'Access-Control-Expose-Headers': 'Content-Range',
+    'Content-Range': `${offset}-${courses.length}/${total}`,
+  });
+  return res.send(courses);
 });
 
 router.get('/courses/:id', async (req, res) => {
