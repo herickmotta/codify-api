@@ -1,6 +1,7 @@
-// const { v4: uuidv4 } = require('uuid');
 const jwt = require('jsonwebtoken');
+
 const Session = require('../models/Session');
+const NotFoundError = require('../errors/NotFoundError');
 
 class SessionController {
   async createSession({ id, name, email }) {
@@ -17,8 +18,11 @@ class SessionController {
     };
   }
 
-  findSessionByUserId(userId) {
-    return Session.findOne({ where: { userId } });
+  async findSessionByUserId(userId) {
+    const session = await Session.findOne({ where: { userId } });
+    if (!session) throw new NotFoundError();
+
+    return session;
   }
 }
 

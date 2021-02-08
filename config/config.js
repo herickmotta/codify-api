@@ -1,16 +1,17 @@
 const dotenv = require('dotenv');
+const DB_URL = require('../src/config/constants');
 
 dotenv.config();
 
 module.exports = {
   development: {
-    url: process.env.DATABASE_URL,
+    url: DB_URL,
   },
   test: {
-    url: process.env.DATABASE_URL,
+    url: DB_URL,
   },
   production: {
-    url: process.env.DATABASE_URL,
+    url: DB_URL,
     dialect: 'postgres',
     dialectOptions: {
       ssl: {
