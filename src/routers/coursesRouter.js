@@ -32,6 +32,7 @@ router.post('/start', authenticationMiddleware, async (req, res) => {
   try {
     const course = await coursesController.findCourseById(courseId);
     await coursesController.startCourse({ userId, courseId });
+
     return res.status(201).send({ ...course, userId });
   } catch (exception) {
     if (exception instanceof ConflictError) return res.status(409).send({ error: 'This user has already started this course' });
