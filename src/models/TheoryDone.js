@@ -1,9 +1,9 @@
 const { Sequelize } = require('sequelize');
 const sequelize = require('../utils/database');
 
-class ExerciseDone extends Sequelize.Model {}
+class TheoryDone extends Sequelize.Model {}
 
-ExerciseDone.init({
+TheoryDone.init({
   id: {
     type: Sequelize.INTEGER,
     autoIncrement: true,
@@ -27,8 +27,8 @@ ExerciseDone.init({
 
 }, {
   sequelize,
-  modelName: 'exerciseDone',
-  tableName: 'exercisesDone',
+  modelName: 'theoryDone',
+  tableName: 'theoriesDone',
 });
 
-module.exports = ExerciseDone;
+module.exports = TheoryDone;
