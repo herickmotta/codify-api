@@ -1,6 +1,7 @@
 /* eslint-disable consistent-return */
 const jwt = require('jsonwebtoken');
 const sessionController = require('../controllers/sessionController');
+const NotFoundError = require('../errors/NotFoundError');
 
 async function authenticationMiddleware(req, res, next) {
   const authHeader = req.header('Authorization');
@@ -11,14 +12,14 @@ async function authenticationMiddleware(req, res, next) {
   try {
     const { id } = jwt.verify(token, process.env.SECRET);
 
-    const session = await sessionController.findSessionByUserId(id);
-
-    if (!session) res.status(401).json({ error: 'Failed to authenticate token.' });
+    await sessionController.findSessionByUserId(id);
 
     req.userId = id;
     next();
-  } catch {
-    return res.status(401).json({ error: 'Failed to authenticate token.' });
+  } catch (execption) {
+    if (execption instanceof NotFoundError) return res.status(401).json({ error: 'Failed to authenticate token.' });
+
+    return res.status(500).json({ error: 'call the responsible person, routeError: /authenticationMiddleware ' });
   }
 }
 

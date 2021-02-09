@@ -1,9 +1,9 @@
 const { Sequelize } = require('sequelize');
 const sequelize = require('../utils/database');
 
-class CoursesUser extends Sequelize.Model {}
+class ExerciseDone extends Sequelize.Model {}
 
-CoursesUser.init({
+ExerciseDone.init({
   id: {
     type: Sequelize.INTEGER,
     autoIncrement: true,
@@ -13,18 +13,10 @@ CoursesUser.init({
   userId: {
     type: Sequelize.INTEGER,
     allowNull: false,
-    references: {
-      model: 'users',
-      key: 'id',
-    },
   },
-  courseId: {
+  exerciseId: {
     type: Sequelize.INTEGER,
     allowNull: false,
-    references: {
-      model: 'courses',
-      key: 'id',
-    },
   },
   createdAt: {
     type: Sequelize.DATE,
@@ -35,7 +27,8 @@ CoursesUser.init({
 
 }, {
   sequelize,
-  modelName: 'coursesUser',
+  modelName: 'exerciseDone',
+  tableName: 'exercisesDone',
 });
 
-module.exports = CoursesUser;
+module.exports = ExerciseDone;
