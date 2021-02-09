@@ -9,15 +9,22 @@ const app = require('../../src/app');
 
 const agent = supertest(app);
 const db = new Pool({
-  connectionString: process.env.DATABASE_URL,
+  connectionString: process.env.DATABASE_URL_DEV,
 });
 
-beforeEach(async () => {
+jest.setTimeout(1000 * 60);
+
+const cleatDataBase = async () => {
   await db.query('DELETE FROM sessions;');
   await db.query('DELETE FROM users;');
+};
+
+beforeEach(async () => {
+  await cleatDataBase();
 });
 
 afterAll(async () => {
+  await cleatDataBase();
   await db.end();
   await sequelize.close();
 });
@@ -77,10 +84,10 @@ describe('POST /api/v1/users/signup', () => {
 
   it('Should return 201 if input data is correct', async () => {
     const body = {
-      name: 'João',
-      email: 'joao@joao.com',
-      password: '12345678',
-      passwordConfirmation: '12345678',
+      name: 'bob',
+      email: 'bob@gmail.com',
+      password: 'bob12345',
+      passwordConfirmation: 'bob12345',
     };
 
     const response = await agent.post('/api/v1/users/signup').send(body);
