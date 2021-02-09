@@ -1,11 +1,14 @@
 /* eslint-disable prefer-destructuring */
 const router = require('express').Router();
-const coursesController = require('../controllers/coursesController');
-const ConflictError = require('../errors/ConflictError');
-const NotFoundError = require('../errors/NotFoundError');
-const courseSchema = require('../schemas/courseSchemas');
+const coursesController = require('../../../controllers/coursesController');
+const ConflictError = require('../../../errors/ConflictError');
+const NotFoundError = require('../../../errors/NotFoundError');
+const courseSchema = require('../../../schemas/courseSchemas');
+const chaptersAdminRouter = require('./chaptersAdminRouter');
 
-router.get('/courses', async (req, res) => {
+router.use('/:id/chapters', chaptersAdminRouter);
+
+router.get('/', async (req, res) => {
   let limit = null;
   let offset = null;
 
@@ -24,7 +27,7 @@ router.get('/courses', async (req, res) => {
   return res.send(courses);
 });
 
-router.get('/courses/:id', async (req, res) => {
+router.get('/:id', async (req, res) => {
   const courseId = +req.params.id;
 
   try {
@@ -38,7 +41,7 @@ router.get('/courses/:id', async (req, res) => {
   }
 });
 
-router.post('/courses', async (req, res) => {
+router.post('/', async (req, res) => {
   const { error } = courseSchema.postCourse.validate(req.body);
   if (error) return res.status(422).send({ error: error.details[0].message });
 
@@ -52,7 +55,7 @@ router.post('/courses', async (req, res) => {
   }
 });
 
-router.put('/courses/:id', async (req, res) => {
+router.put('/:id', async (req, res) => {
   const courseId = +req.params.id;
   const courseParams = req.body;
   courseParams.id = courseId;
@@ -60,6 +63,18 @@ router.put('/courses/:id', async (req, res) => {
   try {
     const course = await coursesController.editCourse(courseParams);
     return res.send(course);
+  } catch (exception) {
+    if (exception instanceof NotFoundError) return res.status(404).send(exception.message);
+    return res.status(500).send({ error: 'call the responsible person, routeError: /api/v1/admin/courses ' });
+  }
+});
+
+router.delete('/:id', async (req, res) => {
+  const courseId = +req.params.id;
+
+  try {
+    await coursesController.destroyCourse(courseId);
+    return res.sendStatus(200);
   } catch (exception) {
     if (exception instanceof NotFoundError) return res.status(404).send(exception.message);
     return res.status(500).send({ error: 'call the responsible person, routeError: /api/v1/admin/courses ' });
