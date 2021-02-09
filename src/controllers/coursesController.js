@@ -39,12 +39,6 @@ class CoursesController {
     await course.save();
     return course;
   }
-
-  async deleteCourse(id) {
-    const course = await Course.findByPk(id);
-    if (!course) throw new NotFoundError('Course not found');
-    // DELETAR DEPENDENCIAS E DEPOIS O CURSO
-  }
 }
 
 module.exports = new CoursesController();
