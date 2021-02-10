@@ -7,6 +7,7 @@ const Theory = require('../models/Theory');
 const Exercise = require('../models/Exercise');
 const NotFoundError = require('../errors/NotFoundError');
 const ConflictError = require('../errors/ConflictError');
+const chaptersController = require('./chaptersController');
 
 class CoursesController {
   async findCourseById(courseId) {
@@ -63,6 +64,17 @@ class CoursesController {
 
     await course.save();
     return course;
+  }
+
+  async destroyCourse(courseId) {
+    const course = await Course.findByPk(courseId);
+    if (!course) throw new NotFoundError('Chapter not found');
+
+    const chapters = Topic.findAll({ where: { courseId } });
+    const promises = chapters.forEach((chapter) => chaptersController.destroyTopic(chapter.id));
+    await Promise.all(promises);
+
+    await Course.destroy({ where: { courseId } });
   }
 }
 

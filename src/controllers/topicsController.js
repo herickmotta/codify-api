@@ -2,6 +2,8 @@
 const Topic = require('../models/Topic');
 const NotFoundError = require('../errors/NotFoundError');
 const ConflictError = require('../errors/ConflictError');
+const Exercise = require('../models/Exercise');
+const Theory = require('../models/Theory');
 
 class TopicsController {
   async findTopicById(topicId) {
@@ -42,6 +44,8 @@ class TopicsController {
   async destroyTopic(topicId) {
     const topic = await Topic.findByPk(topicId);
     if (!topic) throw new NotFoundError('Topic not found');
+    await Exercise.destroy({ where: { topicId } });
+    await Theory.destroy({ where: { topicId } });
 
     await Topic.destroy({ where: { topicId } });
   }

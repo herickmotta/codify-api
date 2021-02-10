@@ -2,6 +2,8 @@
 const Chapter = require('../models/Chapter');
 const NotFoundError = require('../errors/NotFoundError');
 const ConflictError = require('../errors/ConflictError');
+const Topic = require('../models/Topic');
+const topicsController = require('./topicsController');
 
 class ChaptersController {
   async findChapterById(chapterId) {
@@ -43,6 +45,10 @@ class ChaptersController {
   async destroyChapter(chapterId) {
     const chapter = await Chapter.findByPk(chapterId);
     if (!chapter) throw new NotFoundError('Chapter not found');
+
+    const topics = Topic.findAll({ where: { chapterId } });
+    const promises = topics.forEach((topic) => topicsController.destroyTopic(topic.id));
+    await Promise.all(promises);
 
     await Chapter.destroy({ where: { chapterId } });
   }
