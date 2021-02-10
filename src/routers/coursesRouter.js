@@ -15,14 +15,18 @@ router.get('/:id', authenticationMiddleware, async (req, res) => {
   } catch (exception) {
     if (exception instanceof NotFoundError) return res.status(404).send({ error: 'Course not found' });
 
-    return res.status(500).send({ error: 'call the responsible person, routeError: /api/v1/courses/:id ' });
+    return res.status(500).send({ error: 'call the responsible person, routeError: /api/v1/courses/:id' });
   }
 });
 
 router.get('/', authenticationMiddleware, async (req, res) => {
-  const courses = await coursesController.getAllCourses();
+  try {
+    const courses = await coursesController.getAllCourses();
 
-  return res.send(courses);
+    return res.status(200).send(courses);
+  } catch {
+    return res.status(500).send({ error: 'call the responsible person, routeError: /api/v1/courses ' });
+  }
 });
 
 router.post('/start', authenticationMiddleware, async (req, res) => {
@@ -40,6 +44,18 @@ router.post('/start', authenticationMiddleware, async (req, res) => {
     if (exception instanceof NotFoundError) return res.status(404).send({ error: 'Course not found' });
 
     return res.status(500).send({ error: 'call the responsible person, routeError: /api/v1/courses/start ' });
+  }
+});
+
+router.get('/users/started', authenticationMiddleware, async (req, res) => {
+  const { userId } = req;
+  try {
+    const courses = await coursesController.getAllCoursesThatUserStarted(userId);
+
+    return res.status(200).send(courses);
+  } catch (exception) {
+    console.log(exception);
+    return res.status(500).send({ error: 'call the responsible person, routeError: /api/v1/courses/user/started ' });
   }
 });
 

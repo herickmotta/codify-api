@@ -6,7 +6,6 @@ const authenticationController = require('../controllers/authenticationControlle
 const sessionController = require('../controllers/sessionController');
 const signUpMiddleware = require('../middlewares/signUpMiddleware');
 const UnauthorizedError = require('../errors/UnauthorizedError');
-const authenticationMiddleware = require('../middlewares/authenticationMiddleware');
 
 router.post('/signup', signUpMiddleware, async (req, res) => {
   const user = await usersController.create(req.body);
