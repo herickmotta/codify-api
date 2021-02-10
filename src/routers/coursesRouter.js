@@ -2,6 +2,7 @@ const router = require('express').Router();
 
 const authenticationMiddleware = require('../middlewares/authenticationMiddleware');
 const coursesController = require('../controllers/coursesController');
+const topicsController = require('../controllers/topicsController');
 const NotFoundError = require('../errors/NotFoundError');
 
 router.get('/:id', authenticationMiddleware, async (req, res) => {
@@ -22,6 +23,12 @@ router.get('/', authenticationMiddleware, async (req, res) => {
   const courses = await coursesController.getAllCourses();
 
   return res.send(courses);
+});
+
+router.get('/:id/chapters/:id/topics', async (req, res) => {
+  const chapterId = +req.params.id;
+  const topics = await topicsController.findAllCourseTopics(chapterId);
+  return res.send({ chapterId, topics });
 });
 
 module.exports = router;
