@@ -29,7 +29,7 @@ class CoursesController {
     await CourseUser.create({ userId, courseId });
   }
 
-  async getAllCoursesThatUserStarted(userId) {
+  async getAllCoursesStarted(userId) {
     const userWithCourses = await User.findOne({
       where: { id: userId },
       include: Course,

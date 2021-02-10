@@ -95,13 +95,13 @@ describe('coursesController.startCourse', () => {
   });
 });
 
-describe('coursesController.getAllCoursesThatUserStarted', () => {
+describe('coursesController.getAllCoursesStarted', () => {
   it('Should return a empty array of courses when the user dont have any course started', async () => {
     const courses = [];
     const userId = 2;
 
     await User.findOne.mockResolvedValue({ courses });
-    const result = await coursesController.getAllCoursesThatUserStarted(userId);
+    const result = await coursesController.getAllCoursesStarted(userId);
 
     expect(result).toEqual(expect.objectContaining([]));
   });
@@ -124,7 +124,7 @@ describe('coursesController.getAllCoursesThatUserStarted', () => {
     const userId = 2;
 
     await User.findOne.mockResolvedValue({ courses });
-    const result = await coursesController.getAllCoursesThatUserStarted(userId);
+    const result = await coursesController.getAllCoursesStarted(userId);
 
     expect(result).toEqual(expect.objectContaining(courses));
   });
