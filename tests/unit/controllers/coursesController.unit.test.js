@@ -6,8 +6,11 @@ const coursesController = require('../../../src/controllers/coursesController');
 jest.mock('../../../src/models/Course');
 const Course = require('../../../src/models/Course');
 
-jest.mock('../../../src/models/CoursesUser');
-const CoursesUser = require('../../../src/models/CoursesUser');
+jest.mock('../../../src/models/CourseUser');
+const CourseUser = require('../../../src/models/CourseUser');
+
+jest.mock('../../../src/models/User');
+const User = require('../../../src/models/User');
 
 describe('coursesController.findCourseById', () => {
   it('Should throw an error if given id invalid', async () => {
@@ -56,7 +59,7 @@ describe('coursesController.startCourse', () => {
     const userId = 1;
     const courseId = 2;
 
-    await CoursesUser.findOne.mockResolvedValue(courseStarted);
+    await CourseUser.findOne.mockResolvedValue(courseStarted);
     const fn = async () => {
       await coursesController.startCourse({ userId, courseId });
     };
@@ -69,7 +72,7 @@ describe('coursesController.startCourse', () => {
     const userId = 1;
     const courseId = 2;
 
-    await CoursesUser.findOne.mockResolvedValue(courseStarted);
+    await CourseUser.findOne.mockResolvedValue(courseStarted);
     const fn = async () => {
       await coursesController.startCourse({ userId, courseId });
     };
@@ -82,12 +85,47 @@ describe('coursesController.startCourse', () => {
     const userId = 1;
     const courseId = 2;
 
-    await CoursesUser.findOne.mockResolvedValue(courseStarted);
+    await CourseUser.findOne.mockResolvedValue(courseStarted);
 
-    await CoursesUser.create.mockResolvedValue();
+    await CourseUser.create.mockResolvedValue();
 
     const result = await coursesController.startCourse({ userId, courseId });
 
     expect(result).toEqual();
+  });
+});
+
+describe('coursesController.getAllCoursesThatUserStarted', () => {
+  it('Should return a empty array of courses when the user dont have any course started', async () => {
+    const courses = [];
+    const userId = 2;
+
+    await User.findOne.mockResolvedValue(courses);
+    const result = await coursesController.getAllCoursesThatUserStarted(userId);
+
+    expect(result).toEqual(expect.objectContaining([]));
+  });
+
+  it('Should return an array of courses when the user have started some course', async () => {
+    const courses = [
+      {
+        id: 5,
+        name: 'JavaScript do zero!',
+        description: 'Aprenda o básico meu bom!',
+        photo: 'photo',
+      },
+      {
+        id: 6,
+        name: 'Node com TypeScript!',
+        description: 'Aprenda a linguagem do momento!',
+        photo: 'photo',
+      },
+    ];
+    const userId = 2;
+
+    await User.findOne.mockResolvedValue(courses);
+    const result = await coursesController.getAllCoursesThatUserStarted(userId);
+
+    expect(result).toEqual(expect.objectContaining(courses));
   });
 });
