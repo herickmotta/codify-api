@@ -43,7 +43,7 @@ class TheoriesController {
     const theory = await Theory.findByPk(theoryId);
     if (!theory) throw new NotFoundError('Theory not found');
 
-    await Theory.destroy({ where: { theoryId } });
+    await Theory.destroy({ where: { id: theoryId } });
   }
 }
 

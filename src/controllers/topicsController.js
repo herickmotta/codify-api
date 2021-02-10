@@ -47,7 +47,7 @@ class TopicsController {
     await Exercise.destroy({ where: { topicId } });
     await Theory.destroy({ where: { topicId } });
 
-    await Topic.destroy({ where: { topicId } });
+    await Topic.destroy({ where: { id: topicId } });
   }
 }
 

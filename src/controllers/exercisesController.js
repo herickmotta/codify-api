@@ -43,7 +43,7 @@ class ExercisesController {
     const exercise = await Exercise.findByPk(exerciseId);
     if (!exercise) throw new NotFoundError('Exercise not found');
 
-    await Exercise.destroy({ where: { exerciseId } });
+    await Exercise.destroy({ where: { id: exerciseId } });
   }
 }
 

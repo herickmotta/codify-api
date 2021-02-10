@@ -46,11 +46,11 @@ class ChaptersController {
     const chapter = await Chapter.findByPk(chapterId);
     if (!chapter) throw new NotFoundError('Chapter not found');
 
-    const topics = Topic.findAll({ where: { chapterId } });
-    const promises = topics.forEach((topic) => topicsController.destroyTopic(topic.id));
+    const topics = await Topic.findAll({ where: { chapterId } });
+    const promises = topics.map((topic) => topicsController.destroyTopic(topic.id));
     await Promise.all(promises);
 
-    await Chapter.destroy({ where: { chapterId } });
+    await Chapter.destroy({ where: { id: chapterId } });
   }
 }
 
