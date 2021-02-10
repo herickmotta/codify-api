@@ -2,8 +2,9 @@
 
 const Course = require('../models/Course');
 const NotFoundError = require('../errors/NotFoundError');
-const CoursesUser = require('../models/CoursesUser');
+const CourseUser = require('../models/CourseUser');
 const ConflictError = require('../errors/ConflictError');
+const User = require('../models/User');
 
 class CoursesController {
   async findCourseById(courseId) {
@@ -22,10 +23,21 @@ class CoursesController {
   }
 
   async startCourse({ userId, courseId }) {
-    const thisUserAlredyStartedCourse = await CoursesUser.findOne({ where: { courseId, userId } });
+    const thisUserAlredyStartedCourse = await CourseUser.findOne({ where: { courseId, userId } });
     if (thisUserAlredyStartedCourse) throw new ConflictError();
 
-    await CoursesUser.create({ userId, courseId });
+    await CourseUser.create({ userId, courseId });
+  }
+
+  async getAllCoursesStarted(userId) {
+    const userWithCourses = await User.findOne({
+      where: { id: userId },
+      include: Course,
+    });
+
+    const { courses } = userWithCourses;
+
+    return courses;
   }
 }
 

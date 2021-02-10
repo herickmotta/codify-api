@@ -6,7 +6,6 @@ const authenticationController = require('../controllers/authenticationControlle
 const sessionController = require('../controllers/sessionController');
 const signUpMiddleware = require('../middlewares/signUpMiddleware');
 const UnauthorizedError = require('../errors/UnauthorizedError');
-const authenticationMiddleware = require('../middlewares/authenticationMiddleware');
 
 router.post('/signup', signUpMiddleware, async (req, res) => {
   const user = await usersController.create(req.body);
@@ -35,7 +34,7 @@ router.post('/signin', async (req, res) => {
   } catch (exception) {
     if (exception instanceof UnauthorizedError) return res.status(401).send({ error: 'Wrong email or password' });
 
-    return res.status(500).send({ error: 'call the responsible person, routeError: /api/v1/user/signin ' });
+    return res.sendStatus(500);
   }
 });
 
