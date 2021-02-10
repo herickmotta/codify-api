@@ -6,6 +6,7 @@ const NotFoundError = require('../../errors/NotFoundError');
 // const topicSchema = require('../../schemas/topicSchemas');
 
 router.get('/', async (req, res) => {
+  const { chapterId } = JSON.parse(req.query.filter);
   let limit = null;
   let offset = null;
 
@@ -15,7 +16,7 @@ router.get('/', async (req, res) => {
     offset = range[0];
   }
 
-  const topics = await topicsController.getAllTopics(limit, offset);
+  const topics = await topicsController.getAllTopics(limit, offset, chapterId);
   const total = (await topicsController.getAllTopics()).length;
   res.set({
     'Access-Control-Expose-Headers': 'Content-Range',

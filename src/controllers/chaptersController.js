@@ -11,7 +11,10 @@ class ChaptersController {
     return chapter;
   }
 
-  getAllChapters(limit = null, offset = null) {
+  getAllChapters(limit = null, offset = null, courseId = null) {
+    if (courseId) {
+      return Chapter.findAll({ where: { courseId }, limit, offset });
+    }
     return Chapter.findAll({ limit, offset });
   }
 

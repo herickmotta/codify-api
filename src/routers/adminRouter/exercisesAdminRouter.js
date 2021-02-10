@@ -6,6 +6,7 @@ const NotFoundError = require('../../errors/NotFoundError');
 // const exerciseSchema = require('../../schemas/exerciseSchemas');
 
 router.get('/', async (req, res) => {
+  const { topicId } = JSON.parse(req.query.filter);
   let limit = null;
   let offset = null;
 
@@ -15,7 +16,7 @@ router.get('/', async (req, res) => {
     offset = range[0];
   }
 
-  const exercises = await exercisesController.getAllExercises(limit, offset);
+  const exercises = await exercisesController.getAllExercises(limit, offset, topicId);
   const total = (await exercisesController.getAllExercises()).length;
   res.set({
     'Access-Control-Expose-Headers': 'Content-Range',

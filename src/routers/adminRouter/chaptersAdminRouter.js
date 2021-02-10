@@ -6,6 +6,7 @@ const NotFoundError = require('../../errors/NotFoundError');
 // const chapterSchema = require('../../schemas/chapterSchemas');
 
 router.get('/', async (req, res) => {
+  const { courseId } = JSON.parse(req.query.filter);
   let limit = null;
   let offset = null;
 
@@ -15,7 +16,7 @@ router.get('/', async (req, res) => {
     offset = range[0];
   }
 
-  const chapters = await chaptersController.getAllChapters(limit, offset);
+  const chapters = await chaptersController.getAllChapters(limit, offset, courseId);
   const total = (await chaptersController.getAllChapters()).length;
   res.set({
     'Access-Control-Expose-Headers': 'Content-Range',
@@ -29,7 +30,6 @@ router.get('/:id', async (req, res) => {
 
   try {
     const chapter = await chaptersController.findChapterById(chapterId);
-
     return res.status(200).send(chapter);
   } catch (exception) {
     if (exception instanceof NotFoundError) return res.status(404).send({ error: 'Chapter not found' });

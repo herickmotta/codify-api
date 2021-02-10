@@ -11,8 +11,10 @@ class ExercisesController {
     return exercise;
   }
 
-  getAllExercises(limit = null, offset = null) {
-    return Exercise.findAll({ limit, offset });
+  getAllExercises(limit = null, offset = null, topicId = null) {
+    if (topicId) {
+      return Exercise.findAll({ where: { topicId }, limit, offset });
+    } return Exercise.findAll({ limit, offset });
   }
 
   async createExercise(exerciseParams) {
