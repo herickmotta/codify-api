@@ -61,8 +61,7 @@ router.get('/users/started', authenticationMiddleware, async (req, res) => {
     });
 
     return res.status(200).send(cleanedCourses);
-  } catch (exception) {
-    console.log(exception);
+  } catch {
     return res.status(500).send({ error: 'call the responsible person, routeError: /api/v1/courses/user/started ' });
   }
 });
