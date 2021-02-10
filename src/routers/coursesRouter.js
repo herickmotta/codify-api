@@ -25,10 +25,10 @@ router.get('/', authenticationMiddleware, async (req, res) => {
   return res.send(courses);
 });
 
-router.get('/:id/chapters/:id/topics', async (req, res) => {
-  const chapterId = +req.params.id;
-  const topics = await topicsController.findAllCourseTopics(chapterId);
-  return res.send({ chapterId, topics });
+router.get('/:id/chapters/:chapterId/topics/:topicId', async (req, res) => {
+  const { topicId } = req.params;
+  const result = await topicsController.getTopicsData(topicId);
+  return res.send(result);
 });
 
 module.exports = router;

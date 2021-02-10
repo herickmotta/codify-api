@@ -1,9 +1,19 @@
 /* eslint-disable no-param-reassign */
 const Topic = require('../models/Topic');
+const Theory = require('../models/Theory');
+const Exercise = require('../models/Exercise');
 const NotFoundError = require('../errors/NotFoundError');
 const ConflictError = require('../errors/ConflictError');
 
 class TopicsController {
+  async getTopicsData(id) {
+    const topics = Topic.findByPk(id, {
+      include: [Theory, Exercise],
+    });
+
+    return topics;
+  }
+
   async findTopicById(topicId) {
     const topic = await Topic.findByPk(topicId);
     if (!topic) throw new NotFoundError('Topic not found');
