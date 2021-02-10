@@ -1,14 +1,9 @@
 /* eslint-disable prefer-destructuring */
 const router = require('express').Router();
-const topicsController = require('../../../../../controllers/topicsController');
-const ConflictError = require('../../../../../errors/ConflictError');
-const NotFoundError = require('../../../../../errors/NotFoundError');
+const topicsController = require('../../controllers/topicsController');
+const ConflictError = require('../../errors/ConflictError');
+const NotFoundError = require('../../errors/NotFoundError');
 // const topicSchema = require('../../schemas/topicSchemas');
-const exercisesAdminRouter = require('./exercisesAdminRouter');
-const theoriesAdminRouter = require('./theoriesAdminRouter');
-
-router.use('/:id/exercises', exercisesAdminRouter);
-router.use('/:id/theories', theoriesAdminRouter);
 
 router.get('/', async (req, res) => {
   let limit = null;

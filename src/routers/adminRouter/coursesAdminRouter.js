@@ -4,9 +4,6 @@ const coursesController = require('../../controllers/coursesController');
 const ConflictError = require('../../errors/ConflictError');
 const NotFoundError = require('../../errors/NotFoundError');
 const courseSchema = require('../../schemas/courseSchemas');
-const chaptersAdminRouter = require('./coursesAdminRouter/chaptersAdminRouter');
-
-router.use('/:id/chapters', chaptersAdminRouter);
 
 router.get('/', async (req, res) => {
   let limit = null;
