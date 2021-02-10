@@ -1,8 +1,8 @@
 /* eslint-disable prefer-destructuring */
 const router = require('express').Router();
-const exercisesController = require('../../../../../controllers/exercisesController');
-const ConflictError = require('../../../../../errors/ConflictError');
-const NotFoundError = require('../../../../../errors/NotFoundError');
+const exercisesController = require('../../controllers/exercisesController');
+const ConflictError = require('../../errors/ConflictError');
+const NotFoundError = require('../../errors/NotFoundError');
 // const exerciseSchema = require('../../schemas/exerciseSchemas');
 
 router.get('/', async (req, res) => {

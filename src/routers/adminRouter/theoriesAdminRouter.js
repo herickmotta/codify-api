@@ -1,8 +1,8 @@
 /* eslint-disable prefer-destructuring */
 const router = require('express').Router();
-const theoriesController = require('../../../../../controllers/theoriesController');
-const ConflictError = require('../../../../../errors/ConflictError');
-const NotFoundError = require('../../../../../errors/NotFoundError');
+const theoriesController = require('../../controllers/theoriesController');
+const ConflictError = require('../../errors/ConflictError');
+const NotFoundError = require('../../errors/NotFoundError');
 // const theorySchema = require('../../schemas/theorySchemas');
 
 router.get('/', async (req, res) => {
