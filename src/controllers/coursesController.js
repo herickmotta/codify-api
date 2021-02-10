@@ -35,15 +35,9 @@ class CoursesController {
       include: Course,
     });
 
-    const dirtyCourses = userWithCourses.courses;
-    const cleanedCourses = dirtyCourses.map(({ dataValues }) => {
-      delete dataValues.courseUser;
-      delete dataValues.createdAt;
-      delete dataValues.updatedAt;
-      return dataValues;
-    });
+    const { courses } = userWithCourses;
 
-    return cleanedCourses;
+    return courses;
   }
 }
 

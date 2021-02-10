@@ -52,7 +52,15 @@ router.get('/users/started', authenticationMiddleware, async (req, res) => {
   try {
     const courses = await coursesController.getAllCoursesThatUserStarted(userId);
 
-    return res.status(200).send(courses);
+    const cleanedCourses = courses.map(({ dataValues }) => {
+      const data = dataValues;
+      delete data.courseUser;
+      delete data.createdAt;
+      delete data.updatedAt;
+      return data;
+    });
+
+    return res.status(200).send(cleanedCourses);
   } catch (exception) {
     console.log(exception);
     return res.status(500).send({ error: 'call the responsible person, routeError: /api/v1/courses/user/started ' });

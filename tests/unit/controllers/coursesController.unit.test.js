@@ -100,7 +100,7 @@ describe('coursesController.getAllCoursesThatUserStarted', () => {
     const courses = [];
     const userId = 2;
 
-    await User.findOne.mockResolvedValue(courses);
+    await User.findOne.mockResolvedValue({ courses });
     const result = await coursesController.getAllCoursesThatUserStarted(userId);
 
     expect(result).toEqual(expect.objectContaining([]));
@@ -123,7 +123,7 @@ describe('coursesController.getAllCoursesThatUserStarted', () => {
     ];
     const userId = 2;
 
-    await User.findOne.mockResolvedValue(courses);
+    await User.findOne.mockResolvedValue({ courses });
     const result = await coursesController.getAllCoursesThatUserStarted(userId);
 
     expect(result).toEqual(expect.objectContaining(courses));
