@@ -6,20 +6,11 @@ const NotFoundError = require('../../errors/NotFoundError');
 const courseSchema = require('../../schemas/courseSchemas');
 
 router.get('/', async (req, res) => {
-  let limit = null;
-  let offset = null;
-
-  if (req.query.range) {
-    const range = JSON.parse(req.query.range);
-    limit = range[1] - range[0] + 1;
-    offset = range[0];
-  }
-
-  const courses = await coursesController.getAllCourses(limit, offset);
+  const courses = await coursesController.getAllCourses(req.queryConfig);
   const total = (await coursesController.getAllCourses()).length;
   res.set({
     'Access-Control-Expose-Headers': 'Content-Range',
-    'Content-Range': `${offset}-${courses.length}/${total}`,
+    'Content-Range': `${req.queryConfig.offset}-${courses.length}/${total}`,
   });
   return res.send(courses);
 });

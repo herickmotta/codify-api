@@ -7,20 +7,11 @@ const NotFoundError = require('../../errors/NotFoundError');
 
 router.get('/', async (req, res) => {
   const { chapterId } = JSON.parse(req.query.filter);
-  let limit = null;
-  let offset = null;
-
-  if (req.query.range) {
-    const range = JSON.parse(req.query.range);
-    limit = range[1] - range[0] + 1;
-    offset = range[0];
-  }
-
-  const topics = await topicsController.getAllTopics(limit, offset, chapterId);
+  const topics = await topicsController.getAllTopics(req.queryConfig, chapterId);
   const total = (await topicsController.getAllTopics()).length;
   res.set({
     'Access-Control-Expose-Headers': 'Content-Range',
-    'Content-Range': `${offset}-${topics.length}/${total}`,
+    'Content-Range': `${req.queryConfig.offset}-${topics.length}/${total}`,
   });
   return res.send(topics);
 });

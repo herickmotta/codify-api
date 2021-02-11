@@ -7,20 +7,11 @@ const NotFoundError = require('../../errors/NotFoundError');
 
 router.get('/', async (req, res) => {
   const { topicId } = JSON.parse(req.query.filter);
-  let limit = null;
-  let offset = null;
-
-  if (req.query.range) {
-    const range = JSON.parse(req.query.range);
-    limit = range[1] - range[0] + 1;
-    offset = range[0];
-  }
-
-  const exercises = await exercisesController.getAllExercises(limit, offset, topicId);
+  const exercises = await exercisesController.getAllExercises(req.queryConfig, topicId);
   const total = (await exercisesController.getAllExercises()).length;
   res.set({
     'Access-Control-Expose-Headers': 'Content-Range',
-    'Content-Range': `${offset}-${exercises.length}/${total}`,
+    'Content-Range': `${req.queryConfig.offset}-${exercises.length}/${total}`,
   });
   return res.send(exercises);
 });

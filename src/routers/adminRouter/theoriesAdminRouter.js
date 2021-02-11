@@ -7,20 +7,12 @@ const NotFoundError = require('../../errors/NotFoundError');
 
 router.get('/', async (req, res) => {
   const { topicId } = JSON.parse(req.query.filter);
-  let limit = null;
-  let offset = null;
 
-  if (req.query.range) {
-    const range = JSON.parse(req.query.range);
-    limit = range[1] - range[0] + 1;
-    offset = range[0];
-  }
-
-  const theories = await theoriesController.getAllTheories(limit, offset, topicId);
+  const theories = await theoriesController.getAllTheories(req.queryConfig, topicId);
   const total = (await theoriesController.getAllTheories()).length;
   res.set({
     'Access-Control-Expose-Headers': 'Content-Range',
-    'Content-Range': `${offset}-${theories.length}/${total}`,
+    'Content-Range': `${req.queryConfig.offset}-${theories.length}/${total}`,
   });
   return res.send(theories);
 });

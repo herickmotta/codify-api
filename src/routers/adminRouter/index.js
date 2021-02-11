@@ -7,7 +7,6 @@ const chaptersAdminRouter = require('./chaptersAdminRouter');
 const topicsAdminRouter = require('./topicsAdminRouter');
 const exercisesAdminRouter = require('./exercisesAdminRouter');
 const theoriesAdminRouter = require('./theoriesAdminRouter');
-const authAdminMiddleware = require('../../middlewares/authAdminMiddleware');
 
 router.post('/sign-in', (req, res) => {
   const { error } = adminSchemas.signIn.validate(req.body);
@@ -24,10 +23,10 @@ router.post('/sign-in', (req, res) => {
 
 router.post('/sign-out', (req, res) => res.sendStatus(200));
 
-router.use('/courses', authAdminMiddleware, coursesAdminRouter);
-router.use('/chapters', authAdminMiddleware, chaptersAdminRouter);
-router.use('/topics', authAdminMiddleware, topicsAdminRouter);
-router.use('/exercises', authAdminMiddleware, exercisesAdminRouter);
-router.use('/theories', authAdminMiddleware, theoriesAdminRouter);
+router.use('/courses', coursesAdminRouter);
+router.use('/chapters', chaptersAdminRouter);
+router.use('/topics', topicsAdminRouter);
+router.use('/exercises', exercisesAdminRouter);
+router.use('/theories', theoriesAdminRouter);
 
 module.exports = router;

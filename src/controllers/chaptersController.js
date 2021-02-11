@@ -13,11 +13,11 @@ class ChaptersController {
     return chapter;
   }
 
-  getAllChapters(limit = null, offset = null, courseId = null) {
+  getAllChapters(queryConfig, courseId = null) {
     if (courseId) {
-      return Chapter.findAll({ where: { courseId }, limit, offset });
+      return Chapter.findAll({ where: { courseId }, ...queryConfig });
     }
-    return Chapter.findAll({ limit, offset });
+    return Chapter.findAll(queryConfig);
   }
 
   async createChapter(chapterParams) {

@@ -10,10 +10,10 @@ class TheoriesController {
     return theory;
   }
 
-  getAllTheories(limit = null, offset = null, topicId = null) {
+  getAllTheories(queryConfig, topicId = null) {
     if (topicId) {
-      return Theory.findAll({ where: { topicId }, limit, offset });
-    } return Theory.findAll({ limit, offset });
+      return Theory.findAll({ where: { topicId }, ...queryConfig });
+    } return Theory.findAll(queryConfig);
   }
 
   async createTheory(theoryParams) {

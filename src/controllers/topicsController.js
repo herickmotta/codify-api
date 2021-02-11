@@ -13,10 +13,10 @@ class TopicsController {
     return topic;
   }
 
-  getAllTopics(limit = null, offset = null, chapterId = null) {
+  getAllTopics(queryConfig, chapterId = null) {
     if (chapterId) {
-      return Topic.findAll({ where: { chapterId }, limit, offset });
-    } return Topic.findAll({ limit, offset });
+      return Topic.findAll({ where: { chapterId }, ...queryConfig });
+    } return Topic.findAll(queryConfig);
   }
 
   async createTopic(topicParams) {

@@ -38,8 +38,8 @@ class CoursesController {
     return courseData;
   }
 
-  getAllCourses(limit = null, offset = null) {
-    return Course.findAll({ limit, offset });
+  getAllCourses(queryConfig) {
+    return Course.findAll(queryConfig);
   }
 
   async createCourse(courseParams) {
