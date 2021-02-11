@@ -5,6 +5,7 @@ const userSchemas = require('../schemas/userSchemas');
 const authenticationController = require('../controllers/authenticationController');
 const sessionController = require('../controllers/sessionController');
 const signUpMiddleware = require('../middlewares/signUpMiddleware');
+const authenticationMiddleware = require('../middlewares/authenticationMiddleware');
 const UnauthorizedError = require('../errors/UnauthorizedError');
 
 router.post('/signup', signUpMiddleware, async (req, res) => {
@@ -36,6 +37,15 @@ router.post('/signin', async (req, res) => {
 
     return res.status(500).send({ error: 'call the responsible person, routeError: /api/v1/user/signin ' });
   }
+});
+
+router.get('/courses/:courseId/chapters/:chapterId/progress', authenticationMiddleware, async (req, res) => {
+  const { userId } = req;
+  const { courseId, chapterId } = req.params;
+
+  const topicsProgress = await usersController.getTopicsProgressByChapter(userId, courseId, chapterId);
+
+  return res.status(200).send(topicsProgress);
 });
 
 module.exports = router;
