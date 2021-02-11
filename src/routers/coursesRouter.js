@@ -68,8 +68,7 @@ router.get('/users/not-started', authenticationMiddleware, async (req, res) => {
     const cleanedCourses = cleanCourses(courses);
 
     return res.status(200).send(cleanedCourses);
-  } catch (err) {
-    console.log(err);
+  } catch {
     return res.sendStatus(500);
   }
 });
