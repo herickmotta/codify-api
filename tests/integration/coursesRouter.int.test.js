@@ -12,8 +12,6 @@ const Course = require('../../src/models/Course');
 const CourseUser = require('../../src/models/CourseUser');
 const Session = require('../../src/models/Session');
 
-let courseId;
-
 beforeEach(async () => {
   const courses = [
     {
