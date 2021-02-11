@@ -7,6 +7,7 @@ const chaptersAdminRouter = require('./chaptersAdminRouter');
 const topicsAdminRouter = require('./topicsAdminRouter');
 const exercisesAdminRouter = require('./exercisesAdminRouter');
 const theoriesAdminRouter = require('./theoriesAdminRouter');
+const authAdminMiddleware = require('../../middlewares/authAdminMiddleware');
 
 router.post('/sign-in', (req, res) => {
   const { error } = adminSchemas.signIn.validate(req.body);
@@ -15,18 +16,18 @@ router.post('/sign-in', (req, res) => {
 
   if (username === process.env.ADMIN_USERNAME && password === process.env.ADMIN_PASSWORD) {
     const secretKey = process.env.SECRET;
-    const token = jwt.sign('admin', secretKey, { expiresIn: '1h' });
+    const token = jwt.sign({}, secretKey, { expiresIn: 60 * 60 });
     return res.send(token);
   }
-  return res.sendStatus(409);
+  return res.sendStatus(401);
 });
 
 router.post('/sign-out', (req, res) => res.sendStatus(200));
 
-router.use('/courses', coursesAdminRouter);
-router.use('/chapters', chaptersAdminRouter);
-router.use('/topics', topicsAdminRouter);
-router.use('/exercises', exercisesAdminRouter);
-router.use('/theories', theoriesAdminRouter);
+router.use('/courses', authAdminMiddleware, coursesAdminRouter);
+router.use('/chapters', authAdminMiddleware, chaptersAdminRouter);
+router.use('/topics', authAdminMiddleware, topicsAdminRouter);
+router.use('/exercises', authAdminMiddleware, exercisesAdminRouter);
+router.use('/theories', authAdminMiddleware, theoriesAdminRouter);
 
 module.exports = router;

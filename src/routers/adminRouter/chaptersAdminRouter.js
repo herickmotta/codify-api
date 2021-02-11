@@ -6,7 +6,11 @@ const NotFoundError = require('../../errors/NotFoundError');
 const chapterSchemas = require('../../schemas/chapterSchemas');
 
 router.get('/', async (req, res) => {
-  const { courseId } = JSON.parse(req.query.filter);
+  let courseId = null;
+  if (req.query.filter) {
+    const filter = JSON.parse(req.query.filter);
+    courseId = filter.courseId;
+  }
 
   const chapters = await chaptersController.getAllChapters(req.queryConfig, courseId);
   const total = (await chaptersController.getAllChapters()).length;

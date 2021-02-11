@@ -6,7 +6,11 @@ const NotFoundError = require('../../errors/NotFoundError');
 const topicSchemas = require('../../schemas/topicSchemas');
 
 router.get('/', async (req, res) => {
-  const { chapterId } = JSON.parse(req.query.filter);
+  let chapterId = null;
+  if (req.query.filter) {
+    const filter = JSON.parse(req.query.filter);
+    chapterId = filter.courseId;
+  }
   const topics = await topicsController.getAllTopics(req.queryConfig, chapterId);
   const total = (await topicsController.getAllTopics()).length;
   res.set({

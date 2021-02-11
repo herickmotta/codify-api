@@ -6,7 +6,11 @@ const NotFoundError = require('../../errors/NotFoundError');
 // const theorySchema = require('../../schemas/theorySchemas');
 
 router.get('/', async (req, res) => {
-  const { topicId } = JSON.parse(req.query.filter);
+  let topicId = null;
+  if (req.query.filter) {
+    const filter = JSON.parse(req.query.filter);
+    topicId = filter.courseId;
+  }
 
   const theories = await theoriesController.getAllTheories(req.queryConfig, topicId);
   const total = (await theoriesController.getAllTheories()).length;

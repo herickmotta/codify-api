@@ -6,7 +6,11 @@ const NotFoundError = require('../../errors/NotFoundError');
 // const exerciseSchema = require('../../schemas/exerciseSchemas');
 
 router.get('/', async (req, res) => {
-  const { topicId } = JSON.parse(req.query.filter);
+  let topicId = null;
+  if (req.query.filter) {
+    const filter = JSON.parse(req.query.filter);
+    topicId = filter.courseId;
+  }
   const exercises = await exercisesController.getAllExercises(req.queryConfig, topicId);
   const total = (await exercisesController.getAllExercises()).length;
   res.set({

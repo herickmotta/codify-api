@@ -10,7 +10,6 @@ require('./utils/loadRelationships');
 const usersRouters = require('./routers/usersRouters');
 const coursesRouter = require('./routers/coursesRouter');
 const adminRouter = require('./routers/adminRouter');
-const authAdminMiddleware = require('./middlewares/authAdminMiddleware');
 const getQueriesMiddleware = require('./middlewares/getQueriesMiddleware');
 
 const app = express();
@@ -21,7 +20,7 @@ app.use('/api/v1/users', usersRouters);
 
 app.use('/api/v1/courses', coursesRouter);
 
-app.use('/api/v1/admin', authAdminMiddleware, getQueriesMiddleware, adminRouter);
+app.use('/api/v1/admin', getQueriesMiddleware, adminRouter);
 
 app.use((error, req, res, next) => {
   console.log(error);
