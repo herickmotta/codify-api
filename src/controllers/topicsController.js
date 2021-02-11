@@ -2,16 +2,39 @@
 const Topic = require('../models/Topic');
 const Theory = require('../models/Theory');
 const Exercise = require('../models/Exercise');
+const TheoryDone = require('../models/TheoryDone');
+const ExerciseDone = require('../models/ExerciseDone');
 const NotFoundError = require('../errors/NotFoundError');
 const ConflictError = require('../errors/ConflictError');
 
 class TopicsController {
-  async getTopicsData(id) {
-    const topics = Topic.findByPk(id, {
-      include: [Theory, Exercise],
+  async getTopicsData(topicId, userId) {
+    const topic = await Topic.findByPk(topicId, {
+      include: [
+        {
+          model: Theory,
+          include: {
+            model: TheoryDone,
+            where: { userId },
+            required: false,
+          },
+        },
+        {
+          model: Exercise,
+          include: {
+            model: ExerciseDone,
+            where: { userId },
+            required: false,
+          },
+        },
+      ],
     });
+    if (!topic) throw new NotFoundError('Topic not found');
 
-    return topics;
+    const { exercises, theory } = topic;
+    exercises.unshift(theory);
+
+    return topic;
   }
 
   async findTopicById(topicId) {

@@ -27,7 +27,8 @@ router.get('/', authenticationMiddleware, async (req, res) => {
 
 router.get('/:id/chapters/:chapterId/topics/:topicId', async (req, res) => {
   const { topicId } = req.params;
-  const result = await topicsController.getTopicsData(topicId);
+  const userId = 1;
+  const result = await topicsController.getTopicsData(topicId, userId);
   return res.send(result);
 });
 
