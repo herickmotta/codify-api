@@ -48,7 +48,7 @@ describe('/api/v1/admin/theories', () => {
   it('Should return 200 if input data is correct', async () => {
     const topicId = await topicSeed();
     const body = {
-      youtubeLink: 'https://lalala.com',
+      youtubeLink: 'https://www.youtube.com',
       topicId,
     };
     const response = await agent.post('/api/v1/admin/theories').send(body).set(headers);
@@ -63,7 +63,7 @@ describe('/api/v1/admin/theories', () => {
 
   it('Should return 200 editing a theory', async () => {
     const topicId = await topicSeed();
-    const queryRes = await sequelize.query('INSERT INTO theories ("youtubeLink","topicId") VALUES ($1,$2) RETURNING id', { bind: ['https://lalala.com', topicId] });
+    const queryRes = await sequelize.query('INSERT INTO theories ("youtubeLink","topicId") VALUES ($1,$2) RETURNING id', { bind: ['https://www.lalala.com', topicId] });
     const { id } = queryRes[0][0];
     const response = await agent.put(`/api/v1/admin/theories/${id}`).set(headers);
     expect(response.status).toBe(200);
@@ -76,7 +76,7 @@ describe('/api/v1/admin/theories', () => {
 
   it('Should return 200 getting a theory', async () => {
     const topicId = await topicSeed();
-    const queryRes = await sequelize.query('INSERT INTO theories ("youtubeLink","topicId") VALUES ($1,$2) RETURNING id', { bind: ['https://lalala.com', topicId] });
+    const queryRes = await sequelize.query('INSERT INTO theories ("youtubeLink","topicId") VALUES ($1,$2) RETURNING id', { bind: ['https://www.lalala.com', topicId] });
     const { id } = queryRes[0][0];
     const response = await agent.get(`/api/v1/admin/theories/${id}`).set(headers);
     expect(response.status).toBe(200);
@@ -89,7 +89,7 @@ describe('/api/v1/admin/theories', () => {
 
   it('Should return 200 deleting a theory', async () => {
     const topicId = await topicSeed();
-    const queryRes = await sequelize.query('INSERT INTO theories ("youtubeLink","topicId") VALUES ($1,$2) RETURNING id', { bind: ['https://lalala.com', topicId] });
+    const queryRes = await sequelize.query('INSERT INTO theories ("youtubeLink","topicId") VALUES ($1,$2) RETURNING id', { bind: ['https://www.lalala.com', topicId] });
     const { id } = queryRes[0][0];
     const response = await agent.delete(`/api/v1/admin/theories/${id}`).set(headers);
     expect(response.status).toBe(200);

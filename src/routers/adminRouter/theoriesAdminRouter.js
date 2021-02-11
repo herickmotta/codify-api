@@ -3,7 +3,7 @@ const router = require('express').Router();
 const theoriesController = require('../../controllers/theoriesController');
 const ConflictError = require('../../errors/ConflictError');
 const NotFoundError = require('../../errors/NotFoundError');
-// const theorySchema = require('../../schemas/theorySchemas');
+const theorySchema = require('../../schemas/theorySchemas');
 
 router.get('/', async (req, res) => {
   let topicId = null;
@@ -36,8 +36,8 @@ router.get('/:id', async (req, res) => {
 });
 
 router.post('/', async (req, res) => {
-  // const { error } = theorySchema.postTheory.validate(req.body);
-  // if (error) return res.status(422).send({ error: error.details[0].message });
+  const { error } = theorySchema.postTheory.validate(req.body);
+  if (error) return res.status(422).send({ error: error.details[0].message });
 
   try {
     const theory = await theoriesController.createTheory(req.body);
