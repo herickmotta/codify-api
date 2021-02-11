@@ -73,4 +73,15 @@ router.get('/users/not-started', authenticationMiddleware, async (req, res) => {
   }
 });
 
+router.get('/last-seen', authenticationMiddleware, async (req, res) => {
+  const { userId } = req;
+  try {
+    const course = await coursesController.getLastCourseSeen(userId);
+
+    return res.status(200).send(course);
+  } catch (e) {
+    return res.sendStatus(500);
+  }
+});
+
 module.exports = router;

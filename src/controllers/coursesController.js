@@ -72,7 +72,7 @@ class CoursesController {
   }
 
   async getLastCourseSeen(userId) {
-    const zape = await ExerciseDone.findAll({
+    const exerciseDone = await ExerciseDone.findAll({
       limit: 1,
       where: {
         userId,
@@ -80,7 +80,7 @@ class CoursesController {
       order: [['createdAt', 'DESC']],
     });
 
-    console.log(zape);
+    console.log(exerciseDone);
   }
 }
 
