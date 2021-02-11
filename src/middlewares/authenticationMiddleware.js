@@ -17,6 +17,7 @@ async function authenticationMiddleware(req, res, next) {
     req.userId = id;
     next();
   } catch (execption) {
+    console.log(execption, 'aaaaaaaaaaaaaaaaaaaaa');
     if (execption instanceof NotFoundError) return res.status(401).json({ error: 'Failed to authenticate token.' });
 
     return res.status(500).json({ error: 'call the responsible person, routeError: /authenticationMiddleware ' });

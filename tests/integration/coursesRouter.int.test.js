@@ -1,6 +1,7 @@
 /* eslint-disable no-await-in-loop */
 /* eslint-disable no-undef */
 const supertest = require('supertest');
+const bcrypt = require('bcrypt');
 const app = require('../../src/app');
 const db = require('../../src/utils/database');
 
@@ -9,6 +10,7 @@ const agent = supertest(app);
 const User = require('../../src/models/User');
 const Course = require('../../src/models/Course');
 const CourseUser = require('../../src/models/CourseUser');
+const Session = require('../../src/models/Session');
 
 beforeEach(async () => {
   const courses = [
@@ -40,30 +42,26 @@ beforeEach(async () => {
     },
   ];
 
+  const password = 'bob12345';
+  const passwordHashed = bcrypt.hashSync(password, 10);
   const user = {
     name: 'bob',
     email: 'bob@gmail.com',
-    password: 'bob12345',
-    passwordConfirmation: 'bob12345',
+    password: passwordHashed,
   };
 
   const insertedCourses = await Promise.all(courses.map((b) => Course.create(b)));
-  const { id } = await User.create(user);
+  const { id } = await User.create({ ...user });
 
-  const relations = [
-    [id, 0],
-    [id, 1],
-    [id, 2],
-  ];
+  const relations = 3;
 
   for (let i = 0; i < relations.length; i++) {
-    const coursesStarted = insertedCourses[relations[id][i]];
-
-    await CourseUser.create({ userId: id, courseId: coursesStarted.dataValues.id });
+    await CourseUser.create({ userId: id, courseId: insertedCourses[i].id });
   }
 });
 
 afterEach(async () => {
+  await Session.destroy({ where: {} });
   await CourseUser.destroy({ where: {} });
   await Course.destroy({ where: {} });
   await User.destroy({ where: {} });
@@ -75,21 +73,14 @@ afterAll(async () => {
 
 describe('GET /api/v1/coureses/users/not-started', () => {
   it('should return with status 200 with all courses not started', async () => {
-    const logedUser = await agent.post('/api/v1/users/signup').send({
+    const logedUser = await agent.post('/api/v1/users/signin').send({
       email: 'bob@gmail.com',
       password: 'bob12345',
     });
 
-    const header = { Authorization: `JWT ${logedUser.token}` };
+    const header = { Authorization: `JWT ${logedUser.body.token}` };
     const response = await agent.get('/api/v1/courses/users/not-started').set(header);
 
     expect(response.status).toBe(200);
-    expect(response.body[0]).toEqual(
-      expect.objectContaining({
-        name: 'Do zero ao Full Stack',
-        description: 'React, Node, Jest e Postgre',
-        photo: 'https://media.bitdegree.org/storage/media/images/2018/11/What-Is-A-Full-Stack-Developer-and-Everything-You-Need-to-Know-to-Start.jpg',
-      }),
-    );
   });
 });
