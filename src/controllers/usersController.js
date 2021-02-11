@@ -8,6 +8,7 @@ const Theory = require('../models/Theory');
 const Exercise = require('../models/Exercise');
 const TheoryDone = require('../models/TheoryDone');
 const ExerciseDone = require('../models/ExerciseDone');
+const NotFoundError = require('../errors/NotFoundError');
 
 class UsersController {
   async create(userData) {
@@ -45,8 +46,12 @@ class UsersController {
     const exerciseIdList = [];
 
     courseData.chapters.forEach((chapter) => {
+      if (!chapter) throw new NotFoundError();
       chapter.topics.forEach((topic) => {
+        if (!topic || !topic.theory || !topic.theory || !topic.exercises) throw new NotFoundError();
+
         theoryIdList.push(topic.theory.id);
+
         topic.exercises.forEach((exercise) => {
           exerciseIdList.push(exercise.id);
         });
