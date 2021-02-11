@@ -1,7 +1,6 @@
 /* eslint-disable no-param-reassign */
 const Exercise = require('../models/Exercise');
 const NotFoundError = require('../errors/NotFoundError');
-const ConflictError = require('../errors/ConflictError');
 
 class ExercisesController {
   async findExerciseById(exerciseId) {
@@ -18,10 +17,6 @@ class ExercisesController {
   }
 
   async createExercise(exerciseParams) {
-    const { name } = exerciseParams;
-    const exercise = await Exercise.findOne({ where: { name } });
-    if (exercise) throw new ConflictError('Exercise already exists');
-
     const createdExercise = await Exercise.create(exerciseParams);
     return createdExercise;
   }

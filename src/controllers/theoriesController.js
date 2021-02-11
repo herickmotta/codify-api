@@ -1,7 +1,6 @@
 /* eslint-disable no-param-reassign */
 const Theory = require('../models/Theory');
 const NotFoundError = require('../errors/NotFoundError');
-const ConflictError = require('../errors/ConflictError');
 
 class TheoriesController {
   async findTheoryById(theoryId) {
@@ -18,10 +17,6 @@ class TheoriesController {
   }
 
   async createTheory(theoryParams) {
-    const { name } = theoryParams;
-    const theory = await Theory.findOne({ where: { name } });
-    if (theory) throw new ConflictError('Theory already exists');
-
     const createdTheory = await Theory.create(theoryParams);
     return createdTheory;
   }
