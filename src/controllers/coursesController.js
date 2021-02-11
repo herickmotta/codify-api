@@ -21,7 +21,7 @@ class CoursesController {
             include: [
               {
                 model: Theory,
-                attributes: ['youtubeLink'],
+                attributes: ['id', 'youtubeLink'],
               },
               {
                 model: Exercise,
