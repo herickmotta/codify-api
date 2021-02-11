@@ -27,7 +27,7 @@ router.get('/:id', async (req, res) => {
   } catch (exception) {
     if (exception instanceof NotFoundError) return res.status(404).send({ error: 'Theory not found' });
 
-    return res.status(500).send({ error: 'call the responsible person, routeError: /api/v1/theories/:id ' });
+    return res.status(500);
   }
 });
 
@@ -41,7 +41,7 @@ router.post('/', async (req, res) => {
   } catch (exception) {
     if (exception instanceof ConflictError) return res.status(409).send(exception.message);
 
-    return res.status(500).send({ error: 'call the responsible person, routeError: /api/v1/admin/theories ' });
+    return res.status(500);
   }
 });
 
@@ -55,7 +55,7 @@ router.put('/:id', async (req, res) => {
     return res.send(theory);
   } catch (exception) {
     if (exception instanceof NotFoundError) return res.status(404).send(exception.message);
-    return res.status(500).send({ error: 'call the responsible person, routeError: /api/v1/admin/theories ' });
+    return res.status(500);
   }
 });
 
@@ -67,7 +67,7 @@ router.delete('/:id', async (req, res) => {
     return res.sendStatus(200);
   } catch (exception) {
     if (exception instanceof NotFoundError) return res.status(404).send(exception.message);
-    return res.status(500).send({ error: 'call the responsible person, routeError: /api/v1/admin/theories ' });
+    return res.status(500);
   }
 });
 

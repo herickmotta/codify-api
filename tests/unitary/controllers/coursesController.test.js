@@ -73,7 +73,7 @@ describe('coursesController.createCourse', () => {
     await Course.findOne.mockResolvedValue(course);
 
     const fn = async () => {
-      await coursesController.create(course);
+      await coursesController.createCourse(course);
     };
 
     expect(fn).rejects.toThrow(ConflictError);
