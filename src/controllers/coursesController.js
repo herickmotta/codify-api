@@ -9,6 +9,7 @@ const NotFoundError = require('../errors/NotFoundError');
 const CourseUser = require('../models/CourseUser');
 const ConflictError = require('../errors/ConflictError');
 const User = require('../models/User');
+const ExerciseDone = require('../models/ExerciseDone');
 
 class CoursesController {
   async findCourseById(courseId) {
@@ -68,6 +69,18 @@ class CoursesController {
     const courses = allCourses.filter((el) => !coursesStarted.some((f) => f.id === el.id));
 
     return courses;
+  }
+
+  async getLastCourseSeen(userId) {
+    const zape = await ExerciseDone.findAll({
+      limit: 1,
+      where: {
+        userId,
+      },
+      order: [['createdAt', 'DESC']],
+    });
+
+    console.log(zape);
   }
 }
 
