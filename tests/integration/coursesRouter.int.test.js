@@ -12,6 +12,8 @@ const Course = require('../../src/models/Course');
 const CourseUser = require('../../src/models/CourseUser');
 const Session = require('../../src/models/Session');
 
+let courseId;
+
 beforeEach(async () => {
   const courses = [
     {
@@ -53,11 +55,7 @@ beforeEach(async () => {
   const insertedCourses = await Promise.all(courses.map((b) => Course.create(b)));
   const { id } = await User.create({ ...user });
 
-  const relations = 3;
-
-  for (let i = 0; i < relations.length; i++) {
-    await CourseUser.create({ userId: id, courseId: insertedCourses[i].id });
-  }
+  await CourseUser.create({ userId: id, courseId: insertedCourses[0].id });
 });
 
 afterEach(async () => {
@@ -72,7 +70,7 @@ afterAll(async () => {
 });
 
 describe('GET /api/v1/coureses/users/not-started', () => {
-  it('should return with status 200 with all courses not started', async () => {
+  it('should return with status 200 and all courses because the user didnt started any', async () => {
     const logedUser = await agent.post('/api/v1/users/signin').send({
       email: 'bob@gmail.com',
       password: 'bob12345',
@@ -82,5 +80,6 @@ describe('GET /api/v1/coureses/users/not-started', () => {
     const response = await agent.get('/api/v1/courses/users/not-started').set(header);
 
     expect(response.status).toBe(200);
+    expect(response.body.length).toBe(4);
   });
 });
