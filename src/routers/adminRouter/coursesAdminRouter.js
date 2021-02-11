@@ -73,7 +73,6 @@ router.delete('/:id', async (req, res) => {
     await coursesController.destroyCourse(courseId);
     return res.sendStatus(200);
   } catch (exception) {
-    console.log(exception);
     if (exception instanceof NotFoundError) return res.status(404).send(exception.message);
     return res.status(500).send({ error: 'call the responsible person, routeError: /api/v1/admin/courses ' });
   }
