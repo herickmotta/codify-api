@@ -39,6 +39,15 @@ router.post('/signin', async (req, res) => {
   }
 });
 
+router.get('/courses/:id/progress', authenticationMiddleware, async (req, res) => {
+  const { userId } = req;
+  const courseId = req.params.id;
+
+  const progress = await usersController.getUserProgress(userId, courseId);
+
+  return res.status(200).send(progress);
+});
+
 router.get('/courses/:courseId/chapters/:chapterId/progress', authenticationMiddleware, async (req, res) => {
   const { userId } = req;
   const { courseId, chapterId } = req.params;
