@@ -1,9 +1,9 @@
 const Course = require('../models/Course');
 const User = require('../models/User');
 const Session = require('../models/Session');
-const CoursesUsers = require('../models/CoursesUsers');
+const CourseUser = require('../models/CourseUser');
 
-Course.belongsToMany(User, { through: CoursesUsers });
-User.belongsToMany(Course, { through: CoursesUsers });
+Course.belongsToMany(User, { through: CourseUser });
+User.belongsToMany(Course, { through: CourseUser });
 
 User.hasMany(Session);
