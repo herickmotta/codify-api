@@ -6,6 +6,7 @@ const authenticationController = require('../controllers/authenticationControlle
 const sessionController = require('../controllers/sessionController');
 const signUpMiddleware = require('../middlewares/signUpMiddleware');
 const UnauthorizedError = require('../errors/UnauthorizedError');
+const authenticationMiddleware = require('../middlewares/authenticationMiddleware');
 
 router.post('/signup', signUpMiddleware, async (req, res) => {
   const user = await usersController.create(req.body);
@@ -34,6 +35,17 @@ router.post('/signin', async (req, res) => {
   } catch (exception) {
     if (exception instanceof UnauthorizedError) return res.status(401).send({ error: 'Wrong email or password' });
 
+    return res.sendStatus(500);
+  }
+});
+
+router.post('/logout', authenticationMiddleware, async (req, res) => {
+  try {
+    const { userId } = req;
+    await sessionController.deleteSession(userId);
+
+    return res.sendStatus(201);
+  } catch (exception) {
     return res.sendStatus(500);
   }
 });

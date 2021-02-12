@@ -24,6 +24,10 @@ class SessionController {
 
     return session;
   }
+
+  deleteSession(userId) {
+    return Session.destroy({ where: { userId } });
+  }
 }
 
 module.exports = new SessionController();
