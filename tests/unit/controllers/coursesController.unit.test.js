@@ -32,7 +32,33 @@ describe('coursesController.findCourseById', () => {
       name: 'Course Test',
       description: 'test test',
       photo: 'photo',
+      createdAt: '2021-02-11T16:34:56.316Z',
+      updatedAt: '2021-02-11T16:34:56.316Z',
+      chapters: [
+        {
+          id: 1,
+          name: 'This is a chapter from course 1',
+          topics: [
+            {
+              id: 1,
+              name: 'This is a topic from chapter 1',
+              theory: {
+                id: 1,
+                youtubeLink: 'https://www.youtube.com/watch?v=Ptbk2af68e8',
+              },
+              exercises: [
+                {
+                  id: 1,
+                },
+                {
+                  id: 2,
+                },
+              ],
+            },
+          ],
+        }],
     };
+
     const validCourseId = 1;
 
     await Course.findByPk.mockResolvedValue(course);

@@ -14,7 +14,7 @@ TheoryDone.init({
     type: Sequelize.INTEGER,
     allowNull: false,
   },
-  exerciseId: {
+  theoryId: {
     type: Sequelize.INTEGER,
     allowNull: false,
   },

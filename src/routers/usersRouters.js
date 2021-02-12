@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 const router = require('express').Router();
 
 const usersController = require('../controllers/usersController');
@@ -5,7 +6,9 @@ const userSchemas = require('../schemas/userSchemas');
 const authenticationController = require('../controllers/authenticationController');
 const sessionController = require('../controllers/sessionController');
 const signUpMiddleware = require('../middlewares/signUpMiddleware');
+const authenticationMiddleware = require('../middlewares/authenticationMiddleware');
 const UnauthorizedError = require('../errors/UnauthorizedError');
+const authenticationMiddleware = require('../middlewares/authenticationMiddleware');
 
 router.post('/signup', signUpMiddleware, async (req, res) => {
   const user = await usersController.create(req.body);
@@ -34,6 +37,35 @@ router.post('/signin', async (req, res) => {
   } catch (exception) {
     if (exception instanceof UnauthorizedError) return res.status(401).send({ error: 'Wrong email or password' });
 
+    return res.sendStatus(500);
+  }
+});
+
+router.get('/courses/:id/progress', authenticationMiddleware, async (req, res) => {
+  const { userId } = req;
+  const courseId = req.params.id;
+
+  const progress = await usersController.getUserProgress(userId, courseId);
+
+  return res.status(200).send(progress);
+});
+
+router.get('/courses/:courseId/chapters/:chapterId/progress', authenticationMiddleware, async (req, res) => {
+  const { userId } = req;
+  const { chapterId } = req.params;
+
+  const topicsProgress = await usersController.getTopicsProgressByChapter(userId, chapterId);
+
+  return res.status(200).send(topicsProgress);
+});
+
+router.post('/logout', authenticationMiddleware, async (req, res) => {
+  try {
+    const { userId } = req;
+    await sessionController.deleteSession(userId);
+
+    return res.sendStatus(200);
+  } catch (exception) {
     return res.sendStatus(500);
   }
 });
