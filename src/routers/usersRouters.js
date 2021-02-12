@@ -44,7 +44,7 @@ router.post('/logout', authenticationMiddleware, async (req, res) => {
     const { userId } = req;
     await sessionController.deleteSession(userId);
 
-    return res.sendStatus(201);
+    return res.sendStatus(200);
   } catch (exception) {
     return res.sendStatus(500);
   }
