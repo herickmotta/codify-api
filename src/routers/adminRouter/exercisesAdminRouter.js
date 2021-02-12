@@ -3,7 +3,6 @@ const router = require('express').Router();
 const exercisesController = require('../../controllers/exercisesController');
 const ConflictError = require('../../errors/ConflictError');
 const NotFoundError = require('../../errors/NotFoundError');
-// const exerciseSchema = require('../../schemas/exerciseSchemas');
 
 router.get('/', async (req, res) => {
   const { topicId } = JSON.parse(req.query.filter);
@@ -40,8 +39,6 @@ router.get('/:id', async (req, res) => {
 });
 
 router.post('/', async (req, res) => {
-  // const { error } = exerciseSchema.postExercise.validate(req.body);
-  // if (error) return res.status(422).send({ error: error.details[0].message });
 
   try {
     const exercise = await exercisesController.createExercise(req.body);
