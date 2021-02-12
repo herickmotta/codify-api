@@ -9,7 +9,6 @@ const NotFoundError = require('../errors/NotFoundError');
 const chaptersController = require('./chaptersController');
 const CourseUser = require('../models/CourseUser');
 const ConflictError = require('../errors/ConflictError');
-const CourseUser = require('../models/CourseUser');
 const User = require('../models/User');
 const ExerciseDone = require('../models/ExerciseDone');
 
@@ -41,9 +40,9 @@ class CoursesController {
     return courseData;
   }
 
-getAllCourses(queryConfig) {
+  getAllCourses(queryConfig) {
     return Course.findAll(queryConfig);
-}
+  }
 
   async createCourse(courseParams) {
     const { name } = courseParams;
@@ -53,7 +52,7 @@ getAllCourses(queryConfig) {
     const createdCourse = await Course.create(courseParams);
     return createdCourse;
   }
-  
+
   async editCourse(courseParams) {
     const {
       id, name, description, photo,
@@ -76,8 +75,8 @@ getAllCourses(queryConfig) {
     const chapters = await Chapter.findAll({ where: { courseId } });
     const promises = chapters.map((chapter) => chaptersController.destroyChapter(chapter.id));
     await Promise.all(promises);
- }
-  
+  }
+
   async editCourse(courseParams) {
     const {
       id, name, description, photo,
@@ -92,7 +91,6 @@ getAllCourses(queryConfig) {
     await course.save();
     return course;
   }
-
 
   async startCourse({ userId, courseId }) {
     const thisUserAlredyStartedCourse = await CourseUser.findOne({ where: { courseId, userId } });

@@ -8,12 +8,6 @@ const Exercise = require('../models/Exercise');
 const TheoryDone = require('../models/TheoryDone');
 const ExerciseDone = require('../models/ExerciseDone');
 const CourseUser = require('../models/CourseUser');
-const Chapter = require('../models/Chapter');
-const Exercise = require('../models/Exercise');
-const ExerciseDone = require('../models/ExerciseDone');
-const Theory = require('../models/Theory');
-const TheoryDone = require('../models/TheoryDone');
-const Topic = require('../models/Topic');
 
 Course.belongsToMany(User, { through: CourseUser });
 User.belongsToMany(Course, { through: CourseUser });

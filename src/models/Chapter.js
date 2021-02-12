@@ -1,6 +1,5 @@
 const { Sequelize } = require('sequelize');
 const sequelize = require('../utils/database');
-const Topic = require('./Topic');
 
 class Chapter extends Sequelize.Model {}
 
