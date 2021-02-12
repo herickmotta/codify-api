@@ -3,7 +3,6 @@ const router = require('express').Router();
 const topicsController = require('../../controllers/topicsController');
 const ConflictError = require('../../errors/ConflictError');
 const NotFoundError = require('../../errors/NotFoundError');
-// const topicSchema = require('../../schemas/topicSchemas');
 
 router.get('/', async (req, res) => {
   const { chapterId } = JSON.parse(req.query.filter);
@@ -40,8 +39,6 @@ router.get('/:id', async (req, res) => {
 });
 
 router.post('/', async (req, res) => {
-  // const { error } = topicSchema.postTopic.validate(req.body);
-  // if (error) return res.status(422).send({ error: error.details[0].message });
 
   try {
     const topic = await topicsController.createTopic(req.body);
