@@ -3,7 +3,7 @@ const router = require('express').Router();
 const authenticationMiddleware = require('../middlewares/authenticationMiddleware');
 const lessonsController = require('../controllers/lessonsConstroller');
 
-router.post('/:id', async (req, res) => {
+router.post('/:id', authenticationMiddleware, async (req, res) => {
   const { type } = req.body;
   const lessonId = +req.params.id;
   const { userId } = req;
