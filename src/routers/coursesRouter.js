@@ -87,4 +87,12 @@ router.get('/last-seen', authenticationMiddleware, async (req, res) => {
   }
 });
 
+router.get('/:id/chapters/:chapterId/topics/:topicId', authenticationMiddleware, async (req, res) => {
+  const { topicId } = req.params;
+  const { userId } = req;
+  const id = parseInt(topicId)
+  const result = await topicsController.getTopicsData(id, userId);
+  return res.send(result);
+});
+
 module.exports = router;
