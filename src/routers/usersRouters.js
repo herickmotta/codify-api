@@ -8,6 +8,7 @@ const sessionController = require('../controllers/sessionController');
 const signUpMiddleware = require('../middlewares/signUpMiddleware');
 const authenticationMiddleware = require('../middlewares/authenticationMiddleware');
 const UnauthorizedError = require('../errors/UnauthorizedError');
+const authenticationMiddleware = require('../middlewares/authenticationMiddleware');
 
 router.post('/signup', signUpMiddleware, async (req, res) => {
   const user = await usersController.create(req.body);
@@ -56,6 +57,17 @@ router.get('/courses/:courseId/chapters/:chapterId/progress', authenticationMidd
   const topicsProgress = await usersController.getTopicsProgressByChapter(userId, chapterId);
 
   return res.status(200).send(topicsProgress);
+});
+
+router.post('/logout', authenticationMiddleware, async (req, res) => {
+  try {
+    const { userId } = req;
+    await sessionController.deleteSession(userId);
+
+    return res.sendStatus(200);
+  } catch (exception) {
+    return res.sendStatus(500);
+  }
 });
 
 module.exports = router;
