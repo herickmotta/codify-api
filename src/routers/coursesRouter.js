@@ -4,6 +4,7 @@ const authenticationMiddleware = require('../middlewares/authenticationMiddlewar
 const coursesController = require('../controllers/coursesController');
 const NotFoundError = require('../errors/NotFoundError');
 const ConflictError = require('../errors/ConflictError');
+const cleanCourses = require('../utils/cleanCourses');
 
 router.get('/:id', authenticationMiddleware, async (req, res) => {
   const courseId = +req.params.id;
@@ -51,16 +52,23 @@ router.get('/users/started', authenticationMiddleware, async (req, res) => {
   try {
     const courses = await coursesController.getAllCoursesStarted(userId);
 
-    const cleanedCourses = courses.map(({ dataValues }) => {
-      const data = dataValues;
-      delete data.courseUser;
-      delete data.createdAt;
-      delete data.updatedAt;
-      return data;
-    });
+    const cleanedCourses = cleanCourses(courses);
 
     return res.status(200).send(cleanedCourses);
   } catch {
+    return res.sendStatus(500);
+  }
+});
+
+router.get('/users/not-started', authenticationMiddleware, async (req, res) => {
+  const { userId } = req;
+  try {
+    const courses = await coursesController.getAllCoursesNotStarted(userId);
+
+    const cleanedCourses = cleanCourses(courses);
+
+    return res.status(200).send(cleanedCourses);
+  } catch (e) {
     return res.sendStatus(500);
   }
 });

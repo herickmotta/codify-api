@@ -32,10 +32,19 @@ class CoursesController {
   async getAllCoursesStarted(userId) {
     const userWithCourses = await User.findOne({
       where: { id: userId },
-      include: Course,
+      include: [{ model: Course, attributes: ['id', 'name', 'description', 'photo'] }],
     });
 
     const { courses } = userWithCourses;
+
+    return courses;
+  }
+
+  async getAllCoursesNotStarted(userId) {
+    const coursesStarted = await this.getAllCoursesStarted(userId);
+    const allCourses = await this.getAllCourses();
+
+    const courses = allCourses.filter((el) => !coursesStarted.some((f) => f.id === el.id));
 
     return courses;
   }
