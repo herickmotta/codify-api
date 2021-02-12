@@ -1,3 +1,5 @@
+/* eslint-disable no-underscore-dangle */
+/* eslint-disable max-len */
 /* eslint-disable no-param-reassign */
 const bcrypt = require('bcrypt');
 const User = require('../models/User');
@@ -58,11 +60,8 @@ class UsersController {
       });
     });
 
-    const allUserExercisesDoneId = await ExerciseDone.findAll({ where: { userId } });
-    const exercisesDone = allUserExercisesDoneId.filter((exercise) => exerciseIdList.find((id) => exercise.exerciseId === id));
-
-    const allUserTheoriesDoneId = await TheoryDone.findAll({ where: { userId } });
-    const theoriesDone = allUserTheoriesDoneId.filter((exercise) => theoryIdList.find((id) => exercise.theoryId === id));
+    const exercisesDone = await this._getExercisesDone(userId, exerciseIdList);
+    const theoriesDone = await this._getTheoriesDone(userId, theoryIdList);
 
     const allCourseTasks = [...theoryIdList, ...exerciseIdList];
     const allTasksDone = [...exercisesDone, ...theoriesDone];
@@ -72,7 +71,7 @@ class UsersController {
     return { progress };
   }
 
-  async getTopicsProgressByChapter(userId, courseId, chapterId) {
+  async getTopicsProgressByChapter(userId, chapterId) {
     const chapter = await Chapter.findByPk(chapterId, {
       include: [
         {
@@ -118,6 +117,20 @@ class UsersController {
     });
 
     return progressList;
+  }
+
+  async _getExercisesDone(userId, exerciseIdList) {
+    const allUserExercisesDoneId = await ExerciseDone.findAll({ where: { userId } });
+    const exercisesDone = allUserExercisesDoneId.filter((exercise) => exerciseIdList.find((id) => exercise.exerciseId === id));
+
+    return exercisesDone;
+  }
+
+  async _getTheoriesDone(userId, theoryIdList) {
+    const allUserTheoriesDoneId = await TheoryDone.findAll({ where: { userId } });
+    const theoriesDone = allUserTheoriesDoneId.filter((exercise) => theoryIdList.find((id) => exercise.theoryId === id));
+
+    return theoriesDone;
   }
 }
 

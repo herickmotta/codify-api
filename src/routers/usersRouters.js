@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 const router = require('express').Router();
 
 const usersController = require('../controllers/usersController');
@@ -50,9 +51,9 @@ router.get('/courses/:id/progress', authenticationMiddleware, async (req, res) =
 
 router.get('/courses/:courseId/chapters/:chapterId/progress', authenticationMiddleware, async (req, res) => {
   const { userId } = req;
-  const { courseId, chapterId } = req.params;
+  const { chapterId } = req.params;
 
-  const topicsProgress = await usersController.getTopicsProgressByChapter(userId, courseId, chapterId);
+  const topicsProgress = await usersController.getTopicsProgressByChapter(userId, chapterId);
 
   return res.status(200).send(topicsProgress);
 });

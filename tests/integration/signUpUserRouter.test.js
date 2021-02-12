@@ -15,6 +15,8 @@ const db = new Pool({
 jest.setTimeout(1000 * 60);
 
 const cleatDataBase = async () => {
+  await db.query('DELETE FROM "theoriesDone";');
+  await db.query('DELETE FROM "exercisesDone";');
   await db.query('DELETE FROM sessions;');
   await db.query('DELETE FROM users;');
 };
