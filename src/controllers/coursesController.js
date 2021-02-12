@@ -12,6 +12,7 @@ const CourseUser = require('../models/CourseUser');
 const ConflictError = require('../errors/ConflictError');
 const CourseUser = require('../models/CourseUser');
 const User = require('../models/User');
+const ExerciseDone = require('../models/ExerciseDone');
 
 class CoursesController {
   async findCourseById(courseId) {
@@ -40,6 +41,7 @@ class CoursesController {
     if (!courseData) throw new NotFoundError();
     return courseData;
   }
+  
   getAllCourses(limit = null, offset = null) {
     return Course.findAll({ limit, offset });
   }
@@ -105,6 +107,18 @@ class CoursesController {
     const courses = allCourses.filter((el) => !coursesStarted.some((f) => f.id === el.id));
 
     return courses;
+  }
+
+  async getLastCourseSeen(userId) {
+    const exerciseDone = await ExerciseDone.findAll({
+      limit: 1,
+      where: {
+        userId,
+      },
+      order: [['createdAt', 'DESC']],
+    });
+
+    console.log(exerciseDone);
   }
 }
 

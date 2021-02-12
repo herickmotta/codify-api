@@ -37,7 +37,9 @@ router.post('/start', authenticationMiddleware, async (req, res) => {
     const course = await coursesController.findCourseById(courseId);
     await coursesController.startCourse({ userId, courseId });
 
-    return res.status(201).send({ ...course, userId });
+    console.log(course);
+
+    return res.status(201).send({ ...course.dataValues, userId });
   } catch (exception) {
     if (exception instanceof ConflictError) return res.status(409).send({ error: 'This user has already started this course' });
 
@@ -68,6 +70,17 @@ router.get('/users/not-started', authenticationMiddleware, async (req, res) => {
     const cleanedCourses = cleanCourses(courses);
 
     return res.status(200).send(cleanedCourses);
+  } catch (e) {
+    return res.sendStatus(500);
+  }
+});
+
+router.get('/last-seen', authenticationMiddleware, async (req, res) => {
+  const { userId } = req;
+  try {
+    const course = await coursesController.getLastCourseSeen(userId);
+
+    return res.status(200).send(course);
   } catch (e) {
     return res.sendStatus(500);
   }
