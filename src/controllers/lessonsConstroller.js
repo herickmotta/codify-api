@@ -1,18 +1,22 @@
 /* eslint-disable no-param-reassign */
 const TheoryDone = require('../models/TheoryDone');
 const ExerciseDone = require('../models/ExerciseDone');
+const Theory = require('../models/Theory');
+const Exercise = require('../models/Exercise');
+const NotFoundError = require('../errors/NotFoundError');
 
 class LessonsConstroller {
   async createLessonDone(lessonId, userId, type) {
-    let done;
+    const checked = type === 'exercise'
+      ? await Exercise.findByPk(lessonId)
+      : await Theory.findByPk(lessonId);
+    if (!checked) throw new NotFoundError();
 
-    if (type === 'exercise') {
-      done = await ExerciseDone.create({ userId, exerciseId: lessonId });
-    } else {
-      done = await TheoryDone.create({ userId, theoryId: lessonId });
-    }
+    const result = type === 'exercise'
+      ? await ExerciseDone.create({ userId, exerciseId: lessonId })
+      : await TheoryDone.create({ userId, theoryId: lessonId });
 
-    return done;
+    return result;
   }
 
   async destroyLessonDone(lessonId, userId, type) {

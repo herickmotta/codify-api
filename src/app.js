@@ -12,6 +12,7 @@ const coursesRouter = require('./routers/coursesRouter');
 const chaptersRouter = require('./routers/chaptersRouter');
 const lessonsRouter = require('./routers/lessonsRouter');
 const adminRouter = require('./routers/adminRouter');
+const NotFoundError = require('./errors/NotFoundError');
 
 const app = express();
 app.use(cors());
@@ -29,6 +30,7 @@ app.use('/api/v1/admin', adminRouter);
 
 app.use((error, req, res, next) => {
   console.log(error);
+  if (error instanceof NotFoundError) return res.sendStatus(404);
   return res.sendStatus(500);
 });
 
