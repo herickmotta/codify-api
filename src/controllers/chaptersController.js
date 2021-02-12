@@ -1,9 +1,29 @@
+/* eslint-disable eqeqeq */
 /* eslint-disable no-param-reassign */
 const Chapter = require('../models/Chapter');
+const Topic = require('../models/Topic');
 const NotFoundError = require('../errors/NotFoundError');
 const ConflictError = require('../errors/ConflictError');
 
 class ChaptersController {
+  async findChapterTopics(chapterId, topicId) {
+    const chapter = await Chapter.findByPk(chapterId, {
+      include: Topic,
+    });
+    if (!chapter) throw new NotFoundError('Chapter not found');
+
+    let index;
+    const formatedList = [];
+    const { name, topics } = chapter;
+
+    topics.forEach((t, i) => {
+      formatedList.push({ value: t.id, label: `${name} - ${t.name}` });
+      if (t.id == topicId) index = i;
+    });
+
+    return { list: formatedList, index };
+  }
+
   async findChapterById(chapterId) {
     const chapter = await Chapter.findByPk(chapterId);
     if (!chapter) throw new NotFoundError('Chapter not found');

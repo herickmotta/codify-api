@@ -9,6 +9,7 @@ require('./utils/loadRelationships');
 
 const usersRouters = require('./routers/usersRouters');
 const coursesRouter = require('./routers/coursesRouter');
+const chaptersRouter = require('./routers/chaptersRouter');
 const lessonsRouter = require('./routers/lessonsRouter');
 const adminRouter = require('./routers/adminRouter');
 
@@ -19,6 +20,8 @@ app.use(express.json());
 app.use('/api/v1/users', usersRouters);
 
 app.use('/api/v1/courses', coursesRouter);
+
+app.use('/api/v1/chapters', chaptersRouter);
 
 app.use('/api/v1/lessons', lessonsRouter);
 

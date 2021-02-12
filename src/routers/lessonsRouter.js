@@ -1,9 +1,9 @@
 const router = require('express').Router();
 
-// const authenticationMiddleware = require('../middlewares/authenticationMiddleware');
+const authenticationMiddleware = require('../middlewares/authenticationMiddleware');
 const lessonsController = require('../controllers/lessonsConstroller');
 
-router.post('/:id', async (req, res) => {
+router.post('/:id', authenticationMiddleware, async (req, res) => {
   const { type, userId } = req.body;
   const lessonId = +req.params.id;
 
@@ -12,7 +12,7 @@ router.post('/:id', async (req, res) => {
   return res.status(201).send(result);
 });
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', authenticationMiddleware, async (req, res) => {
   const { type, userId } = req.body;
   const lessonId = +req.params.id;
 
