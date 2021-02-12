@@ -6,9 +6,11 @@ const Topic = require('../models/Topic');
 const Theory = require('../models/Theory');
 const Exercise = require('../models/Exercise');
 const NotFoundError = require('../errors/NotFoundError');
+
 const chaptersController = require('./chaptersController');
 const CourseUser = require('../models/CourseUser');
 const ConflictError = require('../errors/ConflictError');
+const CourseUser = require('../models/CourseUser');
 const User = require('../models/User');
 
 class CoursesController {
@@ -24,7 +26,7 @@ class CoursesController {
             include: [
               {
                 model: Theory,
-                attributes: ['youtubeLink'],
+                attributes: ['id', 'youtubeLink'],
               },
               {
                 model: Exercise,
@@ -36,12 +38,10 @@ class CoursesController {
       },
     );
     if (!courseData) throw new NotFoundError();
-
     return courseData;
   }
-
-  getAllCourses(queryConfig) {
-    return Course.findAll(queryConfig);
+  getAllCourses(limit = null, offset = null) {
+    return Course.findAll({ limit, offset });
   }
 
   async createCourse(courseParams) {
@@ -52,7 +52,7 @@ class CoursesController {
     const createdCourse = await Course.create(courseParams);
     return createdCourse;
   }
-
+  
   async editCourse(courseParams) {
     const {
       id, name, description, photo,
@@ -78,6 +78,7 @@ class CoursesController {
 
     await Course.destroy({ where: { id: courseId } });
   }
+
 
   async startCourse({ userId, courseId }) {
     const thisUserAlredyStartedCourse = await CourseUser.findOne({ where: { courseId, userId } });

@@ -10,7 +10,9 @@ require('./utils/loadRelationships');
 const usersRouters = require('./routers/usersRouters');
 const coursesRouter = require('./routers/coursesRouter');
 const adminRouter = require('./routers/adminRouter');
+const NotFoundError = require('./errors/NotFoundError');
 const getQueriesMiddleware = require('./middlewares/getQueriesMiddleware');
+
 
 const app = express();
 app.use(cors());
@@ -24,6 +26,8 @@ app.use('/api/v1/admin', getQueriesMiddleware, adminRouter);
 
 app.use((error, req, res, next) => {
   console.log(error);
+  if (error instanceof NotFoundError) return res.status(404).send({ error: 'Not Found Error' });
+
   return res.sendStatus(500);
 });
 
