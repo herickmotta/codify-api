@@ -3,7 +3,6 @@ const router = require('express').Router();
 const chaptersController = require('../../controllers/chaptersController');
 const ConflictError = require('../../errors/ConflictError');
 const NotFoundError = require('../../errors/NotFoundError');
-// const chapterSchema = require('../../schemas/chapterSchemas');
 
 router.get('/', async (req, res) => {
   const { courseId } = JSON.parse(req.query.filter);
@@ -39,8 +38,6 @@ router.get('/:id', async (req, res) => {
 });
 
 router.post('/', async (req, res) => {
-  // const { error } = chapterSchema.postChapter.validate(req.body);
-  // if (error) return res.status(422).send({ error: error.details[0].message });
 
   try {
     const chapter = await chaptersController.createChapter(req.body);
