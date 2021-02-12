@@ -4,6 +4,7 @@ const Chapter = require('../models/Chapter');
 const Topic = require('../models/Topic');
 const NotFoundError = require('../errors/NotFoundError');
 const ConflictError = require('../errors/ConflictError');
+const topicsController = require('./topicsController');
 
 class ChaptersController {
   async findChapterTopics(chapterId, topicId) {
@@ -31,11 +32,12 @@ class ChaptersController {
     return chapter;
   }
 
-  getAllChapters(limit = null, offset = null, courseId = null) {
+
+  getAllChapters(queryConfig, courseId = null) {
     if (courseId) {
-      return Chapter.findAll({ where: { courseId }, limit, offset });
+      return Chapter.findAll({ where: { courseId }, ...queryConfig });
     }
-    return Chapter.findAll({ limit, offset });
+    return Chapter.findAll(queryConfig);
   }
 
   async createChapter(chapterParams) {
@@ -64,7 +66,11 @@ class ChaptersController {
     const chapter = await Chapter.findByPk(chapterId);
     if (!chapter) throw new NotFoundError('Chapter not found');
 
-    await Chapter.destroy({ where: { chapterId } });
+    const topics = await Topic.findAll({ where: { chapterId } });
+    const promises = topics.map((topic) => topicsController.destroyTopic(topic.id));
+    await Promise.all(promises);
+
+    await Chapter.destroy({ where: { id: chapterId } });
   }
 }
 

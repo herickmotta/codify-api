@@ -11,17 +11,14 @@ class ExercisesController {
     return exercise;
   }
 
-  getAllExercises(limit = null, offset = null, topicId = null) {
+  getAllExercises(queryConfig, topicId = null) {
     if (topicId) {
-      return Exercise.findAll({ where: { topicId }, limit, offset });
-    } return Exercise.findAll({ limit, offset });
+      return Exercise.findAll({ where: { topicId }, ...queryConfig });
+    } 
+    return Exercise.findAll(queryConfig);
   }
 
   async createExercise(exerciseParams) {
-    const { name } = exerciseParams;
-    const exercise = await Exercise.findOne({ where: { name } });
-    if (exercise) throw new ConflictError('Exercise already exists');
-
     const createdExercise = await Exercise.create(exerciseParams);
     return createdExercise;
   }
@@ -43,7 +40,7 @@ class ExercisesController {
     const exercise = await Exercise.findByPk(exerciseId);
     if (!exercise) throw new NotFoundError('Exercise not found');
 
-    await Exercise.destroy({ where: { exerciseId } });
+    await Exercise.destroy({ where: { id: exerciseId } });
   }
 }
 

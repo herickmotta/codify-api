@@ -1,5 +1,3 @@
-/* eslint-disable prefer-const */
-/* eslint-disable no-console */
 /* eslint-disable no-param-reassign */
 const Topic = require('../models/Topic');
 const Theory = require('../models/Theory');
@@ -38,7 +36,7 @@ class TopicsController {
 
     return topic;
   }
-
+  
   async findTopicById(topicId) {
     const topic = await Topic.findByPk(topicId);
     if (!topic) throw new NotFoundError('Topic not found');
@@ -46,10 +44,11 @@ class TopicsController {
     return topic;
   }
 
-  getAllTopics(limit = null, offset = null, chapterId = null) {
+
+  getAllTopics(queryConfig, chapterId = null) {
     if (chapterId) {
-      return Topic.findAll({ where: { chapterId }, limit, offset });
-    } return Topic.findAll({ limit, offset });
+      return Topic.findAll({ where: { chapterId }, ...queryConfig });
+    } return Topic.findAll(queryConfig);
   }
 
   async createTopic(topicParams) {
@@ -78,7 +77,10 @@ class TopicsController {
     const topic = await Topic.findByPk(topicId);
     if (!topic) throw new NotFoundError('Topic not found');
 
-    await Topic.destroy({ where: { topicId } });
+    await Exercise.destroy({ where: { topicId } });
+    await Theory.destroy({ where: { topicId } });
+
+    await Topic.destroy({ where: { id: topicId } });
   }
 }
 

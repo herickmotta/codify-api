@@ -5,6 +5,7 @@ const coursesController = require('../controllers/coursesController');
 const topicsController = require('../controllers/topicsController');
 const NotFoundError = require('../errors/NotFoundError');
 const ConflictError = require('../errors/ConflictError');
+const cleanCourses = require('../utils/cleanCourses');
 
 router.get('/:id', authenticationMiddleware, async (req, res) => {
   const courseId = +req.params.id;
@@ -37,7 +38,9 @@ router.post('/start', authenticationMiddleware, async (req, res) => {
     const course = await coursesController.findCourseById(courseId);
     await coursesController.startCourse({ userId, courseId });
 
-    return res.status(201).send({ ...course, userId });
+    console.log(course);
+
+    return res.status(201).send({ ...course.dataValues, userId });
   } catch (exception) {
     if (exception instanceof ConflictError) return res.status(409).send({ error: 'This user has already started this course' });
 
@@ -52,13 +55,7 @@ router.get('/users/started', authenticationMiddleware, async (req, res) => {
   try {
     const courses = await coursesController.getAllCoursesStarted(userId);
 
-    const cleanedCourses = courses.map(({ dataValues }) => {
-      const data = dataValues;
-      delete data.courseUser;
-      delete data.createdAt;
-      delete data.updatedAt;
-      return data;
-    });
+    const cleanedCourses = cleanCourses(courses);
 
     return res.status(200).send(cleanedCourses);
   } catch {
@@ -66,11 +63,28 @@ router.get('/users/started', authenticationMiddleware, async (req, res) => {
   }
 });
 
-router.get('/:id/chapters/:chapterId/topics/:topicId', authenticationMiddleware, async (req, res) => {
-  const { topicId } = req.params;
+router.get('/users/not-started', authenticationMiddleware, async (req, res) => {
   const { userId } = req;
-  const result = await topicsController.getTopicsData(topicId, userId);
-  return res.send(result);
+  try {
+    const courses = await coursesController.getAllCoursesNotStarted(userId);
+
+    const cleanedCourses = cleanCourses(courses);
+
+    return res.status(200).send(cleanedCourses);
+  } catch (e) {
+    return res.sendStatus(500);
+  }
+});
+
+router.get('/last-seen', authenticationMiddleware, async (req, res) => {
+  const { userId } = req;
+  try {
+    const course = await coursesController.getLastCourseSeen(userId);
+
+    return res.status(200).send(course);
+  } catch (e) {
+    return res.sendStatus(500);
+  }
 });
 
 module.exports = router;

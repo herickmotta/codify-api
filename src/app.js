@@ -13,6 +13,8 @@ const chaptersRouter = require('./routers/chaptersRouter');
 const lessonsRouter = require('./routers/lessonsRouter');
 const adminRouter = require('./routers/adminRouter');
 const NotFoundError = require('./errors/NotFoundError');
+const getQueriesMiddleware = require('./middlewares/getQueriesMiddleware');
+
 
 const app = express();
 app.use(cors());
@@ -26,11 +28,12 @@ app.use('/api/v1/chapters', chaptersRouter);
 
 app.use('/api/v1/lessons', lessonsRouter);
 
-app.use('/api/v1/admin', adminRouter);
+app.use('/api/v1/admin', getQueriesMiddleware, adminRouter);
 
 app.use((error, req, res, next) => {
   console.log(error);
-  if (error instanceof NotFoundError) return res.sendStatus(404);
+  if (error instanceof NotFoundError) return res.status(404).send({ error: 'Not Found Error' });
+
   return res.sendStatus(500);
 });
 

@@ -11,17 +11,13 @@ class TheoriesController {
     return theory;
   }
 
-  getAllTheories(limit = null, offset = null, topicId = null) {
+  getAllTheories(queryConfig, topicId = null) {
     if (topicId) {
-      return Theory.findAll({ where: { topicId }, limit, offset });
-    } return Theory.findAll({ limit, offset });
+      return Theory.findAll({ where: { topicId }, ...queryConfig });
+    } return Theory.findAll(queryConfig);
   }
 
   async createTheory(theoryParams) {
-    const { name } = theoryParams;
-    const theory = await Theory.findOne({ where: { name } });
-    if (theory) throw new ConflictError('Theory already exists');
-
     const createdTheory = await Theory.create(theoryParams);
     return createdTheory;
   }
@@ -42,8 +38,8 @@ class TheoriesController {
   async destroyTheory(theoryId) {
     const theory = await Theory.findByPk(theoryId);
     if (!theory) throw new NotFoundError('Theory not found');
-
-    await Theory.destroy({ where: { theoryId } });
+    
+    await Theory.destroy({ where: { id: theoryId } });
   }
 }
 

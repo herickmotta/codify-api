@@ -5,21 +5,16 @@ const ConflictError = require('../../errors/ConflictError');
 const NotFoundError = require('../../errors/NotFoundError');
 
 router.get('/', async (req, res) => {
-  const { topicId } = JSON.parse(req.query.filter);
-  let limit = null;
-  let offset = null;
-
-  if (req.query.range) {
-    const range = JSON.parse(req.query.range);
-    limit = range[1] - range[0] + 1;
-    offset = range[0];
+  let topicId = null;
+  if (req.query.filter) {
+    const filter = JSON.parse(req.query.filter);
+    topicId = filter.courseId;
   }
-
-  const exercises = await exercisesController.getAllExercises(limit, offset, topicId);
+  const exercises = await exercisesController.getAllExercises(req.queryConfig, topicId);
   const total = (await exercisesController.getAllExercises()).length;
   res.set({
     'Access-Control-Expose-Headers': 'Content-Range',
-    'Content-Range': `${offset}-${exercises.length}/${total}`,
+    'Content-Range': `${req.queryConfig.offset}-${exercises.length}/${total}`,
   });
   return res.send(exercises);
 });
@@ -33,9 +28,8 @@ router.get('/:id', async (req, res) => {
     return res.status(200).send(exercise);
   } catch (exception) {
     if (exception instanceof NotFoundError) return res.status(404).send({ error: 'Exercise not found' });
-
-    return res.status(500).send({ error: 'call the responsible person, routeError: /api/v1/exercises/:id ' });
-  }
+    return res.status(500);
+ }
 });
 
 router.post('/', async (req, res) => {
@@ -46,7 +40,7 @@ router.post('/', async (req, res) => {
   } catch (exception) {
     if (exception instanceof ConflictError) return res.status(409).send(exception.message);
 
-    return res.status(500).send({ error: 'call the responsible person, routeError: /api/v1/admin/exercises ' });
+    return res.status(500);
   }
 });
 
@@ -60,7 +54,7 @@ router.put('/:id', async (req, res) => {
     return res.send(exercise);
   } catch (exception) {
     if (exception instanceof NotFoundError) return res.status(404).send(exception.message);
-    return res.status(500).send({ error: 'call the responsible person, routeError: /api/v1/admin/exercises ' });
+    return res.status(500);
   }
 });
 
@@ -72,7 +66,7 @@ router.delete('/:id', async (req, res) => {
     return res.sendStatus(200);
   } catch (exception) {
     if (exception instanceof NotFoundError) return res.status(404).send(exception.message);
-    return res.status(500).send({ error: 'call the responsible person, routeError: /api/v1/admin/exercises ' });
+    return res.status(500);
   }
 });
 
