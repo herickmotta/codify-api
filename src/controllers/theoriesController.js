@@ -1,6 +1,7 @@
 /* eslint-disable no-param-reassign */
 const Theory = require('../models/Theory');
 const NotFoundError = require('../errors/NotFoundError');
+const ConflictError = require('../errors/ConflictError');
 
 class TheoriesController {
   async findTheoryById(theoryId) {
@@ -37,7 +38,7 @@ class TheoriesController {
   async destroyTheory(theoryId) {
     const theory = await Theory.findByPk(theoryId);
     if (!theory) throw new NotFoundError('Theory not found');
-
+    
     await Theory.destroy({ where: { id: theoryId } });
   }
 }

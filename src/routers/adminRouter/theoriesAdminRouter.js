@@ -30,7 +30,6 @@ router.get('/:id', async (req, res) => {
     return res.status(200).send(theory);
   } catch (exception) {
     if (exception instanceof NotFoundError) return res.status(404).send({ error: 'Theory not found' });
-
     return res.status(500);
   }
 });
@@ -38,13 +37,11 @@ router.get('/:id', async (req, res) => {
 router.post('/', async (req, res) => {
   const { error } = theorySchema.postTheory.validate(req.body);
   if (error) return res.status(422).send({ error: error.details[0].message });
-
   try {
     const theory = await theoriesController.createTheory(req.body);
     return res.status(201).send(theory);
   } catch (exception) {
     if (exception instanceof ConflictError) return res.status(409).send(exception.message);
-
     return res.status(500);
   }
 });

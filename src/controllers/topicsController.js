@@ -1,17 +1,49 @@
 /* eslint-disable no-param-reassign */
 const Topic = require('../models/Topic');
+const Theory = require('../models/Theory');
+const Exercise = require('../models/Exercise');
+const TheoryDone = require('../models/TheoryDone');
+const ExerciseDone = require('../models/ExerciseDone');
 const NotFoundError = require('../errors/NotFoundError');
 const ConflictError = require('../errors/ConflictError');
-const Exercise = require('../models/Exercise');
-const Theory = require('../models/Theory');
 
 class TopicsController {
+  async getTopicsData(topicId, userId) {
+    const topic = await Topic.findByPk(topicId, {
+      include: [
+        {
+          model: Theory,
+          include: {
+            model: TheoryDone,
+            where: { userId },
+            required: false,
+          },
+        },
+        {
+          model: Exercise,
+          include: {
+            model: ExerciseDone,
+            where: { userId },
+            required: false,
+          },
+        },
+      ],
+    });
+    if (!topic) throw new NotFoundError('Topic not found');
+
+    const { exercises, theories } = topic;
+    await exercises.unshift(theories);
+
+    return topic;
+  }
+  
   async findTopicById(topicId) {
     const topic = await Topic.findByPk(topicId);
     if (!topic) throw new NotFoundError('Topic not found');
 
     return topic;
   }
+
 
   getAllTopics(queryConfig, chapterId = null) {
     if (chapterId) {
@@ -44,6 +76,7 @@ class TopicsController {
   async destroyTopic(topicId) {
     const topic = await Topic.findByPk(topicId);
     if (!topic) throw new NotFoundError('Topic not found');
+
     await Exercise.destroy({ where: { topicId } });
     await Theory.destroy({ where: { topicId } });
 

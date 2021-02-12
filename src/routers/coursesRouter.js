@@ -2,6 +2,7 @@ const router = require('express').Router();
 
 const authenticationMiddleware = require('../middlewares/authenticationMiddleware');
 const coursesController = require('../controllers/coursesController');
+const topicsController = require('../controllers/topicsController');
 const NotFoundError = require('../errors/NotFoundError');
 const ConflictError = require('../errors/ConflictError');
 const cleanCourses = require('../utils/cleanCourses');

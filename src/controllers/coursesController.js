@@ -6,7 +6,6 @@ const Topic = require('../models/Topic');
 const Theory = require('../models/Theory');
 const Exercise = require('../models/Exercise');
 const NotFoundError = require('../errors/NotFoundError');
-
 const chaptersController = require('./chaptersController');
 const CourseUser = require('../models/CourseUser');
 const ConflictError = require('../errors/ConflictError');
@@ -41,10 +40,10 @@ class CoursesController {
     if (!courseData) throw new NotFoundError();
     return courseData;
   }
-  
-  getAllCourses(limit = null, offset = null) {
-    return Course.findAll({ limit, offset });
-  }
+
+getAllCourses(queryConfig) {
+    return Course.findAll(queryConfig);
+}
 
   async createCourse(courseParams) {
     const { name } = courseParams;
@@ -77,8 +76,21 @@ class CoursesController {
     const chapters = await Chapter.findAll({ where: { courseId } });
     const promises = chapters.map((chapter) => chaptersController.destroyChapter(chapter.id));
     await Promise.all(promises);
+ }
+  
+  async editCourse(courseParams) {
+    const {
+      id, name, description, photo,
+    } = courseParams;
+    const course = await Course.findByPk(id);
+    if (!course) throw new NotFoundError('Course not found');
 
-    await Course.destroy({ where: { id: courseId } });
+    if (name) course.name = name;
+    if (description) course.description = description;
+    if (photo) course.photo = photo;
+
+    await course.save();
+    return course;
   }
 
 

@@ -9,6 +9,8 @@ require('./utils/loadRelationships');
 
 const usersRouters = require('./routers/usersRouters');
 const coursesRouter = require('./routers/coursesRouter');
+const chaptersRouter = require('./routers/chaptersRouter');
+const lessonsRouter = require('./routers/lessonsRouter');
 const adminRouter = require('./routers/adminRouter');
 const NotFoundError = require('./errors/NotFoundError');
 const getQueriesMiddleware = require('./middlewares/getQueriesMiddleware');
@@ -21,6 +23,10 @@ app.use(express.json());
 app.use('/api/v1/users', usersRouters);
 
 app.use('/api/v1/courses', coursesRouter);
+
+app.use('/api/v1/chapters', chaptersRouter);
+
+app.use('/api/v1/lessons', lessonsRouter);
 
 app.use('/api/v1/admin', getQueriesMiddleware, adminRouter);
 

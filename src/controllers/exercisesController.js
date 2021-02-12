@@ -1,6 +1,7 @@
 /* eslint-disable no-param-reassign */
 const Exercise = require('../models/Exercise');
 const NotFoundError = require('../errors/NotFoundError');
+const ConflictError = require('../errors/ConflictError');
 
 class ExercisesController {
   async findExerciseById(exerciseId) {
@@ -13,7 +14,8 @@ class ExercisesController {
   getAllExercises(queryConfig, topicId = null) {
     if (topicId) {
       return Exercise.findAll({ where: { topicId }, ...queryConfig });
-    } return Exercise.findAll(queryConfig);
+    } 
+    return Exercise.findAll(queryConfig);
   }
 
   async createExercise(exerciseParams) {

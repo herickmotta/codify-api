@@ -28,9 +28,8 @@ router.get('/:id', async (req, res) => {
     return res.status(200).send(exercise);
   } catch (exception) {
     if (exception instanceof NotFoundError) return res.status(404).send({ error: 'Exercise not found' });
-
     return res.status(500);
-  }
+ }
 });
 
 router.post('/', async (req, res) => {
