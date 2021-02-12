@@ -66,9 +66,9 @@ router.get('/users/started', authenticationMiddleware, async (req, res) => {
   }
 });
 
-router.get('/:id/chapters/:chapterId/topics/:topicId', async (req, res) => {
+router.get('/:id/chapters/:chapterId/topics/:topicId', authenticationMiddleware, async (req, res) => {
   const { topicId } = req.params;
-  const userId = 1;
+  const { userId } = req;
   const result = await topicsController.getTopicsData(topicId, userId);
   return res.send(result);
 });
