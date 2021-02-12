@@ -9,7 +9,6 @@ const NotFoundError = require('../errors/NotFoundError');
 const chaptersController = require('./chaptersController');
 const CourseUser = require('../models/CourseUser');
 const ConflictError = require('../errors/ConflictError');
-const CourseUser = require('../models/CourseUser');
 const User = require('../models/User');
 const ExerciseDone = require('../models/ExerciseDone');
 
