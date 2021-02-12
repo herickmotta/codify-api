@@ -1,9 +1,6 @@
 const { Sequelize } = require('sequelize');
 const sequelize = require('../utils/database');
 
-const Theory = require('./Theory');
-const Exercise = require('./Exercise');
-
 class Topic extends Sequelize.Model {}
 
 Topic.init({
@@ -25,8 +22,5 @@ Topic.init({
   sequelize,
   modelName: 'topic',
 });
-
-Topic.hasOne(Theory);
-Topic.hasMany(Exercise);
 
 module.exports = Topic;

@@ -8,7 +8,6 @@ const Exercise = require('../models/Exercise');
 const NotFoundError = require('../errors/NotFoundError');
 const ConflictError = require('../errors/ConflictError');
 const CourseUser = require('../models/CourseUser');
-const ConflictError = require('../errors/ConflictError');
 const User = require('../models/User');
 
 class CoursesController {

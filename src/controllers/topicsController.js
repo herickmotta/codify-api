@@ -1,3 +1,5 @@
+/* eslint-disable prefer-const */
+/* eslint-disable no-console */
 /* eslint-disable no-param-reassign */
 const Topic = require('../models/Topic');
 const Theory = require('../models/Theory');
@@ -31,8 +33,8 @@ class TopicsController {
     });
     if (!topic) throw new NotFoundError('Topic not found');
 
-    const { exercises, theory } = topic;
-    exercises.unshift(theory);
+    const { exercises, theories } = topic;
+    await exercises.unshift(theories[0]);
 
     return topic;
   }
