@@ -32,7 +32,7 @@ class TopicsController {
     if (!topic) throw new NotFoundError('Topic not found');
 
     const { exercises, theories } = topic;
-    await exercises.unshift(theories[0]);
+    await exercises.unshift(theories);
 
     return topic;
   }
