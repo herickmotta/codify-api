@@ -129,3 +129,19 @@ describe('coursesController.getAllCoursesStarted', () => {
     expect(result).toEqual(expect.objectContaining(courses));
   });
 });
+
+describe('coursesController.getAllCoursesStarted', () => {
+  it('Should return a empty array of courses when the user dont have any course started', async () => {
+    const getAllCourses = jest.fn(() => [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }, { id: 5 }]);
+    const getAllCoursesStarted = jest.fn(() => [{ id: 1 }, { id: 2 }, { id: 3 }]);
+    const courses = [{ id: 4 }, { id: 5 }];
+    const userId = 2;
+
+    coursesController.getAllCourses.mockResolvedValue(getAllCourses);
+    coursesController.getAllCoursesStarted.mockResolvedValue(getAllCoursesStarted);
+
+    const result = await coursesController.getAllCoursesStarted(userId);
+
+    expect(result).toEqual(expect.objectContaining(courses));
+  });
+});
