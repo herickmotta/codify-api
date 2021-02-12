@@ -1,34 +1,30 @@
 const { Sequelize } = require('sequelize');
 const sequelize = require('../utils/database');
 
-const Chapter = require('./Chapter');
+const Topic = require('./Topic');
 
-class Course extends Sequelize.Model {}
+class Chapter extends Sequelize.Model {}
 
-Course.init({
+Chapter.init({
   id: {
     type: Sequelize.INTEGER,
     autoIncrement: true,
     allowNull: false,
     primaryKey: true,
   },
+  courseId: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+  },
   name: {
-    type: Sequelize.STRING,
-    allowNull: false,
-  },
-  description: {
-    type: Sequelize.STRING,
-    allowNull: false,
-  },
-  photo: {
     type: Sequelize.STRING,
     allowNull: false,
   },
 }, {
   sequelize,
-  modelName: 'course',
+  modelName: 'chapter',
 });
 
-Course.hasMany(Chapter);
+Chapter.hasMany(Topic);
 
-module.exports = Course;
+module.exports = Chapter;
