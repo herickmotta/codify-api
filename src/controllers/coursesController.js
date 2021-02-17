@@ -77,21 +77,6 @@ class CoursesController {
     await Promise.all(promises);
   }
 
-  async editCourse(courseParams) {
-    const {
-      id, name, description, photo,
-    } = courseParams;
-    const course = await Course.findByPk(id);
-    if (!course) throw new NotFoundError('Course not found');
-
-    if (name) course.name = name;
-    if (description) course.description = description;
-    if (photo) course.photo = photo;
-
-    await course.save();
-    return course;
-  }
-
   async startCourse({ userId, courseId }) {
     const thisUserAlredyStartedCourse = await CourseUser.findOne({ where: { courseId, userId } });
     if (thisUserAlredyStartedCourse) throw new ConflictError();
@@ -119,16 +104,14 @@ class CoursesController {
     return courses;
   }
 
-  async getLastCourseSeen(userId) {
-    const exerciseDone = await ExerciseDone.findAll({
+  getLastCourseSeen(userId) {
+    return ExerciseDone.findAll({
       limit: 1,
       where: {
         userId,
       },
       order: [['createdAt', 'DESC']],
     });
-
-    console.log(exerciseDone);
   }
 }
 
