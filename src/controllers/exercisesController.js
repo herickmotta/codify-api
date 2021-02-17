@@ -14,7 +14,7 @@ class ExercisesController {
   getAllExercises(queryConfig, topicId = null) {
     if (topicId) {
       return Exercise.findAll({ where: { topicId }, ...queryConfig });
-    } 
+    }
     return Exercise.findAll(queryConfig);
   }
 
