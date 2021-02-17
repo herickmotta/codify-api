@@ -4,6 +4,7 @@
 const bcrypt = require('bcrypt');
 const User = require('../models/User');
 const Course = require('../models/Course');
+const CourseUser = require('../models/CourseUser');
 const Chapter = require('../models/Chapter');
 const Topic = require('../models/Topic');
 const Theory = require('../models/Theory');
@@ -21,6 +22,11 @@ class UsersController {
   }
 
   async getUserProgress(userId, courseId) {
+    const userCourse = await CourseUser.findOne({ where: { userId, courseId } });
+    if (!userCourse) {
+      return { progress: 0 };
+    }
+
     const courseData = await Course.findByPk(
       courseId, {
         include: {
