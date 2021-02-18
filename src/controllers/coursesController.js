@@ -1,5 +1,6 @@
 /* eslint-disable no-param-reassign */
 
+const compareAsc = require('date-fns/compareAsc');
 const Course = require('../models/Course');
 const Chapter = require('../models/Chapter');
 const Topic = require('../models/Topic');
@@ -10,6 +11,9 @@ const chaptersController = require('./chaptersController');
 const CourseUser = require('../models/CourseUser');
 const ConflictError = require('../errors/ConflictError');
 const User = require('../models/User');
+const exercisesController = require('./exercisesController');
+const theoriesController = require('./theoriesController');
+const TheoryDone = require('../models/TheoryDone');
 const ExerciseDone = require('../models/ExerciseDone');
 
 class CoursesController {
@@ -38,6 +42,13 @@ class CoursesController {
     );
     if (!courseData) throw new NotFoundError();
     return courseData;
+  }
+
+
+  async getCourseStartedById(courseId, userId) {
+    const courseStarted = await CourseUser.findOne({ where: { userId, courseId } });
+    if (courseStarted) return true;
+    return false;
   }
 
   getAllCourses(queryConfig) {
@@ -77,21 +88,6 @@ class CoursesController {
     await Promise.all(promises);
   }
 
-  async editCourse(courseParams) {
-    const {
-      id, name, description, photo,
-    } = courseParams;
-    const course = await Course.findByPk(id);
-    if (!course) throw new NotFoundError('Course not found');
-
-    if (name) course.name = name;
-    if (description) course.description = description;
-    if (photo) course.photo = photo;
-
-    await course.save();
-    return course;
-  }
-
   async startCourse({ userId, courseId }) {
     const thisUserAlredyStartedCourse = await CourseUser.findOne({ where: { courseId, userId } });
     if (thisUserAlredyStartedCourse) throw new ConflictError();
@@ -100,13 +96,15 @@ class CoursesController {
   }
 
   async getAllCoursesStarted(userId) {
-    const userWithCourses = await User.findOne({
-      where: { id: userId },
-      include: [{ model: Course, attributes: ['id', 'name', 'description', 'photo'] }],
-    });
-
+    const userWithCourses = await User.findByPk(
+      userId, {
+        include: [{
+          model: Course,
+          attributes: ['id', 'name', 'description', 'photo'],
+        }],
+      },
+    );
     const { courses } = userWithCourses;
-
     return courses;
   }
 
@@ -118,16 +116,5 @@ class CoursesController {
 
     return courses;
   }
-
-  async getLastCourseSeen(userId) {
-    const exerciseDone = await ExerciseDone.findAll({
-      limit: 1,
-      where: {
-        userId,
-      },
-      order: [['createdAt', 'DESC']],
-    });
-  }
-}
 
 module.exports = new CoursesController();

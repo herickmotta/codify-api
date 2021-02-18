@@ -32,7 +32,6 @@ class ChaptersController {
     return chapter;
   }
 
-
   getAllChapters(queryConfig, courseId = null) {
     if (courseId) {
       return Chapter.findAll({ where: { courseId }, ...queryConfig });
