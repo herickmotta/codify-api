@@ -44,6 +44,7 @@ class CoursesController {
     return courseData;
   }
 
+
   async getCourseStartedById(courseId, userId) {
     const courseStarted = await CourseUser.findOne({ where: { userId, courseId } });
     if (courseStarted) return true;
@@ -115,6 +116,5 @@ class CoursesController {
 
     return courses;
   }
-}
 
 module.exports = new CoursesController();
