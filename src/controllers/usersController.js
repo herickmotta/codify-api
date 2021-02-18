@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-return */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable max-len */
 /* eslint-disable no-param-reassign */
@@ -110,13 +111,14 @@ class UsersController {
     const { topics } = chapter;
 
     topics.forEach((topic) => {
-      let topicProgress = false;
-      if (topic.theory.theoryDones.length !== 0) {
+      let topicProgress = true;
+      if (topic.theory.theoryDones.length === 0) {
+        topicProgress = false;
+      } else {
         topic.exercises.forEach((exercise) => {
-          if (exercise.exerciseDones.length !== 0) {
-            topicProgress = true;
-          } else {
+          if (exercise.exerciseDones.length === 0) {
             topicProgress = false;
+            return;
           }
         });
       }
