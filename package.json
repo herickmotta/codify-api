@@ -8,7 +8,7 @@
     "unitTest": "jest -i unit",
     "intTest": "jest -i int",
     "build": "yarn sequelize-cli db:migrate",
-    "seeds": "sequelize-cli db:seed:all",
+    "seeds": "sequelize-cli db:seed",
     "dev": "nodemon ./src/server.js",
     "start": "node src/server.js"
   },
