@@ -69,4 +69,10 @@ router.post('/logout', authenticationMiddleware, async (req, res) => {
   }
 });
 
+router.post('/courses/lastTaskSeen', authenticationMiddleware, async (req, res) => {
+  const { userId } = req;
+
+  return res.status(200).send(userId);
+});
+
 module.exports = router;
