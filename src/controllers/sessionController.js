@@ -16,13 +16,15 @@ class SessionController {
   }
 
   async findSessionByUserId(userId) {
-    client.get(userId, async (err, token) => {
+    const userToken = client.get(userId, async (err, token) => {
       if (err) throw err;
       if (token) {
         return token;
       }
-      throw new NotFoundError();
+      return null;
     });
+    if (userToken) return userToken;
+    throw new NotFoundError();
   }
 
   async deleteSession(userId) {
