@@ -100,74 +100,10 @@ class CoursesController {
         include: [{
           model: Course,
           attributes: ['id', 'name', 'description', 'photo'],
-          include: {
-            model: Chapter,
-            attributes: ['id', 'name'],
-            include: {
-              model: Topic,
-              attributes: ['id', 'name'],
-              include: [
-                {
-                  model: Theory,
-                  attributes: ['id', 'youtubeLink'],
-                  include: [{
-                    model: TheoryDone,
-                  }],
-                },
-                {
-                  model: Exercise,
-                  attributes: ['id'],
-                  include: [{
-                    model: ExerciseDone,
-                  }],
-                },
-              ],
-            },
-          },
-          order: [[Chapter, Topic, Theory, TheoryDone, 'createdAt', 'DESC']],
         }],
       },
     );
     const { courses } = userWithCourses;
-    console.log(courses);
-
-    // descobrir aonde ele parou de estudar
-
-    // ordenar a array por o último curso assistido mais recente
-
-    // const coursesOrdered = courses.map(async (course) => {
-    //   const theoryIdList = [];
-    //   const exerciseIdList = [];
-    //   course.chapters.forEach((chapter) => {
-    //     if (!chapter) throw new NotFoundError();
-    //     chapter.topics.forEach((topic) => {
-    //       if (!topic || !topic.theory || !topic.exercises) throw new NotFoundError();
-
-    //       theoryIdList.push(topic.theory.id);
-
-    //       topic.exercises.forEach((exercise) => {
-    //         exerciseIdList.push(exercise.id);
-    //       });
-    //     });
-    //   });
-    //   // / courses/:id/chapters/:chapterId/topics/:topicId
-    //   const exercisesDone = await exercisesController.getExercisesDone(userId, exerciseIdList);
-    //   const theoriesDone = await theoriesController.getTheoriesDone(userId, theoryIdList);
-
-    //   const lastExerciseDone = exercisesDone[0];
-    //   const lastTheorieDone = theoriesDone[0];
-    //   const mostRecent = compareAsc(lastExerciseDone.updatedAt, lastTheorieDone.updatedAt);
-
-    //   if (mostRecent === 1) {
-    //     return course;
-    //   } if (mostRecent === -1) {
-    //     return course;
-    //   }
-    //   return course;
-    // });
-
-    // const coursesOrdeByLastSeenExerciseOrTheory = await Promise.all(coursesOrdered);
-
     return courses;
   }
 

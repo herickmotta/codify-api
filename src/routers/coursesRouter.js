@@ -56,11 +56,10 @@ router.get('/users/started', authenticationMiddleware, async (req, res) => {
   try {
     const courses = await coursesController.getAllCoursesStarted(userId);
 
-    // const cleanedCourses = cleanCourses(courses);
+    const cleanedCourses = cleanCourses(courses);
 
-    return res.status(200).send(courses);
+    return res.status(200).send(cleanedCourses);
   } catch (e) {
-    console.log(e);
     if (e instanceof NotFoundError) return res.status(404).send({ messager: 'chapter or exercises not found' });
     return res.sendStatus(500);
   }
