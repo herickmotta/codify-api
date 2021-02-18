@@ -4,7 +4,6 @@ require('express-async-errors');
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
-
 require('./utils/loadRelationships');
 
 const usersRouters = require('./routers/usersRouters');
@@ -14,7 +13,6 @@ const lessonsRouter = require('./routers/lessonsRouter');
 const adminRouter = require('./routers/adminRouter');
 const NotFoundError = require('./errors/NotFoundError');
 const getQueriesMiddleware = require('./middlewares/getQueriesMiddleware');
-
 
 const app = express();
 app.use(cors());
