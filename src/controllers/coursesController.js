@@ -15,6 +15,7 @@ const exercisesController = require('./exercisesController');
 const theoriesController = require('./theoriesController');
 const TheoryDone = require('../models/TheoryDone');
 const ExerciseDone = require('../models/ExerciseDone');
+const TheoryDone = require('../models/TheoryDone');
 
 class CoursesController {
   async findCourseById(courseId) {
@@ -116,5 +117,74 @@ class CoursesController {
 
     return courses;
   }
+
+  async getAllCourseDataById(courseId, topicId, userId) {
+    const courseData = await Course.findByPk(
+      courseId, {
+        include: {
+          model: Chapter,
+          attributes: ['id', 'name'],
+          include: {
+            model: Topic,
+            attributes: ['id', 'name'],
+            include: [
+              {
+                model: Theory,
+                attributes: ['id', 'youtubeLink'],
+                include: {
+                  model: TheoryDone,
+                  where: { userId },
+                  required: false,
+                },
+              },
+              {
+                model: Exercise,
+                attributes: ['id'],
+                include: {
+                  model: ExerciseDone,
+                  where: { userId },
+                  required: false,
+                },
+              },
+            ],
+          },
+        },
+      },
+    );
+    if (!courseData) throw new NotFoundError();
+
+    const list = [];
+    let currentTopicIndex;
+    let currentChapterIndex;
+
+    const { chapters } = courseData;
+    chapters.forEach((c, indexC) => {
+      const chapterData = [];
+
+      const { topics } = c;
+      topics.forEach((t, indexT) => {
+        let completed = true;
+        const { theory, exercises } = t;
+
+        if (theory.theoryDones && theory.theoryDones.length === 0) completed = false;
+        if (completed) {
+          exercises.forEach((e) => {
+            if (e.exerciseDones && e.exerciseDones.length === 0) completed = false;
+          });
+        }
+        chapterData.push({ id: t.id, name: t.name, completed });
+
+        if (t.id == topicId) {
+          currentTopicIndex = indexT;
+          currentChapterIndex = indexC;
+        }
+      });
+
+      list.push({ id: c.id, name: c.name, chapterData });
+    });
+
+    return { list, currentChapterIndex, currentTopicIndex };
+  }
+}
 
 module.exports = new CoursesController();
