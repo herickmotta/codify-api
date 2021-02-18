@@ -6,9 +6,6 @@ jest.mock('jsonwebtoken', () => ({
   sign: () => 'token_ultra_seguro',
 }));
 
-jest.mock('../../../src/models/Session');
-const Session = require('../../../src/models/Session');
-
 describe('sessionController.createSession', () => {
   it('Should return a session user if given data valid', async () => {
     const user = {
@@ -19,7 +16,8 @@ describe('sessionController.createSession', () => {
     const { id, name, email } = user;
     const token = 'token_ultra_seguro';
 
-    await Session.create.mockResolvedValue({ userId: id, token });
+    const spy = jest.spyOn(client, 'setex');
+    spy.mockImplementation(() => {});
 
     const result = await sessionController.createSession(user);
 
@@ -32,24 +30,20 @@ describe('sessionController.createSession', () => {
 describe('sessionController.findSessionByUserId', () => {
   it('Should return a session user if given  valid', async () => {
     const userId = 23;
-    const sessionUser = {
-      id: 1,
-      userId,
-      token: 'token_JWT',
-    };
+    const token = 'JTW_token';
 
-    await Session.findOne.mockResolvedValue(sessionUser);
+    const spy = jest.spyOn(client, 'get');
+    spy.mockImplementation(() => token);
 
     const result = await sessionController.findSessionByUserId(userId);
 
-    expect(result).toEqual(expect.objectContaining(sessionUser));
+    expect(result).toEqual(token);
   });
 
   it('Should return a NotFoundError given a userId invalid', async () => {
     const userIdInvalid = null;
-
-    await Session.findOne.mockResolvedValue(null);
-
+    const spy = jest.spyOn(client, 'get');
+    spy.mockImplementation(() => null);
     const fn = async () => {
       await sessionController.findSessionByUserId(userIdInvalid);
     };

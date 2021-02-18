@@ -9,11 +9,14 @@ const cleanCourses = require('../utils/cleanCourses');
 
 router.get('/:id', authenticationMiddleware, async (req, res) => {
   const courseId = +req.params.id;
+  const { userId } = req;
 
   try {
-    const course = await coursesController.findCourseById(courseId);
-
-    return res.status(200).send(course);
+    const courseData = await coursesController.findCourseById(courseId);
+    const isCourseStarted = await coursesController.getCourseStartedById(courseId, userId);
+    const courseStringfy = JSON.stringify(courseData);
+    const course = JSON.parse(courseStringfy);
+    return res.status(200).send({ ...course, isCourseStarted });
   } catch (exception) {
     if (exception instanceof NotFoundError) return res.status(404).send({ error: 'Course not found' });
     return res.sendStatus(500);
@@ -56,7 +59,8 @@ router.get('/users/started', authenticationMiddleware, async (req, res) => {
     const cleanedCourses = cleanCourses(courses);
 
     return res.status(200).send(cleanedCourses);
-  } catch {
+  } catch (e) {
+    if (e instanceof NotFoundError) return res.status(404).send({ messager: 'chapter or exercises not found' });
     return res.sendStatus(500);
   }
 });
@@ -88,9 +92,24 @@ router.get('/last-seen', authenticationMiddleware, async (req, res) => {
 router.get('/:id/chapters/:chapterId/topics/:topicId', authenticationMiddleware, async (req, res) => {
   const { topicId } = req.params;
   const { userId } = req;
-  const id = parseInt(topicId)
+  
+  const id = parseInt(topicId, 10);
+  
   const result = await topicsController.getTopicsData(id, userId);
   return res.send(result);
+});
+
+router.get('/:id/menu/topics/:topicId', authenticationMiddleware, async (req, res) => {
+  const { id, topicId } = req.params;
+  const { userId } = req;
+  try {
+    const course = await coursesController.getAllCourseDataById(id, topicId, userId);
+
+    return res.status(200).send(course);
+  } catch (exception) {
+    if (exception instanceof NotFoundError) return res.status(404).send({ error: 'Course not found' });
+    return res.sendStatus(500);
+  }
 });
 
 module.exports = router;

@@ -4,6 +4,7 @@
 const bcrypt = require('bcrypt');
 const User = require('../models/User');
 const Course = require('../models/Course');
+const CourseUser = require('../models/CourseUser');
 const Chapter = require('../models/Chapter');
 const Topic = require('../models/Topic');
 const Theory = require('../models/Theory');
@@ -11,6 +12,8 @@ const Exercise = require('../models/Exercise');
 const TheoryDone = require('../models/TheoryDone');
 const ExerciseDone = require('../models/ExerciseDone');
 const NotFoundError = require('../errors/NotFoundError');
+const exercisesController = require('./exercisesController');
+const theoriesController = require('./theoriesController');
 
 class UsersController {
   async create(userData) {
@@ -21,6 +24,11 @@ class UsersController {
   }
 
   async getUserProgress(userId, courseId) {
+    const userCourse = await CourseUser.findOne({ where: { userId, courseId } });
+    if (!userCourse) {
+      return { progress: 0 };
+    }
+
     const courseData = await Course.findByPk(
       courseId, {
         include: {
@@ -50,7 +58,7 @@ class UsersController {
     courseData.chapters.forEach((chapter) => {
       if (!chapter) throw new NotFoundError();
       chapter.topics.forEach((topic) => {
-        if (!topic || !topic.theory || !topic.theory || !topic.exercises) throw new NotFoundError();
+        if (!topic || !topic.theory || topic.exercises.length === 0) throw new NotFoundError();
 
         theoryIdList.push(topic.theory.id);
 
@@ -60,8 +68,8 @@ class UsersController {
       });
     });
 
-    const exercisesDone = await this._getExercisesDone(userId, exerciseIdList);
-    const theoriesDone = await this._getTheoriesDone(userId, theoryIdList);
+    const exercisesDone = await exercisesController.getExercisesDone(userId, exerciseIdList);
+    const theoriesDone = await theoriesController.getTheoriesDone(userId, theoryIdList);
 
     const allCourseTasks = [...theoryIdList, ...exerciseIdList];
     const allTasksDone = [...exercisesDone, ...theoriesDone];
@@ -117,20 +125,6 @@ class UsersController {
     });
 
     return progressList;
-  }
-
-  async _getExercisesDone(userId, exerciseIdList) {
-    const allUserExercisesDoneId = await ExerciseDone.findAll({ where: { userId } });
-    const exercisesDone = allUserExercisesDoneId.filter((exercise) => exerciseIdList.find((id) => exercise.exerciseId === id));
-
-    return exercisesDone;
-  }
-
-  async _getTheoriesDone(userId, theoryIdList) {
-    const allUserTheoriesDoneId = await TheoryDone.findAll({ where: { userId } });
-    const theoriesDone = allUserTheoriesDoneId.filter((exercise) => theoryIdList.find((id) => exercise.theoryId === id));
-
-    return theoriesDone;
   }
 }
 

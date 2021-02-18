@@ -4,7 +4,6 @@ require('express-async-errors');
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
-
 require('./utils/loadRelationships');
 
 const usersRouters = require('./routers/usersRouters');

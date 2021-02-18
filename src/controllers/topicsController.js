@@ -30,20 +30,19 @@ class TopicsController {
       ],
     });
     if (!topic) throw new NotFoundError('Topic not found');
-    
+
     const { exercises, theory } = topic;
     await exercises.unshift(theory);
 
     return topic;
   }
-  
+
   async findTopicById(topicId) {
     const topic = await Topic.findByPk(topicId);
     if (!topic) throw new NotFoundError('Topic not found');
 
     return topic;
   }
-
 
   getAllTopics(queryConfig, chapterId = null) {
     if (chapterId) {
