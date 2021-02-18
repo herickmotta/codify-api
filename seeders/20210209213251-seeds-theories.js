@@ -49,6 +49,54 @@ module.exports = {
         createdAt: new Date(),
         updatedAt: new Date(),
       },
+      {
+        topicId: 9,
+        youtubeLink: 'https://www.youtube.com/watch?v=Ptbk2af68e8',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        topicId: 10,
+        youtubeLink: 'https://www.youtube.com/watch?v=Ptbk2af68e8',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        topicId: 11,
+        youtubeLink: 'https://www.youtube.com/watch?v=Ptbk2af68e8',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        topicId: 12,
+        youtubeLink: 'https://www.youtube.com/watch?v=Ptbk2af68e8',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        topicId: 13,
+        youtubeLink: 'https://www.youtube.com/watch?v=Ptbk2af68e8',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        topicId: 14,
+        youtubeLink: 'https://www.youtube.com/watch?v=Ptbk2af68e8',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        topicId: 15,
+        youtubeLink: 'https://www.youtube.com/watch?v=Ptbk2af68e8',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        topicId: 16,
+        youtubeLink: 'https://www.youtube.com/watch?v=Ptbk2af68e8',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
     ]);
   },
 

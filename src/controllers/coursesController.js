@@ -1,5 +1,6 @@
 /* eslint-disable no-param-reassign */
 
+const compareAsc = require('date-fns/compareAsc');
 const Course = require('../models/Course');
 const Chapter = require('../models/Chapter');
 const Topic = require('../models/Topic');
@@ -10,7 +11,8 @@ const chaptersController = require('./chaptersController');
 const CourseUser = require('../models/CourseUser');
 const ConflictError = require('../errors/ConflictError');
 const User = require('../models/User');
-const ExerciseDone = require('../models/ExerciseDone');
+const exercisesController = require('./exercisesController');
+const theoriesController = require('./theoriesController');
 
 class CoursesController {
   async findCourseById(courseId) {
@@ -85,14 +87,73 @@ class CoursesController {
   }
 
   async getAllCoursesStarted(userId) {
-    const userWithCourses = await User.findOne({
-      where: { id: userId },
-      include: [{ model: Course, attributes: ['id', 'name', 'description', 'photo'] }],
-    });
+    const userWithCourses = await User.findByPk(
+      userId, {
+        include: [{
+          model: Course,
+          attributes: ['id', 'name', 'description', 'photo'],
+          include: {
+            model: Chapter,
+            attributes: ['id', 'name'],
+            include: {
+              model: Topic,
+              attributes: ['id', 'name'],
+              include: [
+                {
+                  model: Theory,
+                  attributes: ['id', 'youtubeLink'],
+                },
+                {
+                  model: Exercise,
+                  attributes: ['id'],
+                },
+              ],
+            },
+          },
+        }],
+      },
+    );
 
     const { courses } = userWithCourses;
 
-    return courses;
+    // descobrir aonde ele parou de estudar
+
+    // ordenar a array por o último curso assistido mais recente
+
+    const coursesOrdered = courses.map(async (course) => {
+      const theoryIdList = [];
+      const exerciseIdList = [];
+      course.chapters.forEach((chapter) => {
+        if (!chapter) throw new NotFoundError();
+        chapter.topics.forEach((topic) => {
+          if (!topic || !topic.theory || !topic.exercises) throw new NotFoundError();
+
+          theoryIdList.push(topic.theory.id);
+
+          topic.exercises.forEach((exercise) => {
+            exerciseIdList.push(exercise.id);
+          });
+        });
+      });
+      // / courses/:id/chapters/:chapterId/topics/:topicId
+      const exercisesDone = await exercisesController.getExercisesDone(userId, exerciseIdList);
+      const theoriesDone = await theoriesController.getTheoriesDone(userId, theoryIdList);
+
+      const lastExerciseDone = exercisesDone[0];
+      const lastTheorieDone = theoriesDone[0];
+      const mostRecent = compareAsc(lastExerciseDone.updatedAt, lastTheorieDone.updatedAt);
+
+      if (mostRecent === 1) {
+        return course;
+      } if (mostRecent === -1) {
+        return course;
+      }
+      return course;
+    });
+
+    const coursesOrdeByLastSeenExerciseOrTheory = await Promise.all(coursesOrdered);
+
+    return coursesOrdeByLastSeenExerciseOrTheory;
   }
 
   async getAllCoursesNotStarted(userId) {
@@ -102,16 +163,6 @@ class CoursesController {
     const courses = allCourses.filter((el) => !coursesStarted.some((f) => f.id === el.id));
 
     return courses;
-  }
-
-  getLastCourseSeen(userId) {
-    return ExerciseDone.findAll({
-      limit: 1,
-      where: {
-        userId,
-      },
-      order: [['createdAt', 'DESC']],
-    });
   }
 }
 
