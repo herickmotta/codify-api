@@ -44,9 +44,6 @@ class TheoriesController {
 
   async getTheoriesDone(userId, theoryIdList) {
     const theoriesDone = await TheoryDone.findAll({ where: { userId, theoryId: theoryIdList }, order: [['updatedAt', 'DESC']] });
-    // const theoriesDone = allUserTheoriesDoneId.filter((
-    //   exercise,
-    // ) => theoryIdList.find((id) => exercise.theoryId === id));
 
     return theoriesDone;
   }
