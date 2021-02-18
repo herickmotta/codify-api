@@ -16,7 +16,6 @@ class SessionController {
   }
 
   async findSessionByUserId(userId) {
-    console.log(userId);
     client.get(userId, async (err, token) => {
       if (err) throw err;
       if (token) {
