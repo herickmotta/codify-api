@@ -7,7 +7,7 @@
     "test": "jest --runInBand",
     "unitTest": "jest -i unit",
     "intTest": "jest -i int",
-    "build": "yarn sequelize-cli db:migrate",
+    "build": "yarn sequelize-cli db:migrate && yarn sequelize-cli db:seed",
     "seeds": "sequelize-cli db:seed",
     "dev": "nodemon ./src/server.js",
     "start": "node src/server.js"
