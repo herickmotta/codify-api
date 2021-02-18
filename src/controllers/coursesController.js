@@ -1,5 +1,6 @@
 /* eslint-disable no-param-reassign */
 
+const compareAsc = require('date-fns/compareAsc');
 const Course = require('../models/Course');
 const Chapter = require('../models/Chapter');
 const Topic = require('../models/Topic');
@@ -10,6 +11,9 @@ const chaptersController = require('./chaptersController');
 const CourseUser = require('../models/CourseUser');
 const ConflictError = require('../errors/ConflictError');
 const User = require('../models/User');
+const exercisesController = require('./exercisesController');
+const theoriesController = require('./theoriesController');
+const TheoryDone = require('../models/TheoryDone');
 const ExerciseDone = require('../models/ExerciseDone');
 const TheoryDone = require('../models/TheoryDone');
 
@@ -39,6 +43,13 @@ class CoursesController {
     );
     if (!courseData) throw new NotFoundError();
     return courseData;
+  }
+
+
+  async getCourseStartedById(courseId, userId) {
+    const courseStarted = await CourseUser.findOne({ where: { userId, courseId } });
+    if (courseStarted) return true;
+    return false;
   }
 
   getAllCourses(queryConfig) {
@@ -86,13 +97,15 @@ class CoursesController {
   }
 
   async getAllCoursesStarted(userId) {
-    const userWithCourses = await User.findOne({
-      where: { id: userId },
-      include: [{ model: Course, attributes: ['id', 'name', 'description', 'photo'] }],
-    });
-
+    const userWithCourses = await User.findByPk(
+      userId, {
+        include: [{
+          model: Course,
+          attributes: ['id', 'name', 'description', 'photo'],
+        }],
+      },
+    );
     const { courses } = userWithCourses;
-
     return courses;
   }
 
@@ -103,17 +116,6 @@ class CoursesController {
     const courses = allCourses.filter((el) => !coursesStarted.some((f) => f.id === el.id));
 
     return courses;
-  }
-
-  async getLastCourseSeen(userId) {
-    const exerciseDone = await ExerciseDone.findAll({
-      limit: 1,
-      where: {
-        userId,
-      },
-      order: [['createdAt', 'DESC']],
-    });
-    return exerciseDone;
   }
 
   async getAllCourseDataById(courseId, topicId, userId) {
