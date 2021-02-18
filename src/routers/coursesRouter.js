@@ -9,11 +9,14 @@ const cleanCourses = require('../utils/cleanCourses');
 
 router.get('/:id', authenticationMiddleware, async (req, res) => {
   const courseId = +req.params.id;
+  const { userId } = req;
 
   try {
-    const course = await coursesController.findCourseById(courseId);
-
-    return res.status(200).send(course);
+    const courseData = await coursesController.findCourseById(courseId);
+    const isCourseStarted = await coursesController.getCourseStartedById(courseId, userId);
+    const courseStringfy = JSON.stringify(courseData);
+    const course = JSON.parse(courseStringfy);
+    return res.status(200).send({ ...course, isCourseStarted });
   } catch (exception) {
     if (exception instanceof NotFoundError) return res.status(404).send({ error: 'Course not found' });
     return res.sendStatus(500);
