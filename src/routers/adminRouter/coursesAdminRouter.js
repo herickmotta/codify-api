@@ -52,7 +52,6 @@ router.put('/:id', async (req, res) => {
   } catch (exception) {
     if (exception instanceof NotFoundError) return res.status(404).send(exception.message);
     return res.status(500);
-
   }
 });
 

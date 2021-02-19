@@ -76,11 +76,12 @@ class CoursesController {
 
   async destroyCourse(courseId) {
     const course = await Course.findByPk(courseId);
-    if (!course) throw new NotFoundError('Chapter not found');
+    if (!course) throw new NotFoundError('Course not found');
 
     const chapters = await Chapter.findAll({ where: { courseId } });
     const promises = chapters.map((chapter) => chaptersController.destroyChapter(chapter.id));
     await Promise.all(promises);
+    await course.destroy();
   }
 
   async startCourse({ userId, courseId }) {
