@@ -1,13 +1,17 @@
 /* eslint-disable no-undef */
 const usersController = require('../../../src/controllers/usersController');
+const exercisesController = require('../../../src/controllers/exercisesController');
+const theoriesController = require('../../../src/controllers/theoriesController');
 
 const User = require('../../../src/models/User');
 const Course = require('../../../src/models/Course');
 const Chapter = require('../../../src/models/Chapter');
+const CourseUser = require('../../../src/models/CourseUser');
 
 jest.mock('../../../src/models/User');
 jest.mock('../../../src/models/Course');
 jest.mock('../../../src/models/Chapter');
+jest.mock('../../../src/models/CourseUser');
 
 const NotFoundError = require('../../../src/errors/NotFoundError');
 
@@ -35,6 +39,12 @@ describe('signUpUser', () => {
 
 describe('getUserProgress', () => {
   it('returns the progress value', async () => {
+    const mockedCourseUser = {
+      id: 1,
+      userId: 1,
+      courseId: 1,
+    };
+
     const mockedCourse = {
       id: 1,
       name: 'JavaScript do zero!',
@@ -97,14 +107,15 @@ describe('getUserProgress', () => {
       theoryId: 1,
     }];
 
-    const spy = jest.spyOn(usersController, '_getExercisesDone');
+    const spy = jest.spyOn(exercisesController, 'getExercisesDone');
     spy.mockImplementation(() => mockedAllExercisesDone);
 
-    const spyy = jest.spyOn(usersController, '_getTheoriesDone');
+    const spyy = jest.spyOn(theoriesController, 'getTheoriesDone');
     spyy.mockImplementation(() => mockedAllTheoriesDone);
 
     const expected = { progress: 50 };
 
+    CourseUser.findOne.mockResolvedValue(mockedCourseUser);
     Course.findByPk.mockResolvedValue(mockedCourse);
 
     const result = await usersController.getUserProgress(1, 1);
@@ -154,13 +165,13 @@ describe('getUserProgress', () => {
       theoryId: 1,
     }];
 
-    const spy = jest.spyOn(usersController, '_getExercisesDone');
+    const spy = jest.spyOn(exercisesController, 'getExercisesDone');
     spy.mockImplementation(() => mockedAllExercisesDone);
 
-    const spyy = jest.spyOn(usersController, '_getTheoriesDone');
+    const spyy = jest.spyOn(theoriesController, 'getTheoriesDone');
     spyy.mockImplementation(() => mockedAllTheoriesDone);
 
-    Course.findByPk.mockResolvedValue(mockedCourse);
+    Course.findOne.mockResolvedValue(mockedCourse);
 
     const fn = async () => {
       await usersController.getUserProgress(1, 1);
