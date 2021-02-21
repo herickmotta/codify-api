@@ -92,9 +92,9 @@ router.get('/last-seen', authenticationMiddleware, async (req, res) => {
 router.get('/:id/chapters/:chapterId/topics/:topicId', authenticationMiddleware, async (req, res) => {
   const { topicId } = req.params;
   const { userId } = req;
-  
+
   const id = parseInt(topicId, 10);
-  
+
   const result = await topicsController.getTopicsData(id, userId);
   return res.send(result);
 });
@@ -102,8 +102,10 @@ router.get('/:id/chapters/:chapterId/topics/:topicId', authenticationMiddleware,
 router.get('/:id/menu/topics/:topicId', authenticationMiddleware, async (req, res) => {
   const { id, topicId } = req.params;
   const { userId } = req;
+  const topic = parseInt(topicId, 10);
+
   try {
-    const course = await coursesController.getAllCourseDataById(id, topicId, userId);
+    const course = await coursesController.getAllCourseDataById(id, topic, userId);
 
     return res.status(200).send(course);
   } catch (exception) {

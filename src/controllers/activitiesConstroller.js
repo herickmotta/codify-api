@@ -5,8 +5,8 @@ const Theory = require('../models/Theory');
 const Exercise = require('../models/Exercise');
 const NotFoundError = require('../errors/NotFoundError');
 
-class LessonsConstroller {
-  async createLessonDone(lessonId, userId, type) {
+class ActivitiesConstroller {
+  async createActivityDone(lessonId, userId, type) {
     const checked = type === 'exercise'
       ? await Exercise.findByPk(lessonId)
       : await Theory.findByPk(lessonId);
@@ -19,7 +19,7 @@ class LessonsConstroller {
     return result;
   }
 
-  async destroyLessonDone(lessonId, userId, type) {
+  async destroyActivityDone(lessonId, userId, type) {
     if (type === 'exercise') {
       await ExerciseDone.destroy({ where: { userId, exerciseId: lessonId } });
     } else {
@@ -28,4 +28,4 @@ class LessonsConstroller {
   }
 }
 
-module.exports = new LessonsConstroller();
+module.exports = new ActivitiesConstroller();

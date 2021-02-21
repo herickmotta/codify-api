@@ -169,7 +169,7 @@ class CoursesController {
         }
         chapterData.push({ id: t.id, name: t.name, completed });
 
-        if (t.id == topicId) {
+        if (t.id === topicId) {
           currentTopicIndex = indexT;
           currentChapterIndex = indexC;
         }
