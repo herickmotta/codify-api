@@ -6,6 +6,7 @@ const topicsController = require('../controllers/topicsController');
 const NotFoundError = require('../errors/NotFoundError');
 const ConflictError = require('../errors/ConflictError');
 const cleanCourses = require('../utils/cleanCourses');
+const lastTaskSeenController = require('../controllers/lastTaskSeenController');
 
 router.get('/:id', authenticationMiddleware, async (req, res) => {
   const courseId = +req.params.id;
@@ -40,6 +41,7 @@ router.post('/start', authenticationMiddleware, async (req, res) => {
   try {
     const course = await coursesController.findCourseById(courseId);
     await coursesController.startCourse({ userId, courseId });
+    await lastTaskSeenController.createLastTaskSeen(userId, course);
 
     return res.status(201).send({ ...course.dataValues, userId });
   } catch (exception) {
