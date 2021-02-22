@@ -9,6 +9,7 @@ const signUpMiddleware = require('../middlewares/signUpMiddleware');
 const authenticationMiddleware = require('../middlewares/authenticationMiddleware');
 const UnauthorizedError = require('../errors/UnauthorizedError');
 const lastTaskSeenController = require('../controllers/lastTaskSeenController');
+const lastTaskSeenMiddleware = require('../middlewares/lastTaskSeenMiddleware');
 
 router.post('/signup', signUpMiddleware, async (req, res) => {
   const user = await usersController.create(req.body);
@@ -70,10 +71,10 @@ router.post('/logout', authenticationMiddleware, async (req, res) => {
   }
 });
 
-router.post('/courses/lastTaskSeen', authenticationMiddleware, async (req, res) => {
+router.put('/courses/:courseId/lastTaskSeen', authenticationMiddleware, lastTaskSeenMiddleware, async (req, res) => {
   const { userId } = req;
 
-  const lastTaskSeen = await lastTaskSeenController.createLastTaskSeen();
+  const lastTaskSeen = await lastTaskSeenController.updateLastTaskSeen(userId, req.body);
   return res.status(200).send(lastTaskSeen);
 });
 
