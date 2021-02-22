@@ -37,7 +37,6 @@ router.post('/signin', async (req, res) => {
     return res.status(201).send(userSession);
   } catch (exception) {
     if (exception instanceof UnauthorizedError) return res.status(401).send({ error: 'Wrong email or password' });
-    console.log(exception);
     return res.sendStatus(500);
   }
 });

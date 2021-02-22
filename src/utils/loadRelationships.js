@@ -33,9 +33,9 @@ User.belongsToMany(Exercise, { through: ExerciseDone });
 Theory.belongsToMany(User, { through: TheoryDone });
 User.belongsToMany(Theory, { through: TheoryDone });
 
-LastTaskSeen.hasMany(User);
-LastTaskSeen.hasMany(Course);
-LastTaskSeen.hasMany(Chapter);
-LastTaskSeen.hasMany(Topic);
-LastTaskSeen.hasMany(Exercise);
-LastTaskSeen.hasMany(Theory);
+User.hasMany(LastTaskSeen);
+Course.hasMany(LastTaskSeen);
+Chapter.hasMany(LastTaskSeen);
+Topic.hasMany(LastTaskSeen);
+Theory.hasMany(LastTaskSeen);
+Exercise.hasMany(LastTaskSeen);
