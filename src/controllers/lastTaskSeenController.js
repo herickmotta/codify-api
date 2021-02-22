@@ -42,11 +42,11 @@ class LastTaskSeenController {
   }
 
   async getLastTaskSeen(userId, courseId) {
-    const lastTaskSeen = await lastTaskSeen.findOne({ where: { userId, courseId } });
+    const lastTask = await LastTaskSeen.findOne({ where: { userId, courseId } });
 
-    if (!lastTaskSeen) throw new CourseNotStarted();
+    if (!lastTask) throw new CourseNotStarted();
 
-    return lastTaskSeen;
+    return lastTask;
   }
 }
 
