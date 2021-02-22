@@ -2,13 +2,14 @@ const LastTaskSeen = require('../models/LastTaskSeen');
 
 class LastTaskSeenController {
   async createLastTaskSeen(userId, courseData) {
-    const { courseId } = courseData;
+    const { id } = courseData;
+
     const chapterId = courseData.chapters[0].id;
     const topicId = courseData.chapters[0].topics[0].id;
     const theoryId = courseData.chapters[0].topics[0].theory.id;
 
     const lastTask = await LastTaskSeen.create({
-      userId, courseId, chapterId, topicId, theoryId,
+      userId, courseId: id, chapterId, topicId, theoryId,
     });
 
     return lastTask;
@@ -24,12 +25,12 @@ class LastTaskSeenController {
     lastTaskSeen.chapterId = chapterId;
     lastTaskSeen.topicId = topicId;
 
-    if (type === 'theory') {
+    if (type === 'Theory') {
       const { theoryId } = updateData;
 
       lastTaskSeen.theoryId = theoryId;
       lastTaskSeen.exerciseId = null;
-    } if (type === 'exercise') {
+    } if (type === 'Exercise') {
       const { exerciseId } = updateData;
 
       lastTaskSeen.theoryId = null;
