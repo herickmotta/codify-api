@@ -23,10 +23,6 @@ User.init(
       type: Sequelize.STRING,
       allowNull: false,
     },
-    lastTaskSeenId: {
-      type: Sequelize.INTEGER,
-      allowNull: false,
-    },
   },
 
   { sequelize, modelName: 'user' },
