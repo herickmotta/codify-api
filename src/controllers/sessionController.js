@@ -1,32 +1,38 @@
 const jwt = require('jsonwebtoken');
-
-const Session = require('../models/Session');
 const NotFoundError = require('../errors/NotFoundError');
+const client = require('../utils/redis');
 
 class SessionController {
   async createSession({ id, name, email }) {
     const data = { id };
     const secretKey = process.env.SECRET;
-    const timeToExpires = { expiresIn: 60 * 60 * 24 * 30 };
+    const timeToExpires = { expiresIn: 60 * 60 * 24 };
 
     const token = jwt.sign(data, secretKey, timeToExpires);
-
-    await Session.create({ userId: id, token });
-
+    client.setex(id, timeToExpires.expiresIn, token);
     return {
       id, name, email, token,
     };
   }
 
   async findSessionByUserId(userId) {
-    const session = await Session.findOne({ where: { userId } });
-    if (!session) throw new NotFoundError();
-
-    return session;
+    const userToken = client.get(userId, async (err, token) => {
+      if (err) throw err;
+      if (token) {
+        return token;
+      }
+      return null;
+    });
+    if (userToken) return userToken;
+    throw new NotFoundError();
   }
 
-  deleteSession(userId) {
-    return Session.destroy({ where: { userId } });
+  async deleteSession(userId) {
+    client.del(userId, async (err, res) => {
+      if (res !== 1) {
+        throw new NotFoundError();
+      }
+    });
   }
 }
 

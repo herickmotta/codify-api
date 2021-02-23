@@ -7,7 +7,6 @@ async function authenticationMiddleware(req, res, next) {
   const authHeader = req.header('Authorization');
 
   const token = authHeader.replace('JWT ', '');
-
   if (!token) return res.status(401).json({ error: 'No token provided.' });
   try {
     const { id } = jwt.verify(token, process.env.SECRET);
