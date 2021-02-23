@@ -3,25 +3,49 @@ module.exports = {
     await queryInterface.bulkInsert('topics', [
       {
         chapterId: 1,
-        name: 'This is a topic from chapter 1',
+        name: 'This is first topic from chapter 1',
         createdAt: new Date(),
         updatedAt: new Date(),
       },
       {
         chapterId: 1,
-        name: 'This is a topic from chapter 1',
+        name: 'This is second topic from chapter 1',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        chapterId: 1,
+        name: 'This is third topic from chapter 1',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        chapterId: 1,
+        name: 'This is fourth topic from chapter 1',
         createdAt: new Date(),
         updatedAt: new Date(),
       },
       {
         chapterId: 2,
-        name: 'This is a topic from chapter 2',
+        name: 'This is first topic from chapter 2',
         createdAt: new Date(),
         updatedAt: new Date(),
       },
       {
         chapterId: 2,
-        name: 'This is a topic from chapter 2',
+        name: 'This is second topic from chapter 2',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        chapterId: 2,
+        name: 'This is third topic from chapter 2',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        chapterId: 2,
+        name: 'This is fourth topic from chapter 2',
         createdAt: new Date(),
         updatedAt: new Date(),
       },

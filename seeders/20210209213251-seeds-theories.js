@@ -97,6 +97,30 @@ module.exports = {
         createdAt: new Date(),
         updatedAt: new Date(),
       },
+      {
+        topicId: 17,
+        youtubeLink: 'https://www.youtube.com/watch?v=Ptbk2af68e8',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        topicId: 18,
+        youtubeLink: 'https://www.youtube.com/watch?v=Ptbk2af68e8',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        topicId: 19,
+        youtubeLink: 'https://www.youtube.com/watch?v=Ptbk2af68e8',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        topicId: 20,
+        youtubeLink: 'https://www.youtube.com/watch?v=Ptbk2af68e8',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
     ]);
   },
 
