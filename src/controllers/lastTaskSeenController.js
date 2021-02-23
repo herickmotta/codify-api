@@ -1,4 +1,5 @@
 const LastTaskSeen = require('../models/LastTaskSeen');
+const CourseNotStarted = require('../errors/CourseNotStarted');
 
 class LastTaskSeenController {
   async createLastTaskSeen(userId, courseData) {

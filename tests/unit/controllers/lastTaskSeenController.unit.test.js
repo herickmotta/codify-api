@@ -55,42 +55,67 @@ describe('lastTaskSeenController.createLastTaskSeen', () => {
   });
 });
 
-// describe('lastTaskSeenController.updateLastTaskSeen', () => {
-//   it('Should return the updated last task seen from user in this course', async () => {
-//     const lastTaskSeen = {
-//       id: 1,
-//       userId: 1,
-//       courseId: 1,
-//       chapterId: 1,
-//       topicId: 1,
-//       theoryId: 1,
-//     };
+describe('lastTaskSeenController.updateLastTaskSeen', () => {
+  it('Should return the updated last task seen from user in this course', async () => {
+    const lastTaskSeen = {
+      id: 1,
+      userId: 1,
+      courseId: 1,
+      chapterId: 1,
+      topicId: 1,
+      theoryId: 1,
+      save: () => this,
+    };
 
-//     const updateData = {
-//       courseId: 1,
-//       chapterId: 1,
-//       topicId: 1,
-//       type: 'Exercise',
-//       exerciseId: 2,
-//     };
+    const updateData = {
+      courseId: 1,
+      chapterId: 1,
+      topicId: 1,
+      type: 'Exercise',
+      exerciseId: 2,
+    };
 
-//     const expect = {
-//       id: 1,
-//       userId: 1,
-//       courseId: 1,
-//       chapterId: 1,
-//       topicId: 1,
-//       exerciseId: 2,
-//     };
+    const expected = {
+      id: 1,
+      userId: 1,
+      courseId: 1,
+      chapterId: 1,
+      topicId: 1,
+      exerciseId: 2,
+    };
 
-//     await LastTaskSeen.findOne.mockResolvedValue(lastTaskSeen);
+    await LastTaskSeen.findOne.mockResolvedValue(lastTaskSeen);
 
-//     const userModelInstanceMock = { save: jest.fn() };
-//     const userModelMock = { findByPk: jest.fn().mockResolvedValueOnce(userModelInstanceMock) };
+    const result = await lastTaskSeenController.updateLastTaskSeen(1, updateData);
 
-//     const fn = async () => {
-//       await lastTaskSeenController.updateLastTaskSeen(1, updateData);
-//     };
-//     expect(fn).toEqual(expect.objectContaining({ ...lastTaskSeen }));
-//   });
-// });
+    expect(result).toEqual(expect.objectContaining({ ...expected }));
+  });
+});
+
+describe('lastTaskSeenController.getLastTaskSeen', () => {
+  it('Should return the last task seen from user in this course', async () => {
+    const lastTaskSeen = {
+      id: 1,
+      userId: 1,
+      courseId: 1,
+      chapterId: 1,
+      topicId: 1,
+      theoryId: 1,
+    };
+
+    await LastTaskSeen.findOne.mockResolvedValue(lastTaskSeen);
+    const result = await lastTaskSeenController.getLastTaskSeen(1, 1);
+
+    expect(result).toEqual(expect.objectContaining({ ...lastTaskSeen }));
+  });
+
+  it('Should return the last task seen from user in this course', async () => {
+    await LastTaskSeen.findOne.mockResolvedValue(null);
+
+    const fn = async () => {
+      await lastTaskSeenController.getLastTaskSeen(1, 1);
+    };
+
+    expect(fn).rejects.toThrow(CourseNotStarted);
+  });
+});
