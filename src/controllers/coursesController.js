@@ -29,7 +29,7 @@ class CoursesController {
               },
               {
                 model: Exercise,
-                attributes: ['id'],
+                attributes: ['id', 'name', 'wording'],
               },
             ],
           },
@@ -125,7 +125,7 @@ class CoursesController {
             include: [
               {
                 model: Theory,
-                attributes: ['id', 'youtubeLink'],
+                attributes: ['id'],
                 include: {
                   model: TheoryDone,
                   where: { userId },
