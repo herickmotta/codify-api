@@ -8,6 +8,8 @@ const sessionController = require('../controllers/sessionController');
 const signUpMiddleware = require('../middlewares/signUpMiddleware');
 const authenticationMiddleware = require('../middlewares/authenticationMiddleware');
 const UnauthorizedError = require('../errors/UnauthorizedError');
+const lastTaskSeenController = require('../controllers/lastTaskSeenController');
+const lastTaskSeenMiddleware = require('../middlewares/lastTaskSeenMiddleware');
 
 router.post('/signup', signUpMiddleware, async (req, res) => {
   const user = await usersController.create(req.body);
@@ -35,7 +37,6 @@ router.post('/signin', async (req, res) => {
     return res.status(201).send(userSession);
   } catch (exception) {
     if (exception instanceof UnauthorizedError) return res.status(401).send({ error: 'Wrong email or password' });
-
     return res.sendStatus(500);
   }
 });
@@ -67,6 +68,22 @@ router.post('/logout', authenticationMiddleware, async (req, res) => {
   } catch (exception) {
     return res.sendStatus(500);
   }
+});
+
+router.put('/courses/:courseId/last-task-seen', authenticationMiddleware, lastTaskSeenMiddleware, async (req, res) => {
+  const { userId } = req;
+
+  const lastTaskSeen = await lastTaskSeenController.updateLastTaskSeen(userId, req.body);
+  return res.status(200).send(lastTaskSeen);
+});
+
+router.get('/courses/:courseId/last-task-seen', authenticationMiddleware, async (req, res) => {
+  const { userId } = req;
+  const { courseId } = req.params;
+
+  const lastTaskSeen = await lastTaskSeenController.getLastTaskSeen(userId, courseId);
+
+  return res.status(200).send(lastTaskSeen);
 });
 
 module.exports = router;
