@@ -31,10 +31,18 @@ class TopicsController {
     });
     if (!topic) throw new NotFoundError('Topic not found');
 
-    const { exercises, theory } = topic;
-    await exercises.unshift(theory);
+    const {
+      id, chapterId, name, exercises, theory,
+    } = topic;
 
-    return topic;
+    const result = {
+      id,
+      chapterId,
+      name,
+      activities: [theory, ...exercises],
+    };
+
+    return result;
   }
 
   async findTopicById(topicId) {
