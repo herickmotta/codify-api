@@ -11,6 +11,7 @@ const ConflictError = require('../errors/ConflictError');
 const User = require('../models/User');
 const TheoryDone = require('../models/TheoryDone');
 const ExerciseDone = require('../models/ExerciseDone');
+const LastTaskSeen = require('../models/LastTaskSeen');
 
 class CoursesController {
   async findCourseById(courseId) {
@@ -47,7 +48,8 @@ class CoursesController {
   }
 
   getAllCourses(queryConfig) {
-    return Course.findAll(queryConfig);
+    if (queryConfig) return Course.findAll(queryConfig);
+    return Course.findAll();
   }
 
   async createCourse(courseParams) {
@@ -92,20 +94,26 @@ class CoursesController {
   }
 
   async getAllCoursesStarted(userId) {
-    const userWithCourses = await User.findByPk(
-      userId, {
-        include: [{
-          model: Course,
-          attributes: ['id', 'name', 'description', 'photo'],
-        }],
-      },
-    );
-    const { courses } = userWithCourses;
+    const courses = await Course.findAll({
+      include: [{
+        model: User,
+        where: { id: userId },
+      }, {
+        model: LastTaskSeen,
+        attributes: ['userId', 'theoryId', 'courseId', 'chapterId', 'topicId', 'exerciseId'],
+        where: { userId },
+      }],
+      order: [
+        [{ model: LastTaskSeen }, 'updatedAt', 'DESC'],
+      ],
+    });
+
     return courses;
   }
 
   async getAllCoursesNotStarted(userId) {
     const coursesStarted = await this.getAllCoursesStarted(userId);
+
     const allCourses = await this.getAllCourses();
 
     const courses = allCourses.filter((el) => !coursesStarted.some((f) => f.id === el.id));
