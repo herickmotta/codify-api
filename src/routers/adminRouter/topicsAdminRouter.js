@@ -9,7 +9,7 @@ router.get('/', async (req, res) => {
   let chapterId = null;
   if (req.query.filter) {
     const filter = JSON.parse(req.query.filter);
-    chapterId = filter.courseId;
+    chapterId = filter.chapterId;
   }
   const topics = await topicsController.getAllTopics(req.queryConfig, chapterId);
   const total = (await topicsController.getAllTopics()).length;
@@ -36,7 +36,7 @@ router.get('/:id', async (req, res) => {
 router.post('/', async (req, res) => {
   const { error } = topicSchemas.postTopic.validate(req.body);
   if (error) return res.status(422).send({ error: error.details[0].message });
-  
+
   try {
     const topic = await topicsController.createTopic(req.body);
     return res.status(201).send(topic);

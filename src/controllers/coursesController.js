@@ -1,6 +1,5 @@
 /* eslint-disable no-param-reassign */
 
-const compareAsc = require('date-fns/compareAsc');
 const Course = require('../models/Course');
 const Chapter = require('../models/Chapter');
 const Topic = require('../models/Topic');
@@ -11,11 +10,8 @@ const chaptersController = require('./chaptersController');
 const CourseUser = require('../models/CourseUser');
 const ConflictError = require('../errors/ConflictError');
 const User = require('../models/User');
-const exercisesController = require('./exercisesController');
-const theoriesController = require('./theoriesController');
 const TheoryDone = require('../models/TheoryDone');
 const ExerciseDone = require('../models/ExerciseDone');
-const TheoryDone = require('../models/TheoryDone');
 
 class CoursesController {
   async findCourseById(courseId) {
@@ -44,7 +40,6 @@ class CoursesController {
     if (!courseData) throw new NotFoundError();
     return courseData;
   }
-
 
   async getCourseStartedById(courseId, userId) {
     const courseStarted = await CourseUser.findOne({ where: { userId, courseId } });

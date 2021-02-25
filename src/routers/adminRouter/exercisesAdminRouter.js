@@ -8,7 +8,7 @@ router.get('/', async (req, res) => {
   let topicId = null;
   if (req.query.filter) {
     const filter = JSON.parse(req.query.filter);
-    topicId = filter.courseId;
+    topicId = filter.topicId;
   }
   const exercises = await exercisesController.getAllExercises(req.queryConfig, topicId);
   const total = (await exercisesController.getAllExercises()).length;
@@ -29,11 +29,10 @@ router.get('/:id', async (req, res) => {
   } catch (exception) {
     if (exception instanceof NotFoundError) return res.status(404).send({ error: 'Exercise not found' });
     return res.status(500);
- }
+  }
 });
 
 router.post('/', async (req, res) => {
-
   try {
     const exercise = await exercisesController.createExercise(req.body);
     return res.status(201).send(exercise);

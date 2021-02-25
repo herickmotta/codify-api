@@ -1,6 +1,7 @@
 /* eslint-disable no-undef */
 const sessionController = require('../../../src/controllers/sessionController');
 const NotFoundError = require('../../../src/errors/NotFoundError');
+const client = require('../../../src/utils/redis');
 
 jest.mock('jsonwebtoken', () => ({
   sign: () => 'token_ultra_seguro',
