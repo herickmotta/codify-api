@@ -57,7 +57,6 @@ router.put('/:id', async (req, res) => {
 
 router.delete('/:id', async (req, res) => {
   const courseId = +req.params.id;
-
   try {
     await coursesController.destroyCourse(courseId);
     return res.sendStatus(200);
