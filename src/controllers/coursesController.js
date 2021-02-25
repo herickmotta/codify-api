@@ -162,7 +162,7 @@ class CoursesController {
         const { theory, exercises } = t;
 
         if (theory.theoryDones && theory.theoryDones.length === 0) completed = false;
-        if (completed) {
+        else {
           exercises.forEach((e) => {
             if (e.exerciseDones && e.exerciseDones.length === 0) completed = false;
           });

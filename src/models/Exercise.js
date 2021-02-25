@@ -22,6 +22,18 @@ Exercise.init({
     type: Sequelize.STRING,
     allowNull: false,
   },
+  example: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
+  defaultCode: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
+  test: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
 }, {
   sequelize,
   modelName: 'exercise',
