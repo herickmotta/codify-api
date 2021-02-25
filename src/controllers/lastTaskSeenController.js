@@ -1,5 +1,6 @@
 const LastTaskSeen = require('../models/LastTaskSeen');
 const CourseNotStarted = require('../errors/CourseNotStarted');
+const NotFoundError = require('../errors/NotFoundError');
 
 class LastTaskSeenController {
   async createLastTaskSeen(userId, courseData) {
@@ -45,7 +46,7 @@ class LastTaskSeenController {
   async getLastTaskSeen(userId, courseId) {
     const lastTask = await LastTaskSeen.findOne({ where: { userId, courseId } });
 
-    if (!lastTask) throw new CourseNotStarted();
+    if (!lastTask) throw new NotFoundError();
 
     return lastTask;
   }

@@ -1,6 +1,3 @@
-/* eslint-disable no-useless-return */
-/* eslint-disable no-underscore-dangle */
-/* eslint-disable max-len */
 /* eslint-disable no-param-reassign */
 const bcrypt = require('bcrypt');
 const User = require('../models/User');
@@ -118,7 +115,6 @@ class UsersController {
         topic.exercises.forEach((exercise) => {
           if (exercise.exerciseDones.length === 0) {
             topicProgress = false;
-            return;
           }
         });
       }
