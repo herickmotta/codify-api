@@ -85,7 +85,7 @@ module.exports = {
             const param2 = 3;
             const expected = 3;
 
-            const result = somar(param1, param2);
+            const result = subtrair(param1, param2);
 
             expect(result).equal(expected);
           });
@@ -177,7 +177,7 @@ module.exports = {
             const param2 = 3;
             const expected = 3;
 
-            const result = somar(param1, param2);
+            const result = subtrair(param1, param2);
 
             expect(result).equal(expected);
           });
@@ -269,7 +269,7 @@ module.exports = {
             const param2 = 3;
             const expected = 3;
 
-            const result = somar(param1, param2);
+            const result = subtrair(param1, param2);
 
             expect(result).equal(expected);
           });
@@ -361,7 +361,7 @@ module.exports = {
             const param2 = 3;
             const expected = 3;
 
-            const result = somar(param1, param2);
+            const result = subtrair(param1, param2);
 
             expect(result).equal(expected);
           });
@@ -453,7 +453,7 @@ module.exports = {
             const param2 = 3;
             const expected = 3;
 
-            const result = somar(param1, param2);
+            const result = subtrair(param1, param2);
 
             expect(result).equal(expected);
           });
@@ -545,7 +545,7 @@ module.exports = {
             const param2 = 3;
             const expected = 3;
 
-            const result = somar(param1, param2);
+            const result = subtrair(param1, param2);
 
             expect(result).equal(expected);
           });
@@ -637,7 +637,7 @@ module.exports = {
             const param2 = 3;
             const expected = 3;
 
-            const result = somar(param1, param2);
+            const result = subtrair(param1, param2);
 
             expect(result).equal(expected);
           });
@@ -729,7 +729,7 @@ module.exports = {
             const param2 = 3;
             const expected = 3;
 
-            const result = somar(param1, param2);
+            const result = subtrair(param1, param2);
 
             expect(result).equal(expected);
           });
@@ -821,7 +821,7 @@ module.exports = {
             const param2 = 3;
             const expected = 3;
 
-            const result = somar(param1, param2);
+            const result = subtrair(param1, param2);
 
             expect(result).equal(expected);
           });
@@ -913,7 +913,7 @@ module.exports = {
             const param2 = 3;
             const expected = 3;
 
-            const result = somar(param1, param2);
+            const result = subtrair(param1, param2);
 
             expect(result).equal(expected);
           });
@@ -1005,7 +1005,7 @@ module.exports = {
             const param2 = 3;
             const expected = 3;
 
-            const result = somar(param1, param2);
+            const result = subtrair(param1, param2);
 
             expect(result).equal(expected);
           });
@@ -1097,7 +1097,7 @@ module.exports = {
             const param2 = 3;
             const expected = 3;
 
-            const result = somar(param1, param2);
+            const result = subtrair(param1, param2);
 
             expect(result).equal(expected);
           });
@@ -1189,7 +1189,7 @@ module.exports = {
             const param2 = 3;
             const expected = 3;
 
-            const result = somar(param1, param2);
+            const result = subtrair(param1, param2);
 
             expect(result).equal(expected);
           });
