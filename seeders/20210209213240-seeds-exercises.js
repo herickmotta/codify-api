@@ -4,7 +4,7 @@ module.exports = {
       {
         topicId: 1,
         name: 'Exercício 1',
-        wording: 'Texto do enunciado da questão',
+        wording: 'Texto do enunciado da questão Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to.',
         example: 'Quando enviado 10 retorna 10',
         defaultCode: 'function retornar(param) {}',
         test: 'describe("retornar", () => { it("Retorna 5 quando passado 5", () => { const r = retornar(5); expect(r).equal(5); }); it("Retorna 3 quando passado 3", () => { const r = retornar(3); expect(r).equal(3); }); })',
@@ -14,7 +14,7 @@ module.exports = {
       {
         topicId: 1,
         name: 'Exercício 2',
-        wording: 'Texto do enunciado da questão',
+        wording: 'Texto do enunciado da questão Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to.',
         example: 'Quando enviado 10 e 5 retorna 15',
         defaultCode: 'function soma(param1, param2) {}',
         test: 'describe("soma", () => { it("Retorna 9 quando passado 5 e 4", () => { const r = soma(5, 4); expect(r).equal(9); }); it("Retorna 3 quando passado 1 e 2", () => { const r = soma(1, 2); expect(r).equal(3); }); });',
@@ -24,7 +24,7 @@ module.exports = {
       {
         topicId: 2,
         name: 'Exercício 3',
-        wording: 'Texto do enunciado da questão',
+        wording: 'Texto do enunciado da questão Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to.',
         example: 'Quando enviado 10 e 5 retorna 5',
         defaultCode: 'function subtrair(param1, param2) {}',
         test: 'describe("subtrair", () => { it("Retorna 1 quando passado 5 e 4", () => { const r = subtrair(5, 4); expect(r).equal(1); }); it("Retorna 3 quando passado 6 e 3", () => { const r = subtrair(6, 3); expect(r).equal(3); }); });',
@@ -34,7 +34,7 @@ module.exports = {
       {
         topicId: 2,
         name: 'Exercício 4',
-        wording: 'Texto do enunciado da questão',
+        wording: 'Texto do enunciado da questão Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to.',
         example: 'Quando enviado 10 retorna 10',
         defaultCode: 'function retornar(param) {}',
         test: 'describe("retornar", () => { it("Retorna 5 quando passado 5", () => { const r = retornar(5); expect(r).equal(5); }); it("Retorna 3 quando passado 3", () => { const r = retornar(3); expect(r).equal(3); }); })',
@@ -44,7 +44,7 @@ module.exports = {
       {
         topicId: 3,
         name: 'Exercício 5',
-        wording: 'Texto do enunciado da questão',
+        wording: 'Texto do enunciado da questão Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to.',
         example: 'Quando enviado 10 e 5 retorna 15',
         defaultCode: 'function soma(param1, param2) {}',
         test: 'describe("soma", () => { it("Retorna 9 quando passado 5 e 4", () => { const r = soma(5, 4); expect(r).equal(9); }); it("Retorna 3 quando passado 1 e 2", () => { const r = soma(1, 2); expect(r).equal(3); }); });',
@@ -54,7 +54,7 @@ module.exports = {
       {
         topicId: 3,
         name: 'Exercício 6',
-        wording: 'Texto do enunciado da questão',
+        wording: 'Texto do enunciado da questão Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to.',
         example: 'Quando enviado 10 e 5 retorna 5',
         defaultCode: 'function subtrair(param1, param2) {}',
         test: 'describe("subtrair", () => { it("Retorna 1 quando passado 5 e 4", () => { const r = subtrair(5, 4); expect(r).equal(1); }); it("Retorna 3 quando passado 6 e 3", () => { const r = subtrair(6, 3); expect(r).equal(3); }); });',
@@ -64,7 +64,7 @@ module.exports = {
       {
         topicId: 4,
         name: 'Exercício 7',
-        wording: 'Texto do enunciado da questão',
+        wording: 'Texto do enunciado da questão Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to.',
         example: 'Quando enviado 10 retorna 10',
         defaultCode: 'function retornar(param) {}',
         test: 'describe("retornar", () => { it("Retorna 5 quando passado 5", () => { const r = retornar(5); expect(r).equal(5); }); it("Retorna 3 quando passado 3", () => { const r = retornar(3); expect(r).equal(3); }); })',
@@ -74,7 +74,7 @@ module.exports = {
       {
         topicId: 4,
         name: 'Exercício 8',
-        wording: 'Texto do enunciado da questão',
+        wording: 'Texto do enunciado da questão Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to.',
         example: 'Quando enviado 10 e 5 retorna 15',
         defaultCode: 'function soma(param1, param2) {}',
         test: 'describe("soma", () => { it("Retorna 9 quando passado 5 e 4", () => { const r = soma(5, 4); expect(r).equal(9); }); it("Retorna 3 quando passado 1 e 2", () => { const r = soma(1, 2); expect(r).equal(3); }); });',
@@ -84,7 +84,7 @@ module.exports = {
       {
         topicId: 5,
         name: 'Exercício 9',
-        wording: 'Texto do enunciado da questão',
+        wording: 'Texto do enunciado da questão Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to.',
         example: 'Quando enviado 10 e 5 retorna 5',
         defaultCode: 'function subtrair(param1, param2) {}',
         test: 'describe("subtrair", () => { it("Retorna 1 quando passado 5 e 4", () => { const r = subtrair(5, 4); expect(r).equal(1); }); it("Retorna 3 quando passado 6 e 3", () => { const r = subtrair(6, 3); expect(r).equal(3); }); });',
@@ -94,7 +94,7 @@ module.exports = {
       {
         topicId: 5,
         name: 'Exercício 10',
-        wording: 'Texto do enunciado da questão',
+        wording: 'Texto do enunciado da questão Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to.',
         example: 'Quando enviado 10 retorna 10',
         defaultCode: 'function retornar(param) {}',
         test: 'describe("retornar", () => { it("Retorna 5 quando passado 5", () => { const r = retornar(5); expect(r).equal(5); }); it("Retorna 3 quando passado 3", () => { const r = retornar(3); expect(r).equal(3); }); })',
@@ -104,7 +104,7 @@ module.exports = {
       {
         topicId: 6,
         name: 'Exercício 11',
-        wording: 'Texto do enunciado da questão',
+        wording: 'Texto do enunciado da questão Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to.',
         example: 'Quando enviado 10 e 5 retorna 15',
         defaultCode: 'function soma(param1, param2) {}',
         test: 'describe("soma", () => { it("Retorna 9 quando passado 5 e 4", () => { const r = soma(5, 4); expect(r).equal(9); }); it("Retorna 3 quando passado 1 e 2", () => { const r = soma(1, 2); expect(r).equal(3); }); });',
@@ -114,7 +114,7 @@ module.exports = {
       {
         topicId: 6,
         name: 'Exercício 12',
-        wording: 'Texto do enunciado da questão',
+        wording: 'Texto do enunciado da questão Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to.',
         example: 'Quando enviado 10 e 5 retorna 5',
         defaultCode: 'function subtrair(param1, param2) {}',
         test: 'describe("subtrair", () => { it("Retorna 1 quando passado 5 e 4", () => { const r = subtrair(5, 4); expect(r).equal(1); }); it("Retorna 3 quando passado 6 e 3", () => { const r = subtrair(6, 3); expect(r).equal(3); }); });',
@@ -124,7 +124,7 @@ module.exports = {
       {
         topicId: 7,
         name: 'Exercício 13',
-        wording: 'Texto do enunciado da questão',
+        wording: 'Texto do enunciado da questão Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to.',
         example: 'Quando enviado 10 retorna 10',
         defaultCode: 'function retornar(param) {}',
         test: 'describe("retornar", () => { it("Retorna 5 quando passado 5", () => { const r = retornar(5); expect(r).equal(5); }); it("Retorna 3 quando passado 3", () => { const r = retornar(3); expect(r).equal(3); }); })',
@@ -134,7 +134,7 @@ module.exports = {
       {
         topicId: 7,
         name: 'Exercício 14',
-        wording: 'Texto do enunciado da questão',
+        wording: 'Texto do enunciado da questão Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to.',
         example: 'Quando enviado 10 e 5 retorna 15',
         defaultCode: 'function soma(param1, param2) {}',
         test: 'describe("soma", () => { it("Retorna 9 quando passado 5 e 4", () => { const r = soma(5, 4); expect(r).equal(9); }); it("Retorna 3 quando passado 1 e 2", () => { const r = soma(1, 2); expect(r).equal(3); }); });',
@@ -144,7 +144,7 @@ module.exports = {
       {
         topicId: 8,
         name: 'Exercício 15',
-        wording: 'Texto do enunciado da questão',
+        wording: 'Texto do enunciado da questão Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to.',
         example: 'Quando enviado 10 e 5 retorna 5',
         defaultCode: 'function subtrair(param1, param2) {}',
         test: 'describe("subtrair", () => { it("Retorna 1 quando passado 5 e 4", () => { const r = subtrair(5, 4); expect(r).equal(1); }); it("Retorna 3 quando passado 6 e 3", () => { const r = subtrair(6, 3); expect(r).equal(3); }); });',
@@ -154,7 +154,7 @@ module.exports = {
       {
         topicId: 8,
         name: 'Exercício 16',
-        wording: 'Texto do enunciado da questão',
+        wording: 'Texto do enunciado da questão Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to.',
         example: 'Quando enviado 10 retorna 10',
         defaultCode: 'function retornar(param) {}',
         test: 'describe("retornar", () => { it("Retorna 5 quando passado 5", () => { const r = retornar(5); expect(r).equal(5); }); it("Retorna 3 quando passado 3", () => { const r = retornar(3); expect(r).equal(3); }); })',
@@ -164,7 +164,7 @@ module.exports = {
       {
         topicId: 9,
         name: 'Exercício 17',
-        wording: 'Texto do enunciado da questão',
+        wording: 'Texto do enunciado da questão Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to.',
         example: 'Quando enviado 10 e 5 retorna 15',
         defaultCode: 'function soma(param1, param2) {}',
         test: 'describe("soma", () => { it("Retorna 9 quando passado 5 e 4", () => { const r = soma(5, 4); expect(r).equal(9); }); it("Retorna 3 quando passado 1 e 2", () => { const r = soma(1, 2); expect(r).equal(3); }); });',
@@ -174,7 +174,7 @@ module.exports = {
       {
         topicId: 9,
         name: 'Exercício 18',
-        wording: 'Texto do enunciado da questão',
+        wording: 'Texto do enunciado da questão Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to.',
         example: 'Quando enviado 10 e 5 retorna 5',
         defaultCode: 'function subtrair(param1, param2) {}',
         test: 'describe("subtrair", () => { it("Retorna 1 quando passado 5 e 4", () => { const r = subtrair(5, 4); expect(r).equal(1); }); it("Retorna 3 quando passado 6 e 3", () => { const r = subtrair(6, 3); expect(r).equal(3); }); });',
@@ -184,7 +184,7 @@ module.exports = {
       {
         topicId: 10,
         name: 'Exercício 19',
-        wording: 'Texto do enunciado da questão',
+        wording: 'Texto do enunciado da questão Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to.',
         example: 'Quando enviado 10 retorna 10',
         defaultCode: 'function retornar(param) {}',
         test: 'describe("retornar", () => { it("Retorna 5 quando passado 5", () => { const r = retornar(5); expect(r).equal(5); }); it("Retorna 3 quando passado 3", () => { const r = retornar(3); expect(r).equal(3); }); })',
@@ -194,7 +194,7 @@ module.exports = {
       {
         topicId: 10,
         name: 'Exercício 20',
-        wording: 'Texto do enunciado da questão',
+        wording: 'Texto do enunciado da questão Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to.',
         example: 'Quando enviado 10 e 5 retorna 15',
         defaultCode: 'function soma(param1, param2) {}',
         test: 'describe("soma", () => { it("Retorna 9 quando passado 5 e 4", () => { const r = soma(5, 4); expect(r).equal(9); }); it("Retorna 3 quando passado 1 e 2", () => { const r = soma(1, 2); expect(r).equal(3); }); });',
@@ -204,7 +204,7 @@ module.exports = {
       {
         topicId: 11,
         name: 'Exercício 21',
-        wording: 'Texto do enunciado da questão',
+        wording: 'Texto do enunciado da questão Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to.',
         example: 'Quando enviado 10 e 5 retorna 5',
         defaultCode: 'function subtrair(param1, param2) {}',
         test: 'describe("subtrair", () => { it("Retorna 1 quando passado 5 e 4", () => { const r = subtrair(5, 4); expect(r).equal(1); }); it("Retorna 3 quando passado 6 e 3", () => { const r = subtrair(6, 3); expect(r).equal(3); }); });',
@@ -214,7 +214,7 @@ module.exports = {
       {
         topicId: 11,
         name: 'Exercício 22',
-        wording: 'Texto do enunciado da questão',
+        wording: 'Texto do enunciado da questão Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to.',
         example: 'Quando enviado 10 retorna 10',
         defaultCode: 'function retornar(param) {}',
         test: 'describe("retornar", () => { it("Retorna 5 quando passado 5", () => { const r = retornar(5); expect(r).equal(5); }); it("Retorna 3 quando passado 3", () => { const r = retornar(3); expect(r).equal(3); }); })',
@@ -224,7 +224,7 @@ module.exports = {
       {
         topicId: 12,
         name: 'Exercício 23',
-        wording: 'Texto do enunciado da questão',
+        wording: 'Texto do enunciado da questão Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to.',
         example: 'Quando enviado 10 e 5 retorna 15',
         defaultCode: 'function soma(param1, param2) {}',
         test: 'describe("soma", () => { it("Retorna 9 quando passado 5 e 4", () => { const r = soma(5, 4); expect(r).equal(9); }); it("Retorna 3 quando passado 1 e 2", () => { const r = soma(1, 2); expect(r).equal(3); }); });',
@@ -234,7 +234,7 @@ module.exports = {
       {
         topicId: 12,
         name: 'Exercício 24',
-        wording: 'Texto do enunciado da questão',
+        wording: 'Texto do enunciado da questão Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to.',
         example: 'Quando enviado 10 e 5 retorna 5',
         defaultCode: 'function subtrair(param1, param2) {}',
         test: 'describe("subtrair", () => { it("Retorna 1 quando passado 5 e 4", () => { const r = subtrair(5, 4); expect(r).equal(1); }); it("Retorna 3 quando passado 6 e 3", () => { const r = subtrair(6, 3); expect(r).equal(3); }); });',
@@ -244,7 +244,7 @@ module.exports = {
       {
         topicId: 13,
         name: 'Exercício 25',
-        wording: 'Texto do enunciado da questão',
+        wording: 'Texto do enunciado da questão Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to.',
         example: 'Quando enviado 10 retorna 10',
         defaultCode: 'function retornar(param) {}',
         test: 'describe("retornar", () => { it("Retorna 5 quando passado 5", () => { const r = retornar(5); expect(r).equal(5); }); it("Retorna 3 quando passado 3", () => { const r = retornar(3); expect(r).equal(3); }); })',
@@ -254,7 +254,7 @@ module.exports = {
       {
         topicId: 13,
         name: 'Exercício 26',
-        wording: 'Texto do enunciado da questão',
+        wording: 'Texto do enunciado da questão Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to.',
         example: 'Quando enviado 10 e 5 retorna 15',
         defaultCode: 'function soma(param1, param2) {}',
         test: 'describe("soma", () => { it("Retorna 9 quando passado 5 e 4", () => { const r = soma(5, 4); expect(r).equal(9); }); it("Retorna 3 quando passado 1 e 2", () => { const r = soma(1, 2); expect(r).equal(3); }); });',
@@ -264,7 +264,7 @@ module.exports = {
       {
         topicId: 14,
         name: 'Exercício 27',
-        wording: 'Texto do enunciado da questão',
+        wording: 'Texto do enunciado da questão Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to.',
         example: 'Quando enviado 10 e 5 retorna 5',
         defaultCode: 'function subtrair(param1, param2) {}',
         test: 'describe("subtrair", () => { it("Retorna 1 quando passado 5 e 4", () => { const r = subtrair(5, 4); expect(r).equal(1); }); it("Retorna 3 quando passado 6 e 3", () => { const r = subtrair(6, 3); expect(r).equal(3); }); });',
@@ -274,7 +274,7 @@ module.exports = {
       {
         topicId: 14,
         name: 'Exercício 28',
-        wording: 'Texto do enunciado da questão',
+        wording: 'Texto do enunciado da questão Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to.',
         example: 'Quando enviado 10 retorna 10',
         defaultCode: 'function retornar(param) {}',
         test: 'describe("retornar", () => { it("Retorna 5 quando passado 5", () => { const r = retornar(5); expect(r).equal(5); }); it("Retorna 3 quando passado 3", () => { const r = retornar(3); expect(r).equal(3); }); })',
@@ -284,7 +284,7 @@ module.exports = {
       {
         topicId: 15,
         name: 'Exercício 29',
-        wording: 'Texto do enunciado da questão',
+        wording: 'Texto do enunciado da questão Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to.',
         example: 'Quando enviado 10 e 5 retorna 15',
         defaultCode: 'function soma(param1, param2) {}',
         test: 'describe("soma", () => { it("Retorna 9 quando passado 5 e 4", () => { const r = soma(5, 4); expect(r).equal(9); }); it("Retorna 3 quando passado 1 e 2", () => { const r = soma(1, 2); expect(r).equal(3); }); });',
@@ -294,7 +294,7 @@ module.exports = {
       {
         topicId: 15,
         name: 'Exercício 30',
-        wording: 'Texto do enunciado da questão',
+        wording: 'Texto do enunciado da questão Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to.',
         example: 'Quando enviado 10 e 5 retorna 5',
         defaultCode: 'function subtrair(param1, param2) {}',
         test: 'describe("subtrair", () => { it("Retorna 1 quando passado 5 e 4", () => { const r = subtrair(5, 4); expect(r).equal(1); }); it("Retorna 3 quando passado 6 e 3", () => { const r = subtrair(6, 3); expect(r).equal(3); }); });',
@@ -304,7 +304,7 @@ module.exports = {
       {
         topicId: 16,
         name: 'Exercício 31',
-        wording: 'Texto do enunciado da questão',
+        wording: 'Texto do enunciado da questão Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to.',
         example: 'Quando enviado 10 retorna 10',
         defaultCode: 'function retornar(param) {}',
         test: 'describe("retornar", () => { it("Retorna 5 quando passado 5", () => { const r = retornar(5); expect(r).equal(5); }); it("Retorna 3 quando passado 3", () => { const r = retornar(3); expect(r).equal(3); }); })',
@@ -314,7 +314,7 @@ module.exports = {
       {
         topicId: 16,
         name: 'Exercício 32',
-        wording: 'Texto do enunciado da questão',
+        wording: 'Texto do enunciado da questão Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to.',
         example: 'Quando enviado 10 e 5 retorna 15',
         defaultCode: 'function soma(param1, param2) {}',
         test: 'describe("soma", () => { it("Retorna 9 quando passado 5 e 4", () => { const r = soma(5, 4); expect(r).equal(9); }); it("Retorna 3 quando passado 1 e 2", () => { const r = soma(1, 2); expect(r).equal(3); }); });',
@@ -324,7 +324,7 @@ module.exports = {
       {
         topicId: 17,
         name: 'Exercício 33',
-        wording: 'Texto do enunciado da questão',
+        wording: 'Texto do enunciado da questão Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to.',
         example: 'Quando enviado 10 e 5 retorna 5',
         defaultCode: 'function subtrair(param1, param2) {}',
         test: 'describe("subtrair", () => { it("Retorna 1 quando passado 5 e 4", () => { const r = subtrair(5, 4); expect(r).equal(1); }); it("Retorna 3 quando passado 6 e 3", () => { const r = subtrair(6, 3); expect(r).equal(3); }); });',
@@ -334,7 +334,7 @@ module.exports = {
       {
         topicId: 17,
         name: 'Exercício 34',
-        wording: 'Texto do enunciado da questão',
+        wording: 'Texto do enunciado da questão Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to.',
         example: 'Quando enviado 10 retorna 10',
         defaultCode: 'function retornar(param) {}',
         test: 'describe("retornar", () => { it("Retorna 5 quando passado 5", () => { const r = retornar(5); expect(r).equal(5); }); it("Retorna 3 quando passado 3", () => { const r = retornar(3); expect(r).equal(3); }); })',
@@ -344,7 +344,7 @@ module.exports = {
       {
         topicId: 18,
         name: 'Exercício 35',
-        wording: 'Texto do enunciado da questão',
+        wording: 'Texto do enunciado da questão Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to.',
         example: 'Quando enviado 10 e 5 retorna 15',
         defaultCode: 'function soma(param1, param2) {}',
         test: 'describe("soma", () => { it("Retorna 9 quando passado 5 e 4", () => { const r = soma(5, 4); expect(r).equal(9); }); it("Retorna 3 quando passado 1 e 2", () => { const r = soma(1, 2); expect(r).equal(3); }); });',
@@ -354,7 +354,7 @@ module.exports = {
       {
         topicId: 18,
         name: 'Exercício 36',
-        wording: 'Texto do enunciado da questão',
+        wording: 'Texto do enunciado da questão Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to.',
         example: 'Quando enviado 10 e 5 retorna 5',
         defaultCode: 'function subtrair(param1, param2) {}',
         test: 'describe("subtrair", () => { it("Retorna 1 quando passado 5 e 4", () => { const r = subtrair(5, 4); expect(r).equal(1); }); it("Retorna 3 quando passado 6 e 3", () => { const r = subtrair(6, 3); expect(r).equal(3); }); });',
@@ -364,7 +364,7 @@ module.exports = {
       {
         topicId: 19,
         name: 'Exercício 37',
-        wording: 'Texto do enunciado da questão',
+        wording: 'Texto do enunciado da questão Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to.',
         example: 'Quando enviado 10 retorna 10',
         defaultCode: 'function retornar(param) {}',
         test: 'describe("retornar", () => { it("Retorna 5 quando passado 5", () => { const r = retornar(5); expect(r).equal(5); }); it("Retorna 3 quando passado 3", () => { const r = retornar(3); expect(r).equal(3); }); })',
@@ -374,7 +374,7 @@ module.exports = {
       {
         topicId: 19,
         name: 'Exercício 38',
-        wording: 'Texto do enunciado da questão',
+        wording: 'Texto do enunciado da questão Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to.',
         example: 'Quando enviado 10 e 5 retorna 15',
         defaultCode: 'function soma(param1, param2) {}',
         test: 'describe("soma", () => { it("Retorna 9 quando passado 5 e 4", () => { const r = soma(5, 4); expect(r).equal(9); }); it("Retorna 3 quando passado 1 e 2", () => { const r = soma(1, 2); expect(r).equal(3); }); });',
@@ -384,7 +384,7 @@ module.exports = {
       {
         topicId: 20,
         name: 'Exercício 39',
-        wording: 'Texto do enunciado da questão',
+        wording: 'Texto do enunciado da questão Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to.',
         example: 'Quando enviado 10 e 5 retorna 5',
         defaultCode: 'function subtrair(param1, param2) {}',
         test: 'describe("subtrair", () => { it("Retorna 1 quando passado 5 e 4", () => { const r = subtrair(5, 4); expect(r).equal(1); }); it("Retorna 3 quando passado 6 e 3", () => { const r = subtrair(6, 3); expect(r).equal(3); }); });',
@@ -394,7 +394,7 @@ module.exports = {
       {
         topicId: 20,
         name: 'Exercício 40',
-        wording: 'Texto do enunciado da questão',
+        wording: 'Texto do enunciado da questão Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to.',
         example: 'Quando enviado 10 retorna 10',
         defaultCode: 'function retornar(param) {}',
         test: 'describe("retornar", () => { it("Retorna 5 quando passado 5", () => { const r = retornar(5); expect(r).equal(5); }); it("Retorna 3 quando passado 3", () => { const r = retornar(3); expect(r).equal(3); }); })',

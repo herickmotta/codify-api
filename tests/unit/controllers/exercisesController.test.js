@@ -24,6 +24,9 @@ describe('exercisesController.findExerciseById', () => {
       id: 1,
       name: 'Exercise Test',
       wording: 'Exercise wording text',
+      example: 'Should return 10',
+      defaultCode: 'function myFunction(param) {}',
+      test: 'describe("functionToTest", () => { ... });',
     };
     const validExerciseId = 1;
 
@@ -51,6 +54,9 @@ describe('exercisesController.createExercise', () => {
       id: 1,
       name: 'This is a name',
       wording: 'Exercise wording text',
+      example: 'Should return 10',
+      defaultCode: 'function myFunction(param) {}',
+      test: 'describe("functionToTest", () => { ... });',
     };
     await Exercise.findOne.mockResolvedValue(null);
     await Exercise.create.mockResolvedValue(exercise);
@@ -67,6 +73,9 @@ describe('exercisesController.editExercise', () => {
       id: 1,
       name: 'This is a name',
       wording: 'Exercise wording text',
+      example: 'Should return 10',
+      defaultCode: 'function myFunction(param) {}',
+      test: 'describe("functionToTest", () => { ... });',
     };
     await Exercise.findByPk.mockResolvedValue(null);
 
@@ -86,6 +95,9 @@ describe('exercisesController.editExercise', () => {
       id: 1,
       name: 'This is a name',
       wording: 'Exercise wording text',
+      example: 'Should return 10',
+      defaultCode: 'function myFunction(param) {}',
+      test: 'describe("functionToTest", () => { ... });',
       save: async () => Promise.resolve(),
     });
 
@@ -95,6 +107,9 @@ describe('exercisesController.editExercise', () => {
       id: 1,
       name: 'This is a edited name',
       wording: 'Exercise wording text',
+      example: 'Should return 10',
+      defaultCode: 'function myFunction(param) {}',
+      test: 'describe("functionToTest", () => { ... });',
     }));
   });
 
@@ -107,6 +122,9 @@ describe('exercisesController.editExercise', () => {
       id: 1,
       name: 'This is a name',
       wording: 'Exercise wording text',
+      example: 'Should return 10',
+      defaultCode: 'function myFunction(param) {}',
+      test: 'describe("functionToTest", () => { ... });',
       save: async () => Promise.resolve(),
     });
 
@@ -116,6 +134,9 @@ describe('exercisesController.editExercise', () => {
       id: 1,
       name: 'This is a name',
       wording: 'Exercise edited wording text',
+      example: 'Should return 10',
+      defaultCode: 'function myFunction(param) {}',
+      test: 'describe("functionToTest", () => { ... });',
     }));
   });
 
@@ -129,6 +150,9 @@ describe('exercisesController.editExercise', () => {
       id: 1,
       name: 'This is a name',
       wording: 'Exercise wording text',
+      example: 'Should return 10',
+      defaultCode: 'function myFunction(param) {}',
+      test: 'describe("functionToTest", () => { ... });',
       save: async () => Promise.resolve(),
     });
 
@@ -138,6 +162,9 @@ describe('exercisesController.editExercise', () => {
       id: 1,
       name: 'This is a edited name',
       wording: 'Exercise edited wording text',
+      example: 'Should return 10',
+      defaultCode: 'function myFunction(param) {}',
+      test: 'describe("functionToTest", () => { ... });',
     }));
   });
 });

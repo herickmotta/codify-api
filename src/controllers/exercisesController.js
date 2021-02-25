@@ -25,13 +25,16 @@ class ExercisesController {
 
   async editExercise(exerciseParams) {
     const {
-      id, name, wording,
+      id, name, wording, example, defaultCode, test,
     } = exerciseParams;
     const exercise = await Exercise.findByPk(id);
     if (!exercise) throw new NotFoundError('Exercise not found');
 
     if (name) exercise.name = name;
     if (wording) exercise.wording = wording;
+    if (example) exercise.example = example;
+    if (defaultCode) exercise.defaultCode = defaultCode;
+    if (test) exercise.test = test;
 
     await exercise.save();
     return exercise;
