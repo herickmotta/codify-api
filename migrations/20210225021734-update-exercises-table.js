@@ -1,7 +1,7 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.addColumn('exercises', 'test', {
-      type: Sequelize.STRING,
+      type: Sequelize.TEXT,
       allowNull: false,
     });
   },

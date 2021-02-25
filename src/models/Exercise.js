@@ -19,7 +19,7 @@ Exercise.init({
     allowNull: false,
   },
   wording: {
-    type: Sequelize.STRING,
+    type: Sequelize.TEXT,
     allowNull: false,
   },
   example: {
@@ -27,11 +27,11 @@ Exercise.init({
     allowNull: false,
   },
   defaultCode: {
-    type: Sequelize.STRING,
+    type: Sequelize.TEXT,
     allowNull: false,
   },
   test: {
-    type: Sequelize.STRING,
+    type: Sequelize.TEXT,
     allowNull: false,
   },
 }, {
