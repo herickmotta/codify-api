@@ -155,7 +155,7 @@ class UsersController {
   }
 
   generateUrl(id, token) {
-    return `http://localhost:3000/redefine-password/${id}/${token}`;
+    return `https://front-user-codify.vercel.app/redefine-password/${id}/${token}`;
   }
 
   async sendEmail(email, name, url) {
