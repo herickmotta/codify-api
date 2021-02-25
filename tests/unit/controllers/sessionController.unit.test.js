@@ -2,6 +2,7 @@
 const sessionController = require('../../../src/controllers/sessionController');
 const NotFoundError = require('../../../src/errors/NotFoundError');
 const UnauthorizedError = require('../../../src/errors/UnauthorizedError');
+
 const client = require('../../../src/utils/redis');
 
 jest.mock('jsonwebtoken', () => ({

@@ -23,6 +23,10 @@ describe('exercisesController.findExerciseById', () => {
     const exercise = {
       id: 1,
       name: 'Exercise Test',
+      wording: 'Exercise wording text',
+      example: 'Should return 10',
+      defaultCode: 'function myFunction(param) {}',
+      test: 'describe("functionToTest", () => { ... });',
     };
     const validExerciseId = 1;
 
@@ -49,6 +53,10 @@ describe('exercisesController.createExercise', () => {
     const exercise = {
       id: 1,
       name: 'This is a name',
+      wording: 'Exercise wording text',
+      example: 'Should return 10',
+      defaultCode: 'function myFunction(param) {}',
+      test: 'describe("functionToTest", () => { ... });',
     };
     await Exercise.findOne.mockResolvedValue(null);
     await Exercise.create.mockResolvedValue(exercise);
@@ -64,6 +72,10 @@ describe('exercisesController.editExercise', () => {
     const exercise = {
       id: 1,
       name: 'This is a name',
+      wording: 'Exercise wording text',
+      example: 'Should return 10',
+      defaultCode: 'function myFunction(param) {}',
+      test: 'describe("functionToTest", () => { ... });',
     };
     await Exercise.findByPk.mockResolvedValue(null);
 
@@ -74,7 +86,7 @@ describe('exercisesController.editExercise', () => {
     expect(fn).rejects.toThrow(NotFoundError);
   });
 
-  it('Should return a edited exercise', async () => {
+  it('Should return a edited exercise name', async () => {
     const editedExercise = {
       id: 1,
       name: 'This is a edited name',
@@ -82,6 +94,10 @@ describe('exercisesController.editExercise', () => {
     await Exercise.findByPk.mockResolvedValue({
       id: 1,
       name: 'This is a name',
+      wording: 'Exercise wording text',
+      example: 'Should return 10',
+      defaultCode: 'function myFunction(param) {}',
+      test: 'describe("functionToTest", () => { ... });',
       save: async () => Promise.resolve(),
     });
 
@@ -90,6 +106,65 @@ describe('exercisesController.editExercise', () => {
     expect(result).toEqual(expect.objectContaining({
       id: 1,
       name: 'This is a edited name',
+      wording: 'Exercise wording text',
+      example: 'Should return 10',
+      defaultCode: 'function myFunction(param) {}',
+      test: 'describe("functionToTest", () => { ... });',
+    }));
+  });
+
+  it('Should return a edited exercise wording', async () => {
+    const editedExercise = {
+      id: 1,
+      wording: 'Exercise edited wording text',
+    };
+    await Exercise.findByPk.mockResolvedValue({
+      id: 1,
+      name: 'This is a name',
+      wording: 'Exercise wording text',
+      example: 'Should return 10',
+      defaultCode: 'function myFunction(param) {}',
+      test: 'describe("functionToTest", () => { ... });',
+      save: async () => Promise.resolve(),
+    });
+
+    const result = await exercisesController.editExercise(editedExercise);
+
+    expect(result).toEqual(expect.objectContaining({
+      id: 1,
+      name: 'This is a name',
+      wording: 'Exercise edited wording text',
+      example: 'Should return 10',
+      defaultCode: 'function myFunction(param) {}',
+      test: 'describe("functionToTest", () => { ... });',
+    }));
+  });
+
+  it('Should return a edited exercise name and wording', async () => {
+    const editedExercise = {
+      id: 1,
+      name: 'This is a edited name',
+      wording: 'Exercise edited wording text',
+    };
+    await Exercise.findByPk.mockResolvedValue({
+      id: 1,
+      name: 'This is a name',
+      wording: 'Exercise wording text',
+      example: 'Should return 10',
+      defaultCode: 'function myFunction(param) {}',
+      test: 'describe("functionToTest", () => { ... });',
+      save: async () => Promise.resolve(),
+    });
+
+    const result = await exercisesController.editExercise(editedExercise);
+
+    expect(result).toEqual(expect.objectContaining({
+      id: 1,
+      name: 'This is a edited name',
+      wording: 'Exercise edited wording text',
+      example: 'Should return 10',
+      defaultCode: 'function myFunction(param) {}',
+      test: 'describe("functionToTest", () => { ... });',
     }));
   });
 });

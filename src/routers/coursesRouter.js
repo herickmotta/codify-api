@@ -72,20 +72,7 @@ router.get('/users/not-started', authenticationMiddleware, async (req, res) => {
   try {
     const courses = await coursesController.getAllCoursesNotStarted(userId);
 
-    const cleanedCourses = cleanCourses(courses);
-
-    return res.status(200).send(cleanedCourses);
-  } catch (e) {
-    return res.sendStatus(500);
-  }
-});
-
-router.get('/last-seen', authenticationMiddleware, async (req, res) => {
-  const { userId } = req;
-  try {
-    const course = await coursesController.getLastCourseSeen(userId);
-
-    return res.status(200).send(course);
+    return res.status(200).send(courses);
   } catch (e) {
     return res.sendStatus(500);
   }

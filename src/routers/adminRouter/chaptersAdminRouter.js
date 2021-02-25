@@ -11,7 +11,6 @@ router.get('/', async (req, res) => {
     const filter = JSON.parse(req.query.filter);
     courseId = filter.courseId;
   }
-
   const chapters = await chaptersController.getAllChapters(req.queryConfig, courseId);
   const total = (await chaptersController.getAllChapters()).length;
   res.set({
@@ -36,7 +35,7 @@ router.get('/:id', async (req, res) => {
 router.post('/', async (req, res) => {
   const { error } = chapterSchemas.postChapter.validate(req.body);
   if (error) return res.status(422).send({ error: error.details[0].message });
-  
+
   try {
     const chapter = await chaptersController.createChapter(req.body);
     return res.status(201).send(chapter);

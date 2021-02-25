@@ -26,14 +26,23 @@ describe('topicsController.getTopicsData', () => {
     const topic = {
       chapterId: 1,
       name: 'Topic from chapter 1',
-      theories: [],
-      exercises: [],
+      theory: [],
+      exercises: [
+        { exercise: [] },
+        { exercise: [] },
+      ],
+    };
+
+    const expected = {
+      chapterId: 1,
+      name: 'Topic from chapter 1',
+      activities: [topic.theory, ...topic.exercises],
     };
 
     Topic.findByPk.mockResolvedValue(topic);
 
     const result = await topicsController.getTopicsData(validTopicId, validUserId);
 
-    expect(result).toEqual(expect.objectContaining({ ...topic }));
+    expect(result).toEqual(expect.objectContaining({ ...expected }));
   });
 });

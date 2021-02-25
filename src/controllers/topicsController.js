@@ -85,12 +85,17 @@ class TopicsController {
     if (!topic) throw new NotFoundError('Topic not found');
 
     const exercises = await Exercise.findAll({ where: { topicId } });
-    const { id: theoryId } = await Theory.findOne({ where: { topicId } });
+
+    const theory = await Theory.findOne({ where: { topicId } });
 
     const exercisesId = exercises.map((exercise) => exercise.id);
 
-    await ExerciseDone.destroy({ where: { id: exercisesId } });
-    await TheoryDone.destroy({ where: { id: theoryId } });
+    if (exercises) {
+      await ExerciseDone.destroy({ where: { exerciseId: exercisesId } });
+    }
+    if (theory) {
+      await TheoryDone.destroy({ where: { theoryId: theory.id } });
+    }
     await Exercise.destroy({ where: { topicId } });
     await Theory.destroy({ where: { topicId } });
 
