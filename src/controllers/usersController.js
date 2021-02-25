@@ -128,6 +128,13 @@ class UsersController {
 
     return progressList;
   }
+
+  sendEmailToRecoverPassword(userData) {
+    const { id, email, name} = userData;
+    const url = await this.generateUrl(id);
+
+    this.sendEmail(email, name, url);
+  }
 }
 
 module.exports = new UsersController();

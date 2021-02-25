@@ -10,6 +10,7 @@ const authenticationMiddleware = require('../middlewares/authenticationMiddlewar
 const UnauthorizedError = require('../errors/UnauthorizedError');
 const lastTaskSeenController = require('../controllers/lastTaskSeenController');
 const lastTaskSeenMiddleware = require('../middlewares/lastTaskSeenMiddleware');
+const recoverPasswordMiddleware = require('../middlewares/recoverPasswordMiddleware');
 
 router.post('/signup', signUpMiddleware, async (req, res) => {
   const user = await usersController.create(req.body);
@@ -84,6 +85,14 @@ router.get('/courses/:courseId/last-task-seen', authenticationMiddleware, async 
   const lastTaskSeen = await lastTaskSeenController.getLastTaskSeen(userId, courseId);
 
   return res.status(200).send(lastTaskSeen);
+});
+
+router.post('/recover-password', recoverPasswordMiddleware, async (req, res) => {
+  const { userData } = req;
+
+  await usersController.sendEmailToRecoverPassword(userData);
+
+  return res.sendStatus(200);
 });
 
 module.exports = router;
