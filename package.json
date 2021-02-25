@@ -17,6 +17,7 @@
   "license": "ISC",
   "dependencies": {
     "@sendgrid/mail": "^7.4.2",
+    "async-redis": "^1.1.7",
     "bcrypt": "^5.0.0",
     "connect-redis": "^5.1.0",
     "cors": "^2.8.5",

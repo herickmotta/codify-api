@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const NotFoundError = require('../errors/NotFoundError');
+const UnauthorizedError = require('../errors/UnauthorizedError');
 const client = require('../utils/redis');
 
 class SessionController {
@@ -36,9 +37,15 @@ class SessionController {
   }
 
   async createRecoverPasswordSession(id, token) {
-    const timeToExpires = { expiresIn: 60 * 60 * 24 };
+    const timeToExpires = { expiresIn: 60 * 10 };
 
     client.setex(`${id}-recover-password`, timeToExpires.expiresIn, token);
+  }
+
+  async verifySessionToRedefinePassword(id, tokenToVerify) {
+    const userToken = await client.get(`${id}-recover-password`);
+
+    if (tokenToVerify !== userToken) throw new UnauthorizedError();
   }
 }
 

@@ -11,7 +11,7 @@ async function recoverPasswordMiddleware(req, res, next) {
   const { email } = req.body;
 
   const user = await User.findOne({ where: { email } });
-  if (!user) return res.sendStatus(404);
+  if (!user) return res.status(404).send({ error: 'There is not a account with this email' });
 
   req.userData = { id: user.id, email: user.email, name: user.name };
 

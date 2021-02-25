@@ -24,6 +24,7 @@ const NotFoundError = require('../errors/NotFoundError');
 const exercisesController = require('./exercisesController');
 const theoriesController = require('./theoriesController');
 const sessionController = require('./sessionController');
+const htmlEmail = require('../utils/htmlEmail');
 
 class UsersController {
   async create(userData) {
@@ -140,20 +141,21 @@ class UsersController {
 
   async sendEmailToRecoverPassword(userData) {
     const { id, email, name } = userData;
-    const { url, token } = this.generateUrl(id);
-
-    await this.sendEmail(email, name, url);
+    const token = uuidv4();
 
     await sessionController.createRecoverPasswordSession(id, token);
+    const url = this.generateUrl(id, token);
 
-    return true;
+    await this.sendEmail(email, name, url);
   }
 
-  generateUrl(id) {
-    const token = uuidv4();
-    const url = `localhost:3000/redefine-password/?id=${id}&token=${token}`;
+  async redefinePassword(password, user) {
+    user.password = bcrypt.hashSync(password, 10);
+    await user.save();
+  }
 
-    return { url, token };
+  generateUrl(id, token) {
+    return `http://localhost:3000/redefine-password/?id=${id}&token=${token}`;
   }
 
   async sendEmail(email, name, url) {
@@ -162,6 +164,7 @@ class UsersController {
       from: 'codifyschools@gmail.com',
       subject: 'Recover your password',
       text: `Hello, ${name}. To redefine a new password access this link: ${url}`,
+      html: htmlEmail(name, url),
     };
 
     await sgMail.send(msg);
