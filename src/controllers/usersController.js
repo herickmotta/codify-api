@@ -155,15 +155,14 @@ class UsersController {
   }
 
   generateUrl(id, token) {
-    return `http://localhost:3000/redefine-password/?id=${id}&token=${token}`;
+    return `http://localhost:3000/redefine-password/${id}/${token}`;
   }
 
   async sendEmail(email, name, url) {
     const msg = {
-      to: 'thiribeiro142@gmail.com', // acertar para o email do usuário
+      to: email,
       from: 'codifyschools@gmail.com',
       subject: 'Recover your password',
-      text: `Hello, ${name}. To redefine a new password access this link: ${url}`,
       html: htmlEmail(name, url),
     };
 
