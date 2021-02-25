@@ -13,6 +13,7 @@ const activitiesRouter = require('./routers/activitiesRouter');
 const adminRouter = require('./routers/adminRouter');
 const NotFoundError = require('./errors/NotFoundError');
 const getQueriesMiddleware = require('./middlewares/getQueriesMiddleware');
+const UnauthorizedError = require('./errors/UnauthorizedError');
 
 const app = express();
 app.use(cors());
@@ -31,6 +32,7 @@ app.use('/api/v1/admin', getQueriesMiddleware, adminRouter);
 app.use((error, req, res, next) => {
   console.log(error);
   if (error instanceof NotFoundError) return res.status(404).send({ error: 'Not Found Error' });
+  if (error instanceof UnauthorizedError) return res.status(401).send({ error: 'Unauthorized' });
 
   return res.sendStatus(500);
 });

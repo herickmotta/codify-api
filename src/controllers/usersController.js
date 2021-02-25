@@ -1,5 +1,13 @@
 /* eslint-disable no-param-reassign */
+const { v4: uuidv4 } = require('uuid');
+
+require('dotenv').config();
+
 const bcrypt = require('bcrypt');
+const sgMail = require('@sendgrid/mail');
+
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+
 const User = require('../models/User');
 const Course = require('../models/Course');
 const CourseUser = require('../models/CourseUser');
@@ -12,6 +20,8 @@ const ExerciseDone = require('../models/ExerciseDone');
 const NotFoundError = require('../errors/NotFoundError');
 const exercisesController = require('./exercisesController');
 const theoriesController = require('./theoriesController');
+const sessionController = require('./sessionController');
+const htmlEmail = require('../utils/htmlEmail');
 
 class UsersController {
   async create(userData) {
@@ -123,6 +133,36 @@ class UsersController {
     });
 
     return progressList;
+  }
+
+  async sendEmailToRecoverPassword(userData) {
+    const { id, email, name } = userData;
+    const token = uuidv4();
+
+    await sessionController.createRecoverPasswordSession(id, token);
+    const url = this.generateUrl(id, token);
+
+    await this.sendEmail(email, name, url);
+  }
+
+  async redefinePassword(password, user) {
+    user.password = bcrypt.hashSync(password, 10);
+    await user.save();
+  }
+
+  generateUrl(id, token) {
+    return `https://front-user-codify.vercel.app/redefine-password/${id}/${token}`;
+  }
+
+  async sendEmail(email, name, url) {
+    const msg = {
+      to: email,
+      from: 'codifyschools@gmail.com',
+      subject: 'Recover your password',
+      html: htmlEmail(name, url),
+    };
+
+    await sgMail.send(msg);
   }
 }
 

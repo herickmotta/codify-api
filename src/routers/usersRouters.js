@@ -2,14 +2,16 @@
 const router = require('express').Router();
 
 const usersController = require('../controllers/usersController');
+const sessionController = require('../controllers/sessionController');
 const userSchemas = require('../schemas/userSchemas');
 const authenticationController = require('../controllers/authenticationController');
-const sessionController = require('../controllers/sessionController');
 const signUpMiddleware = require('../middlewares/signUpMiddleware');
 const authenticationMiddleware = require('../middlewares/authenticationMiddleware');
 const UnauthorizedError = require('../errors/UnauthorizedError');
 const lastTaskSeenController = require('../controllers/lastTaskSeenController');
 const lastTaskSeenMiddleware = require('../middlewares/lastTaskSeenMiddleware');
+const recoverPasswordMiddleware = require('../middlewares/recoverPasswordMiddleware');
+const verifySessionToRedefinePasswordMiddleware = require('../middlewares/verifySessionToRedefinePasswordMiddleware');
 
 router.post('/signup', signUpMiddleware, async (req, res) => {
   const user = await usersController.create(req.body);
@@ -84,6 +86,20 @@ router.get('/courses/:courseId/last-task-seen', authenticationMiddleware, async 
   const lastTaskSeen = await lastTaskSeenController.getLastTaskSeen(userId, courseId);
 
   return res.status(200).send(lastTaskSeen);
+});
+
+router.post('/recover-password', recoverPasswordMiddleware, async (req, res) => {
+  const { userData } = req;
+
+  await usersController.sendEmailToRecoverPassword(userData);
+
+  return res.sendStatus(200);
+});
+
+router.put('/redefine-password', verifySessionToRedefinePasswordMiddleware, async (req, res) => {
+  await usersController.redefinePassword(req.body.password, req.user);
+
+  return res.sendStatus(200);
 });
 
 module.exports = router;

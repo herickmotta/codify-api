@@ -1,20 +1,33 @@
 /* eslint-disable no-undef */
+jest.mock('@sendgrid/mail');
+const sgMail = require('@sendgrid/mail');
+const bcrypt = require('bcrypt');
 const usersController = require('../../../src/controllers/usersController');
+const exercisesController = require('../../../src/controllers/exercisesController');
+const theoriesController = require('../../../src/controllers/theoriesController');
+const sessionController = require('../../../src/controllers/sessionController');
 
 const User = require('../../../src/models/User');
 const Course = require('../../../src/models/Course');
 const Chapter = require('../../../src/models/Chapter');
+const CourseUser = require('../../../src/models/CourseUser');
 
 jest.mock('../../../src/models/User');
 jest.mock('../../../src/models/Course');
 jest.mock('../../../src/models/Chapter');
+jest.mock('../../../src/models/CourseUser');
 
 const NotFoundError = require('../../../src/errors/NotFoundError');
+const htmlEmail = require('../../../src/utils/htmlEmail');
 
 jest.mock('sequelize');
 
 jest.mock('bcrypt', () => ({
   hashSync: (password) => password,
+}));
+
+jest.mock('uuid', () => ({
+  v4: () => '1234',
 }));
 
 describe('signUpUser', () => {
@@ -35,6 +48,12 @@ describe('signUpUser', () => {
 
 describe('getUserProgress', () => {
   it('returns the progress value', async () => {
+    const mockedCourseUser = {
+      id: 1,
+      userId: 1,
+      courseId: 1,
+    };
+
     const mockedCourse = {
       id: 1,
       name: 'JavaScript do zero!',
@@ -97,14 +116,15 @@ describe('getUserProgress', () => {
       theoryId: 1,
     }];
 
-    const spy = jest.spyOn(usersController, '_getExercisesDone');
+    const spy = jest.spyOn(exercisesController, 'getExercisesDone');
     spy.mockImplementation(() => mockedAllExercisesDone);
 
-    const spyy = jest.spyOn(usersController, '_getTheoriesDone');
+    const spyy = jest.spyOn(theoriesController, 'getTheoriesDone');
     spyy.mockImplementation(() => mockedAllTheoriesDone);
 
     const expected = { progress: 50 };
 
+    CourseUser.findOne.mockResolvedValue(mockedCourseUser);
     Course.findByPk.mockResolvedValue(mockedCourse);
 
     const result = await usersController.getUserProgress(1, 1);
@@ -154,13 +174,14 @@ describe('getUserProgress', () => {
       theoryId: 1,
     }];
 
-    const spy = jest.spyOn(usersController, '_getExercisesDone');
+    const spy = jest.spyOn(exercisesController, 'getExercisesDone');
     spy.mockImplementation(() => mockedAllExercisesDone);
 
-    const spyy = jest.spyOn(usersController, '_getTheoriesDone');
+    const spyy = jest.spyOn(theoriesController, 'getTheoriesDone');
     spyy.mockImplementation(() => mockedAllTheoriesDone);
 
     Course.findByPk.mockResolvedValue(mockedCourse);
+    CourseUser.findOne.mockResolvedValue(mockedCourse);
 
     const fn = async () => {
       await usersController.getUserProgress(1, 1);
@@ -382,5 +403,52 @@ describe('getTopicsProgressByChapter', () => {
 
     const result = await usersController.getTopicsProgressByChapter(1, 1, 1);
     expect(result).toEqual(expected);
+  });
+});
+
+describe('sendEmailToRecoverPassword', () => {
+  it('should call sgMail with message', async () => {
+    const userData = {
+      id: 1,
+      email: 'jose@jose.com',
+      name: 'Jose',
+    };
+
+    const msg = {
+      to: userData.email,
+      from: 'codifyschools@gmail.com',
+      subject: 'Recover your password',
+      html: htmlEmail(userData.name, 'http://localhost:3000/'),
+    };
+
+    const spyCreateSession = jest.spyOn(sessionController, 'createRecoverPasswordSession');
+    spyCreateSession.mockImplementation(() => {});
+    const spyGenerateUrl = jest.spyOn(usersController, 'generateUrl');
+    spyGenerateUrl.mockImplementation(() => 'http://localhost:3000/');
+
+    await usersController.sendEmailToRecoverPassword(userData);
+
+    expect(sgMail.send).toHaveBeenCalled();
+    expect(sgMail.send).toHaveBeenCalledWith(msg);
+  });
+});
+
+describe('redefinePassword', () => {
+  it('should call bcrypt with message', async () => {
+    const password = '12345678';
+    const user = {
+      id: 1,
+      name: 'Jose',
+      password: '87654321',
+      save: () => ({}),
+    };
+
+    const spy = jest.spyOn(bcrypt, 'hashSync');
+    spy.mockImplementation((a) => a);
+
+    await usersController.redefinePassword(password, user);
+
+    expect(bcrypt.hashSync).toHaveBeenCalled();
+    expect(bcrypt.hashSync).toHaveBeenCalledWith(password, 10);
   });
 });
