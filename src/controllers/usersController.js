@@ -2,7 +2,15 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable max-len */
 /* eslint-disable no-param-reassign */
+const { v4: uuidv4 } = require('uuid');
+
+require('dotenv').config();
+
 const bcrypt = require('bcrypt');
+const sgMail = require('@sendgrid/mail');
+
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+
 const User = require('../models/User');
 const Course = require('../models/Course');
 const CourseUser = require('../models/CourseUser');
@@ -15,6 +23,7 @@ const ExerciseDone = require('../models/ExerciseDone');
 const NotFoundError = require('../errors/NotFoundError');
 const exercisesController = require('./exercisesController');
 const theoriesController = require('./theoriesController');
+const sessionController = require('./sessionController');
 
 class UsersController {
   async create(userData) {
@@ -129,11 +138,33 @@ class UsersController {
     return progressList;
   }
 
-  sendEmailToRecoverPassword(userData) {
-    const { id, email, name} = userData;
-    const url = await this.generateUrl(id);
+  async sendEmailToRecoverPassword(userData) {
+    const { id, email, name } = userData;
+    const { url, token } = this.generateUrl(id);
 
-    this.sendEmail(email, name, url);
+    await this.sendEmail(email, name, url);
+
+    await sessionController.createRecoverPasswordSession(id, token);
+
+    return true;
+  }
+
+  generateUrl(id) {
+    const token = uuidv4();
+    const url = `localhost:3000/redefine-password/?id=${id}&token=${token}`;
+
+    return { url, token };
+  }
+
+  async sendEmail(email, name, url) {
+    const msg = {
+      to: 'thiribeiro142@gmail.com', // acertar para o email do usuário
+      from: 'codifyschools@gmail.com',
+      subject: 'Recover your password',
+      text: `Hello, ${name}. To redefine a new password access this link: ${url}`,
+    };
+
+    await sgMail.send(msg);
   }
 }
 

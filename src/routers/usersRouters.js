@@ -90,9 +90,9 @@ router.get('/courses/:courseId/last-task-seen', authenticationMiddleware, async 
 router.post('/recover-password', recoverPasswordMiddleware, async (req, res) => {
   const { userData } = req;
 
-  await usersController.sendEmailToRecoverPassword(userData);
+  const result = await usersController.sendEmailToRecoverPassword(userData);
 
-  return res.sendStatus(200);
+  return res.status(200).send(result);
 });
 
 module.exports = router;

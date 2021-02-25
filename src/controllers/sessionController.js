@@ -34,6 +34,12 @@ class SessionController {
       }
     });
   }
+
+  async createRecoverPasswordSession(id, token) {
+    const timeToExpires = { expiresIn: 60 * 60 * 24 };
+
+    client.setex(`${id}-recover-password`, timeToExpires.expiresIn, token);
+  }
 }
 
 module.exports = new SessionController();
