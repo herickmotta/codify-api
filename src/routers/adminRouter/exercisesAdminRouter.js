@@ -9,7 +9,7 @@ router.get('/', async (req, res) => {
   let topicId = null;
   if (req.query.filter) {
     const filter = JSON.parse(req.query.filter);
-    topicId = filter.courseId;
+    topicId = filter.topicId;
   }
   const exercises = await exercisesController.getAllExercises(req.queryConfig, topicId);
   const total = (await exercisesController.getAllExercises()).length;

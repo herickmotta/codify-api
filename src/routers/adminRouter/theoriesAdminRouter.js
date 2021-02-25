@@ -9,9 +9,8 @@ router.get('/', async (req, res) => {
   let topicId = null;
   if (req.query.filter) {
     const filter = JSON.parse(req.query.filter);
-    topicId = filter.courseId;
+    topicId = filter.topicId;
   }
-
   const theories = await theoriesController.getAllTheories(req.queryConfig, topicId);
   const total = (await theoriesController.getAllTheories()).length;
   res.set({

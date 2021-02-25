@@ -82,6 +82,7 @@ class CoursesController {
 
     const chapters = await Chapter.findAll({ where: { courseId } });
     const promises = chapters.map((chapter) => chaptersController.destroyChapter(chapter.id));
+
     await Promise.all(promises);
     await course.destroy();
   }

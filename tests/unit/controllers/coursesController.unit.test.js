@@ -153,6 +153,8 @@ describe('coursesController.getAllCoursesStarted', () => {
     ];
     const userId = 2;
 
+
+    await User.findOne.mockResolvedValue({ courses });
     await User.findByPk.mockResolvedValue({ courses });
     const result = await coursesController.getAllCoursesStarted(userId);
 
