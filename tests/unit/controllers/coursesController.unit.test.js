@@ -49,9 +49,13 @@ describe('coursesController.findCourseById', () => {
               exercises: [
                 {
                   id: 1,
+                  name: 'Exercise Test 1',
+                  wording: 'Exercise wording text',
                 },
                 {
                   id: 2,
+                  name: 'Exercise Test 2',
+                  wording: 'Exercise wording text',
                 },
               ],
             },
@@ -126,7 +130,7 @@ describe('coursesController.getAllCoursesStarted', () => {
     const courses = [];
     const userId = 2;
 
-    await User.findOne.mockResolvedValue({ courses });
+    await User.findByPk.mockResolvedValue({ courses });
     const result = await coursesController.getAllCoursesStarted(userId);
 
     expect(result).toEqual(expect.objectContaining([]));
@@ -149,7 +153,9 @@ describe('coursesController.getAllCoursesStarted', () => {
     ];
     const userId = 2;
 
+
     await User.findOne.mockResolvedValue({ courses });
+    await User.findByPk.mockResolvedValue({ courses });
     const result = await coursesController.getAllCoursesStarted(userId);
 
     expect(result).toEqual(expect.objectContaining(courses));

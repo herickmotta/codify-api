@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 const NotFoundError = require('../../../src/errors/NotFoundError');
-const lessonsConstroller = require('../../../src/controllers/lessonsConstroller');
+const activitiesConstroller = require('../../../src/controllers/activitiesConstroller');
 
 jest.mock('../../../src/models/TheoryDone');
 const TheoryDone = require('../../../src/models/TheoryDone');
@@ -14,7 +14,7 @@ const Exercise = require('../../../src/models/Exercise');
 jest.mock('../../../src/models/Theory');
 const Theory = require('../../../src/models/Theory');
 
-describe('lessonsConstroller.createLessonDone', () => {
+describe('activitiesConstroller.createActivityDone', () => {
   it('Should throw an error if given id invalid', async () => {
     const courseNotFound = null;
     const invalidId = 0;
@@ -24,7 +24,7 @@ describe('lessonsConstroller.createLessonDone', () => {
     await Exercise.findByPk.mockResolvedValue(courseNotFound);
 
     const fn = async () => {
-      await lessonsConstroller.createLessonDone(invalidId, userId, type);
+      await activitiesConstroller.createActivityDone(invalidId, userId, type);
     };
 
     expect(fn).rejects.toThrow(NotFoundError);
@@ -39,7 +39,7 @@ describe('lessonsConstroller.createLessonDone', () => {
     await Theory.findByPk.mockResolvedValue(courseNotFound);
 
     const fn = async () => {
-      await lessonsConstroller.createLessonDone(invalidId, userId, type);
+      await activitiesConstroller.createActivityDone(invalidId, userId, type);
     };
 
     expect(fn).rejects.toThrow(NotFoundError);
@@ -58,7 +58,7 @@ describe('lessonsConstroller.createLessonDone', () => {
     Exercise.findByPk.mockResolvedValue(true);
     ExerciseDone.create.mockResolvedValue(newExerciseDone);
 
-    const result = await lessonsConstroller.createLessonDone(userId, exerciseId, type);
+    const result = await activitiesConstroller.createActivityDone(userId, exerciseId, type);
 
     expect(result).toBe(expected);
   });
@@ -76,7 +76,7 @@ describe('lessonsConstroller.createLessonDone', () => {
     Theory.findByPk.mockResolvedValue(true);
     TheoryDone.create.mockResolvedValue(newExerciseDone);
 
-    const result = await lessonsConstroller.createLessonDone(userId, theoryId, type);
+    const result = await activitiesConstroller.createActivityDone(userId, theoryId, type);
 
     expect(result).toBe(expected);
   });
