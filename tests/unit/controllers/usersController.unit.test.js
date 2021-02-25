@@ -1,6 +1,7 @@
 /* eslint-disable no-undef */
 jest.mock('@sendgrid/mail');
 const sgMail = require('@sendgrid/mail');
+const bcrypt = require('bcrypt');
 const usersController = require('../../../src/controllers/usersController');
 const exercisesController = require('../../../src/controllers/exercisesController');
 const theoriesController = require('../../../src/controllers/theoriesController');
@@ -179,7 +180,8 @@ describe('getUserProgress', () => {
     const spyy = jest.spyOn(theoriesController, 'getTheoriesDone');
     spyy.mockImplementation(() => mockedAllTheoriesDone);
 
-    Course.findOne.mockResolvedValue(mockedCourse);
+    Course.findByPk.mockResolvedValue(mockedCourse);
+    CourseUser.findOne.mockResolvedValue(mockedCourse);
 
     const fn = async () => {
       await usersController.getUserProgress(1, 1);
@@ -428,5 +430,25 @@ describe('sendEmailToRecoverPassword', () => {
 
     expect(sgMail.send).toHaveBeenCalled();
     expect(sgMail.send).toHaveBeenCalledWith(msg);
+  });
+});
+
+describe('redefinePassword', () => {
+  it('should call bcrypt with message', async () => {
+    const password = '12345678';
+    const user = {
+      id: 1,
+      name: 'Jose',
+      password: '87654321',
+      save: () => ({}),
+    };
+
+    const spy = jest.spyOn(bcrypt, 'hashSync');
+    spy.mockImplementation((a) => a);
+
+    await usersController.redefinePassword(password, user);
+
+    expect(bcrypt.hashSync).toHaveBeenCalled();
+    expect(bcrypt.hashSync).toHaveBeenCalledWith(password, 10);
   });
 });
