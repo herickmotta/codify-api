@@ -6,6 +6,13 @@ dotenv.config();
 module.exports = {
   development: {
     url: DB_URL,
+    dialect: 'postgres',
+    dialectOptions: {
+      ssl: {
+        require: false,
+        rejectUnauthorized: false,
+      },
+    },
   },
   test: {
     url: DB_URL,

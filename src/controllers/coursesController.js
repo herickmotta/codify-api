@@ -1,5 +1,4 @@
 /* eslint-disable no-param-reassign */
-
 const Course = require('../models/Course');
 const Chapter = require('../models/Chapter');
 const Topic = require('../models/Topic');
@@ -77,11 +76,13 @@ class CoursesController {
 
   async destroyCourse(courseId) {
     const course = await Course.findByPk(courseId);
-    if (!course) throw new NotFoundError('Chapter not found');
+    if (!course) throw new NotFoundError('Course not found');
 
     const chapters = await Chapter.findAll({ where: { courseId } });
     const promises = chapters.map((chapter) => chaptersController.destroyChapter(chapter.id));
+
     await Promise.all(promises);
+    await course.destroy();
   }
 
   async startCourse({ userId, courseId }) {
@@ -169,7 +170,7 @@ class CoursesController {
         }
         chapterData.push({ id: t.id, name: t.name, completed });
 
-        if (t.id == topicId) {
+        if (t.id === topicId) {
           currentTopicIndex = indexT;
           currentChapterIndex = indexC;
         }

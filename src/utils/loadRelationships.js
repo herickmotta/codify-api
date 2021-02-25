@@ -7,6 +7,7 @@ const Exercise = require('../models/Exercise');
 const TheoryDone = require('../models/TheoryDone');
 const ExerciseDone = require('../models/ExerciseDone');
 const CourseUser = require('../models/CourseUser');
+const LastTaskSeen = require('../models/LastTaskSeen');
 
 Course.belongsToMany(User, { through: CourseUser });
 User.belongsToMany(Course, { through: CourseUser });
@@ -28,3 +29,10 @@ User.belongsToMany(Exercise, { through: ExerciseDone });
 
 Theory.belongsToMany(User, { through: TheoryDone });
 User.belongsToMany(Theory, { through: TheoryDone });
+
+User.hasMany(LastTaskSeen);
+Course.hasMany(LastTaskSeen);
+Chapter.hasMany(LastTaskSeen);
+Topic.hasMany(LastTaskSeen);
+Theory.hasMany(LastTaskSeen);
+Exercise.hasMany(LastTaskSeen);

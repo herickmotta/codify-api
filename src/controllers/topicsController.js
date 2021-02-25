@@ -31,10 +31,18 @@ class TopicsController {
     });
     if (!topic) throw new NotFoundError('Topic not found');
 
-    const { exercises, theory } = topic;
-    await exercises.unshift(theory);
+    const {
+      id, chapterId, name, exercises, theory,
+    } = topic;
 
-    return topic;
+    const result = {
+      id,
+      chapterId,
+      name,
+      activities: [theory, ...exercises],
+    };
+
+    return result;
   }
 
   async findTopicById(topicId) {
@@ -76,6 +84,13 @@ class TopicsController {
     const topic = await Topic.findByPk(topicId);
     if (!topic) throw new NotFoundError('Topic not found');
 
+    const exercises = await Exercise.findAll({ where: { topicId } });
+    const { id: theoryId } = await Theory.findOne({ where: { topicId } });
+
+    const exercisesId = exercises.map((exercise) => exercise.id);
+
+    await ExerciseDone.destroy({ where: { id: exercisesId } });
+    await TheoryDone.destroy({ where: { id: theoryId } });
     await Exercise.destroy({ where: { topicId } });
     await Theory.destroy({ where: { topicId } });
 

@@ -6,6 +6,7 @@ const topicsController = require('../controllers/topicsController');
 const NotFoundError = require('../errors/NotFoundError');
 const ConflictError = require('../errors/ConflictError');
 const cleanCourses = require('../utils/cleanCourses');
+const lastTaskSeenController = require('../controllers/lastTaskSeenController');
 
 router.get('/:id', authenticationMiddleware, async (req, res) => {
   const courseId = +req.params.id;
@@ -40,6 +41,7 @@ router.post('/start', authenticationMiddleware, async (req, res) => {
   try {
     const course = await coursesController.findCourseById(courseId);
     await coursesController.startCourse({ userId, courseId });
+    await lastTaskSeenController.createLastTaskSeen(userId, course);
 
     return res.status(201).send({ ...course.dataValues, userId });
   } catch (exception) {
@@ -92,9 +94,9 @@ router.get('/last-seen', authenticationMiddleware, async (req, res) => {
 router.get('/:id/chapters/:chapterId/topics/:topicId', authenticationMiddleware, async (req, res) => {
   const { topicId } = req.params;
   const { userId } = req;
-  
+
   const id = parseInt(topicId, 10);
-  
+
   const result = await topicsController.getTopicsData(id, userId);
   return res.send(result);
 });
@@ -102,8 +104,10 @@ router.get('/:id/chapters/:chapterId/topics/:topicId', authenticationMiddleware,
 router.get('/:id/menu/topics/:topicId', authenticationMiddleware, async (req, res) => {
   const { id, topicId } = req.params;
   const { userId } = req;
+  const topic = parseInt(topicId, 10);
+
   try {
-    const course = await coursesController.getAllCourseDataById(id, topicId, userId);
+    const course = await coursesController.getAllCourseDataById(id, topic, userId);
 
     return res.status(200).send(course);
   } catch (exception) {
