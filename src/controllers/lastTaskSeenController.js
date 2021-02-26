@@ -22,8 +22,7 @@ class LastTaskSeenController {
       courseId, chapterId, topicId, type,
     } = updateData;
 
-    const lastTaskSeen = await LastTaskSeen.findOne({ where: { userId } });
-    lastTaskSeen.courseId = courseId;
+    const lastTaskSeen = await LastTaskSeen.findOne({ where: { userId, courseId } });
     lastTaskSeen.chapterId = chapterId;
     lastTaskSeen.topicId = topicId;
 
