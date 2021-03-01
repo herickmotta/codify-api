@@ -164,6 +164,16 @@ class UsersController {
 
     await sgMail.send(msg);
   }
+
+  async editProfile(userDataToEdit, user) {
+    const { email, name, password } = userDataToEdit;
+    if (email) user.email = email;
+    if (name) user.name = name;
+    if (password) user.password = bcrypt.hashSync(password, 10);
+
+    await user.save();
+    return { email: user.email, name: user.name };
+  }
 }
 
 module.exports = new UsersController();

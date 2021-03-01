@@ -12,6 +12,7 @@ const lastTaskSeenController = require('../controllers/lastTaskSeenController');
 const lastTaskSeenMiddleware = require('../middlewares/lastTaskSeenMiddleware');
 const recoverPasswordMiddleware = require('../middlewares/recoverPasswordMiddleware');
 const verifySessionToRedefinePasswordMiddleware = require('../middlewares/verifySessionToRedefinePasswordMiddleware');
+const editProfiledMiddleware = require('../middlewares/editProfileMiddleware');
 
 router.post('/signup', signUpMiddleware, async (req, res) => {
   const user = await usersController.create(req.body);
@@ -100,6 +101,12 @@ router.put('/redefine-password', verifySessionToRedefinePasswordMiddleware, asyn
   await usersController.redefinePassword(req.body.password, req.user);
 
   return res.sendStatus(200);
+});
+
+router.put('/edit-profile', authenticationMiddleware, editProfiledMiddleware, async (req, res) => {
+  const user = await usersController.editProfile(req.userDataToEdit, req.user);
+
+  return res.status(200).send(user);
 });
 
 module.exports = router;
