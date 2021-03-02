@@ -76,6 +76,7 @@ describe('exercisesController.editExercise', () => {
       example: 'Should return 10',
       defaultCode: 'function myFunction(param) {}',
       test: 'describe("functionToTest", () => { ... });',
+      solution: 'function myFunction(param) { return param; }',
     };
     await Exercise.findByPk.mockResolvedValue(null);
 
@@ -98,6 +99,7 @@ describe('exercisesController.editExercise', () => {
       example: 'Should return 10',
       defaultCode: 'function myFunction(param) {}',
       test: 'describe("functionToTest", () => { ... });',
+      solution: 'function myFunction(param) { return param; }',
       save: async () => Promise.resolve(),
     });
 
@@ -110,6 +112,7 @@ describe('exercisesController.editExercise', () => {
       example: 'Should return 10',
       defaultCode: 'function myFunction(param) {}',
       test: 'describe("functionToTest", () => { ... });',
+      solution: 'function myFunction(param) { return param; }',
     }));
   });
 
@@ -125,6 +128,7 @@ describe('exercisesController.editExercise', () => {
       example: 'Should return 10',
       defaultCode: 'function myFunction(param) {}',
       test: 'describe("functionToTest", () => { ... });',
+      solution: 'function myFunction(param) { return param; }',
       save: async () => Promise.resolve(),
     });
 
@@ -137,6 +141,7 @@ describe('exercisesController.editExercise', () => {
       example: 'Should return 10',
       defaultCode: 'function myFunction(param) {}',
       test: 'describe("functionToTest", () => { ... });',
+      solution: 'function myFunction(param) { return param; }',
     }));
   });
 
@@ -153,6 +158,7 @@ describe('exercisesController.editExercise', () => {
       example: 'Should return 10',
       defaultCode: 'function myFunction(param) {}',
       test: 'describe("functionToTest", () => { ... });',
+      solution: 'function myFunction(param) { return param; }',
       save: async () => Promise.resolve(),
     });
 
@@ -165,6 +171,7 @@ describe('exercisesController.editExercise', () => {
       example: 'Should return 10',
       defaultCode: 'function myFunction(param) {}',
       test: 'describe("functionToTest", () => { ... });',
+      solution: 'function myFunction(param) { return param; }',
     }));
   });
 });
