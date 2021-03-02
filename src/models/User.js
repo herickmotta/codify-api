@@ -23,10 +23,7 @@ User.init(
       type: Sequelize.STRING,
       allowNull: false,
     },
-    avatar: {
-      type: Sequelize.STRING,
-      defaultValue: null,
-    },
+
   },
 
   { sequelize, modelName: 'user' },

@@ -13,6 +13,8 @@ Image.init({
   },
   bucket: Sequelize.STRING,
   key: Sequelize.STRING,
+  userId: Sequelize.NUMBER,
+  imageUrl: Sequelize.STRING,
 }, {
   sequelize,
   modelName: 'image',

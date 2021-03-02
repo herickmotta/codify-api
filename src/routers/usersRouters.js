@@ -44,8 +44,14 @@ router.post('/signin', async (req, res) => {
 
     const userSession = await sessionController.createSession(user);
 
+    const image = await imagesController.getUserImage(userSession.id);
+    if (image) {
+      const { imageUrl } = image;
+      return res.status(201).send({ ...userSession, imageUrl });
+    }
     return res.status(201).send(userSession);
   } catch (exception) {
+    console.log(exception);
     if (exception instanceof UnauthorizedError) return res.status(401).send({ error: 'Wrong email or password' });
     return res.sendStatus(500);
   }
@@ -110,14 +116,18 @@ router.put('/redefine-password', verifySessionToRedefinePasswordMiddleware, asyn
   return res.sendStatus(200);
 });
 
-router.put('/edit-profile', authenticationMiddleware, upload.single('image'), editProfiledMiddleware, async (req, res) => {
+router.put('/edit-profile', authenticationMiddleware, editProfiledMiddleware, async (req, res) => {
   const user = await usersController.editProfile(req.userDataToEdit, req.user);
 
+  return res.status(200).send(user);
+});
+
+router.put('/edit-profile/image', authenticationMiddleware, upload.single('image'), async (req, res) => {
   const { buffer, mimetype } = req.file;
 
-  await imagesController.createImage({ buffer, mimetype }, req.userId);
+  const { imageUrl } = await imagesController.createImage({ buffer, mimetype }, req.userId);
 
-  return res.status(200).send(user);
+  return res.status(200).send({ imageUrl });
 });
 
 module.exports = router;

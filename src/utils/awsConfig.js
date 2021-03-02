@@ -8,7 +8,7 @@ const s3 = new aws.S3({
 const S3_BUCKET = process.env.AWS_BUCKET_S3;
 
 async function uploadToS3(key, buffer, mimetype) {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     s3.putObject(
       {
         Bucket: S3_BUCKET,
@@ -20,9 +20,20 @@ async function uploadToS3(key, buffer, mimetype) {
     );
   });
 }
+async function dentroyFromS3(key) {
+  return new Promise((resolve) => {
+    s3.deleteObject(
+      {
+        Bucket: S3_BUCKET,
+        Key: key,
+      },
+      () => resolve(),
+    );
+  });
+}
 
 function getSignedUrl(bucket, key, expires = 3600) {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     s3.getSignedUrl(
       'getObject',
       {
@@ -39,4 +50,4 @@ function getSignedUrl(bucket, key, expires = 3600) {
   });
 }
 
-module.exports = { uploadToS3, getSignedUrl };
+module.exports = { uploadToS3, getSignedUrl, dentroyFromS3 };
