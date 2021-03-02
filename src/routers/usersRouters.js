@@ -1,6 +1,12 @@
 /* eslint-disable max-len */
 const router = require('express').Router();
 
+const multer = require('multer');
+
+const storage = multer.memoryStorage();
+
+const upload = multer({ storage });
+
 const usersController = require('../controllers/usersController');
 const sessionController = require('../controllers/sessionController');
 const userSchemas = require('../schemas/userSchemas');
@@ -13,6 +19,7 @@ const lastTaskSeenMiddleware = require('../middlewares/lastTaskSeenMiddleware');
 const recoverPasswordMiddleware = require('../middlewares/recoverPasswordMiddleware');
 const verifySessionToRedefinePasswordMiddleware = require('../middlewares/verifySessionToRedefinePasswordMiddleware');
 const editProfiledMiddleware = require('../middlewares/editProfileMiddleware');
+const imagesController = require('../controllers/imagesController');
 
 router.post('/signup', signUpMiddleware, async (req, res) => {
   const user = await usersController.create(req.body);
@@ -103,8 +110,12 @@ router.put('/redefine-password', verifySessionToRedefinePasswordMiddleware, asyn
   return res.sendStatus(200);
 });
 
-router.put('/edit-profile', authenticationMiddleware, editProfiledMiddleware, async (req, res) => {
+router.put('/edit-profile', authenticationMiddleware, upload.single('image'), editProfiledMiddleware, async (req, res) => {
   const user = await usersController.editProfile(req.userDataToEdit, req.user);
+
+  const { buffer, mimetype } = req.file;
+
+  await imagesController.createImage({ buffer, mimetype }, req.userId);
 
   return res.status(200).send(user);
 });
