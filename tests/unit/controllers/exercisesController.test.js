@@ -27,6 +27,7 @@ describe('exercisesController.findExerciseById', () => {
       example: 'Should return 10',
       defaultCode: 'function myFunction(param) {}',
       test: 'describe("functionToTest", () => { ... });',
+      solution: 'function myFunction(param) { return param; }',
     };
     const validExerciseId = 1;
 
@@ -57,6 +58,7 @@ describe('exercisesController.createExercise', () => {
       example: 'Should return 10',
       defaultCode: 'function myFunction(param) {}',
       test: 'describe("functionToTest", () => { ... });',
+      solution: 'function myFunction(param) { return param; }',
     };
     await Exercise.findOne.mockResolvedValue(null);
     await Exercise.create.mockResolvedValue(exercise);
@@ -145,11 +147,131 @@ describe('exercisesController.editExercise', () => {
     }));
   });
 
-  it('Should return a edited exercise name and wording', async () => {
+  it('Should return a edited exercise example', async () => {
+    const editedExercise = {
+      id: 1,
+      example: 'Should return edited value',
+    };
+    await Exercise.findByPk.mockResolvedValue({
+      id: 1,
+      name: 'This is a name',
+      wording: 'Exercise wording text',
+      example: 'Should return 10',
+      defaultCode: 'function myFunction(param) {}',
+      test: 'describe("functionToTest", () => { ... });',
+      solution: 'function myFunction(param) { return param; }',
+      save: async () => Promise.resolve(),
+    });
+
+    const result = await exercisesController.editExercise(editedExercise);
+
+    expect(result).toEqual(expect.objectContaining({
+      id: 1,
+      name: 'This is a name',
+      wording: 'Exercise wording text',
+      example: 'Should return edited value',
+      defaultCode: 'function myFunction(param) {}',
+      test: 'describe("functionToTest", () => { ... });',
+      solution: 'function myFunction(param) { return param; }',
+    }));
+  });
+
+  it('Should return a edited exercise defaultCode', async () => {
+    const editedExercise = {
+      id: 1,
+      defaultCode: 'function editedFunction(param) {}',
+    };
+    await Exercise.findByPk.mockResolvedValue({
+      id: 1,
+      name: 'This is a name',
+      wording: 'Exercise wording text',
+      example: 'Should return 10',
+      defaultCode: 'function myFunction(param) {}',
+      test: 'describe("functionToTest", () => { ... });',
+      solution: 'function myFunction(param) { return param; }',
+      save: async () => Promise.resolve(),
+    });
+
+    const result = await exercisesController.editExercise(editedExercise);
+
+    expect(result).toEqual(expect.objectContaining({
+      id: 1,
+      name: 'This is a name',
+      wording: 'Exercise wording text',
+      example: 'Should return 10',
+      defaultCode: 'function editedFunction(param) {}',
+      test: 'describe("functionToTest", () => { ... });',
+      solution: 'function myFunction(param) { return param; }',
+    }));
+  });
+
+  it('Should return a edited exercise test', async () => {
+    const editedExercise = {
+      id: 1,
+      test: 'describe("editedFunctionToTest", () => { ... });',
+    };
+    await Exercise.findByPk.mockResolvedValue({
+      id: 1,
+      name: 'This is a name',
+      wording: 'Exercise wording text',
+      example: 'Should return 10',
+      defaultCode: 'function myFunction(param) {}',
+      test: 'describe("functionToTest", () => { ... });',
+      solution: 'function myFunction(param) { return param; }',
+      save: async () => Promise.resolve(),
+    });
+
+    const result = await exercisesController.editExercise(editedExercise);
+
+    expect(result).toEqual(expect.objectContaining({
+      id: 1,
+      name: 'This is a name',
+      wording: 'Exercise wording text',
+      example: 'Should return 10',
+      defaultCode: 'function myFunction(param) {}',
+      test: 'describe("editedFunctionToTest", () => { ... });',
+      solution: 'function myFunction(param) { return param; }',
+    }));
+  });
+
+  it('Should return a edited exercise solution', async () => {
+    const editedExercise = {
+      id: 1,
+      solution: 'function editedFunction(param) { return param; }',
+    };
+    await Exercise.findByPk.mockResolvedValue({
+      id: 1,
+      name: 'This is a name',
+      wording: 'Exercise wording text',
+      example: 'Should return 10',
+      defaultCode: 'function myFunction(param) {}',
+      test: 'describe("functionToTest", () => { ... });',
+      solution: 'function myFunction(param) { return param; }',
+      save: async () => Promise.resolve(),
+    });
+
+    const result = await exercisesController.editExercise(editedExercise);
+
+    expect(result).toEqual(expect.objectContaining({
+      id: 1,
+      name: 'This is a name',
+      wording: 'Exercise wording text',
+      example: 'Should return 10',
+      defaultCode: 'function myFunction(param) {}',
+      test: 'describe("functionToTest", () => { ... });',
+      solution: 'function editedFunction(param) { return param; }',
+    }));
+  });
+
+  it('Should return all exercise items edited', async () => {
     const editedExercise = {
       id: 1,
       name: 'This is a edited name',
       wording: 'Exercise edited wording text',
+      example: 'Should return edited value',
+      defaultCode: 'function editedFunction(param) {}',
+      test: 'describe("editedFunctionToTest", () => { ... });',
+      solution: 'function editedFunction(param) { return param; }',
     };
     await Exercise.findByPk.mockResolvedValue({
       id: 1,
@@ -168,10 +290,10 @@ describe('exercisesController.editExercise', () => {
       id: 1,
       name: 'This is a edited name',
       wording: 'Exercise edited wording text',
-      example: 'Should return 10',
-      defaultCode: 'function myFunction(param) {}',
-      test: 'describe("functionToTest", () => { ... });',
-      solution: 'function myFunction(param) { return param; }',
+      example: 'Should return edited value',
+      defaultCode: 'function editedFunction(param) {}',
+      test: 'describe("editedFunctionToTest", () => { ... });',
+      solution: 'function editedFunction(param) { return param; }',
     }));
   });
 });
