@@ -452,3 +452,57 @@ describe('redefinePassword', () => {
     expect(bcrypt.hashSync).toHaveBeenCalledWith(password, 10);
   });
 });
+
+describe('editProfile', () => {
+  it('should call bcrypt ', async () => {
+    const userDataToEdit = {
+      password: 'newPassword',
+    };
+
+    const user = {
+      id: 1,
+      name: 'zape',
+      email: 'zape@gamil.com',
+      password: 'oldPassword',
+      save: () => ({}),
+    };
+
+    const spy = jest.spyOn(bcrypt, 'hashSync');
+    spy.mockImplementation((password) => password);
+
+    await usersController.editProfile(userDataToEdit, user);
+
+    expect(bcrypt.hashSync).toHaveBeenCalled();
+    expect(bcrypt.hashSync).toHaveBeenCalledWith(userDataToEdit.password, 10);
+  });
+
+  it('should change name when receive a name to edit', async () => {
+    const userDataToEdit = {
+      name: 'newName',
+    };
+
+    const user = {
+      name: 'oldName',
+      save: () => ({}),
+    };
+
+    const result = await usersController.editProfile(userDataToEdit, user);
+    expect(result.name).toEqual(userDataToEdit.name);
+  });
+
+  it('should change the email and name when receive a email and name to edit', async () => {
+    const userDataToEdit = {
+      name: 'newName',
+      email: 'newEmail',
+    };
+
+    const user = {
+      name: 'oldName',
+      email: 'oldEmail',
+      save: () => ({}),
+    };
+
+    const result = await usersController.editProfile(userDataToEdit, user);
+    expect(result.name).toEqual(userDataToEdit.name);
+  });
+});

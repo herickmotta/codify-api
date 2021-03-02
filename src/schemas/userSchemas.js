@@ -15,7 +15,15 @@ const signIn = Joi.object({
     .required(),
 });
 
+const editProfile = Joi.object({
+  name: Joi.string().min(3).max(30),
+  email: Joi.string().email(),
+  password: Joi.string().min(8).max(30).pattern(/^[a-zA-Z0-9]*$/),
+  passwordConfirmation: Joi.ref('password'),
+});
+
 module.exports = {
   postUser,
   signIn,
+  editProfile,
 };
