@@ -1,52 +1,40 @@
 /* eslint-disable no-undef */
 const imagesController = require('../../../src/controllers/imagesController');
 
-jest.mock('jsonwebtoken', () => ({
-  sign: () => 'token_ultra_seguro',
+jest.mock('../../../src/utils/awsConfig');
+const awsConfig = require('../../../src/utils/awsConfig');
+
+jest.mock('../../../src/models/Image');
+const Image = require('../../../src/models/Image');
+
+jest.mock('uuid', () => ({
+  v4: () => 'genarate_uuid',
 }));
 
 describe('imagesController.createImage', () => {
-  it('Should return a session user if given data valid', async () => {
-    const user = {
-      id: 1,
-      name: 'TestUser',
-      email: 'EmailValid@email.com',
+  it('Should return a imageUrl if given data valid', async () => {
+    const userId = 1;
+    const bucket = 'awsBucket';
+    const key = 'keyImage';
+    const file = {
+      buffer: 'bufferMocked',
+      mimetype: 'mimetypeMocked',
     };
-    const { id, name, email } = user;
-    const token = 'token_ultra_seguro';
+    const imageUrl = 'ImageUrl';
 
-    const spy = jest.spyOn(client, 'setex');
+    const spy = jest.spyOn(imagesController, 'deleteImageS3');
     spy.mockImplementation(() => {});
 
-    const result = await sessionController.createSession(user);
+    await awsConfig.uploadToS3.mockResolvedValue(key, file.buffer, file.mimetype);
 
-    expect(result).toEqual(expect.objectContaining({
-      id, name, email, token,
-    }));
-  });
-});
+    await awsConfig.getSignedUrl.mockResolvedValue(imageUrl);
 
-describe('sessionController.findSessionByUserId', () => {
-  it('Should return a session user if given  valid', async () => {
-    const userId = 23;
-    const token = 'JTW_token';
+    await Image.create.mockResolvedValue({
+      bucket, key, userId, imageUrl,
+    });
 
-    const spy = jest.spyOn(client, 'get');
-    spy.mockImplementation(() => token);
+    const result = await imagesController.createImage(file, userId);
 
-    const result = await sessionController.findSessionByUserId(userId);
-
-    expect(result).toEqual(token);
-  });
-
-  it('Should return a NotFoundError given a userId invalid', async () => {
-    const userIdInvalid = null;
-    const spy = jest.spyOn(client, 'get');
-    spy.mockImplementation(() => null);
-    const fn = async () => {
-      await sessionController.findSessionByUserId(userIdInvalid);
-    };
-
-    expect(fn).rejects.toThrow(NotFoundError);
+    expect(result).toEqual(imageUrl);
   });
 });

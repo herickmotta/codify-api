@@ -20,6 +20,7 @@ async function uploadToS3(key, buffer, mimetype) {
     );
   });
 }
+
 async function dentroyFromS3(key) {
   return new Promise((resolve) => {
     s3.deleteObject(

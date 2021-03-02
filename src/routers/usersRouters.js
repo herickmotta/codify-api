@@ -51,7 +51,6 @@ router.post('/signin', async (req, res) => {
     }
     return res.status(201).send(userSession);
   } catch (exception) {
-    console.log(exception);
     if (exception instanceof UnauthorizedError) return res.status(401).send({ error: 'Wrong email or password' });
     return res.sendStatus(500);
   }
@@ -123,9 +122,14 @@ router.put('/edit-profile', authenticationMiddleware, editProfiledMiddleware, as
 });
 
 router.put('/edit-profile/image', authenticationMiddleware, upload.single('image'), async (req, res) => {
+  const isImageSended = req.file;
+  if (!isImageSended) {
+    return res.status(400).send({ error: 'Image its required' });
+  }
+
   const { buffer, mimetype } = req.file;
 
-  const { imageUrl } = await imagesController.createImage({ buffer, mimetype }, req.userId);
+  const imageUrl = await imagesController.createImage({ buffer, mimetype }, req.userId);
 
   return res.status(200).send({ imageUrl });
 });
