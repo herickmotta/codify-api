@@ -26,6 +26,9 @@ module.exports = {
             expect(result).equal(param);
           });
         })`,
+        solution: `function retornarValor(param) {
+  return param;
+}`,
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -58,6 +61,10 @@ module.exports = {
             expect(result).equal(expected);
           });
         })`,
+        solution: `function somar(param1, param2) {
+  const result = param1 + param2;
+  return result;
+}`,
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -90,6 +97,10 @@ module.exports = {
             expect(result).equal(expected);
           });
         })`,
+        solution: `function subtrair(param1, param2) {
+  const result = param1 - param2;
+  return result;
+}`,
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -118,6 +129,9 @@ module.exports = {
             expect(result).equal(param);
           });
         })`,
+        solution: `function retornarValor(param) {
+  return param;
+}`,
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -150,6 +164,10 @@ module.exports = {
             expect(result).equal(expected);
           });
         })`,
+        solution: `function somar(param1, param2) {
+  const result = param1 + param2;
+  return result;
+}`,
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -182,6 +200,10 @@ module.exports = {
             expect(result).equal(expected);
           });
         })`,
+        solution: `function subtrair(param1, param2) {
+  const result = param1 - param2;
+  return result;
+}`,
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -210,6 +232,9 @@ module.exports = {
             expect(result).equal(param);
           });
         })`,
+        solution: `function retornarValor(param) {
+  return param;
+}`,
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -242,6 +267,10 @@ module.exports = {
             expect(result).equal(expected);
           });
         })`,
+        solution: `function somar(param1, param2) {
+  const result = param1 + param2;
+  return result;
+}`,
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -274,6 +303,10 @@ module.exports = {
             expect(result).equal(expected);
           });
         })`,
+        solution: `function subtrair(param1, param2) {
+  const result = param1 - param2;
+  return result;
+}`,
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -302,6 +335,9 @@ module.exports = {
             expect(result).equal(param);
           });
         })`,
+        solution: `function retornarValor(param) {
+  return param;
+}`,
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -334,6 +370,10 @@ module.exports = {
             expect(result).equal(expected);
           });
         })`,
+        solution: `function somar(param1, param2) {
+  const result = param1 + param2;
+  return result;
+}`,
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -366,6 +406,10 @@ module.exports = {
             expect(result).equal(expected);
           });
         })`,
+        solution: `function subtrair(param1, param2) {
+  const result = param1 - param2;
+  return result;
+}`,
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -394,6 +438,9 @@ module.exports = {
             expect(result).equal(param);
           });
         })`,
+        solution: `function retornarValor(param) {
+  return param;
+}`,
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -426,6 +473,10 @@ module.exports = {
             expect(result).equal(expected);
           });
         })`,
+        solution: `function somar(param1, param2) {
+  const result = param1 + param2;
+  return result;
+}`,
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -458,6 +509,10 @@ module.exports = {
             expect(result).equal(expected);
           });
         })`,
+        solution: `function subtrair(param1, param2) {
+  const result = param1 - param2;
+  return result;
+}`,
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -486,6 +541,9 @@ module.exports = {
             expect(result).equal(param);
           });
         })`,
+        solution: `function retornarValor(param) {
+  return param;
+}`,
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -518,6 +576,10 @@ module.exports = {
             expect(result).equal(expected);
           });
         })`,
+        solution: `function somar(param1, param2) {
+  const result = param1 + param2;
+  return result;
+}`,
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -550,6 +612,10 @@ module.exports = {
             expect(result).equal(expected);
           });
         })`,
+        solution: `function subtrair(param1, param2) {
+  const result = param1 - param2;
+  return result;
+}`,
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -578,6 +644,9 @@ module.exports = {
             expect(result).equal(param);
           });
         })`,
+        solution: `function retornarValor(param) {
+  return param;
+}`,
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -610,6 +679,10 @@ module.exports = {
             expect(result).equal(expected);
           });
         })`,
+        solution: `function somar(param1, param2) {
+  const result = param1 + param2;
+  return result;
+}`,
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -642,6 +715,10 @@ module.exports = {
             expect(result).equal(expected);
           });
         })`,
+        solution: `function subtrair(param1, param2) {
+  const result = param1 - param2;
+  return result;
+}`,
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -670,6 +747,9 @@ module.exports = {
             expect(result).equal(param);
           });
         })`,
+        solution: `function retornarValor(param) {
+  return param;
+}`,
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -702,6 +782,10 @@ module.exports = {
             expect(result).equal(expected);
           });
         })`,
+        solution: `function somar(param1, param2) {
+  const result = param1 + param2;
+  return result;
+}`,
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -734,6 +818,10 @@ module.exports = {
             expect(result).equal(expected);
           });
         })`,
+        solution: `function subtrair(param1, param2) {
+  const result = param1 - param2;
+  return result;
+}`,
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -762,6 +850,9 @@ module.exports = {
             expect(result).equal(param);
           });
         })`,
+        solution: `function retornarValor(param) {
+  return param;
+}`,
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -794,6 +885,10 @@ module.exports = {
             expect(result).equal(expected);
           });
         })`,
+        solution: `function somar(param1, param2) {
+  const result = param1 + param2;
+  return result;
+}`,
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -826,6 +921,10 @@ module.exports = {
             expect(result).equal(expected);
           });
         })`,
+        solution: `function subtrair(param1, param2) {
+  const result = param1 - param2;
+  return result;
+}`,
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -854,6 +953,9 @@ module.exports = {
             expect(result).equal(param);
           });
         })`,
+        solution: `function retornarValor(param) {
+  return param;
+}`,
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -886,6 +988,10 @@ module.exports = {
             expect(result).equal(expected);
           });
         })`,
+        solution: `function somar(param1, param2) {
+  const result = param1 + param2;
+  return result;
+}`,
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -918,6 +1024,10 @@ module.exports = {
             expect(result).equal(expected);
           });
         })`,
+        solution: `function subtrair(param1, param2) {
+  const result = param1 - param2;
+  return result;
+}`,
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -946,6 +1056,9 @@ module.exports = {
             expect(result).equal(param);
           });
         })`,
+        solution: `function retornarValor(param) {
+  return param;
+}`,
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -978,6 +1091,10 @@ module.exports = {
             expect(result).equal(expected);
           });
         })`,
+        solution: `function somar(param1, param2) {
+  const result = param1 + param2;
+  return result;
+}`,
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -1010,6 +1127,10 @@ module.exports = {
             expect(result).equal(expected);
           });
         })`,
+        solution: `function subtrair(param1, param2) {
+  const result = param1 - param2;
+  return result;
+}`,
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -1038,6 +1159,9 @@ module.exports = {
             expect(result).equal(param);
           });
         })`,
+        solution: `function retornarValor(param) {
+  return param;
+}`,
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -1070,6 +1194,10 @@ module.exports = {
             expect(result).equal(expected);
           });
         })`,
+        solution: `function somar(param1, param2) {
+  const result = param1 + param2;
+  return result;
+}`,
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -1102,6 +1230,10 @@ module.exports = {
             expect(result).equal(expected);
           });
         })`,
+        solution: `function subtrair(param1, param2) {
+  const result = param1 - param2;
+  return result;
+}`,
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -1130,6 +1262,9 @@ module.exports = {
             expect(result).equal(param);
           });
         })`,
+        solution: `function retornarValor(param) {
+  return param;
+}`,
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -1162,6 +1297,10 @@ module.exports = {
             expect(result).equal(expected);
           });
         })`,
+        solution: `function somar(param1, param2) {
+  const result = param1 + param2;
+  return result;
+}`,
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -1194,6 +1333,10 @@ module.exports = {
             expect(result).equal(expected);
           });
         })`,
+        solution: `function subtrair(param1, param2) {
+  const result = param1 - param2;
+  return result;
+}`,
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -1222,6 +1365,9 @@ module.exports = {
             expect(result).equal(param);
           });
         })`,
+        solution: `function retornarValor(param) {
+  return param;
+}`,
         createdAt: new Date(),
         updatedAt: new Date(),
       },
