@@ -23,6 +23,7 @@ User.init(
       type: Sequelize.STRING,
       allowNull: false,
     },
+
   },
 
   { sequelize, modelName: 'user' },

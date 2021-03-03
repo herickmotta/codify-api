@@ -1,6 +1,12 @@
 /* eslint-disable max-len */
 const router = require('express').Router();
 
+const multer = require('multer');
+
+const storage = multer.memoryStorage();
+
+const upload = multer({ storage });
+
 const usersController = require('../controllers/usersController');
 const sessionController = require('../controllers/sessionController');
 const userSchemas = require('../schemas/userSchemas');
@@ -13,6 +19,7 @@ const lastTaskSeenMiddleware = require('../middlewares/lastTaskSeenMiddleware');
 const recoverPasswordMiddleware = require('../middlewares/recoverPasswordMiddleware');
 const verifySessionToRedefinePasswordMiddleware = require('../middlewares/verifySessionToRedefinePasswordMiddleware');
 const editProfiledMiddleware = require('../middlewares/editProfileMiddleware');
+const imagesController = require('../controllers/imagesController');
 
 router.post('/signup', signUpMiddleware, async (req, res) => {
   const user = await usersController.create(req.body);
@@ -37,6 +44,11 @@ router.post('/signin', async (req, res) => {
 
     const userSession = await sessionController.createSession(user);
 
+    const image = await imagesController.getUserImage(userSession.id);
+    if (image) {
+      const { imageUrl } = image;
+      return res.status(201).send({ ...userSession, imageUrl });
+    }
     return res.status(201).send(userSession);
   } catch (exception) {
     if (exception instanceof UnauthorizedError) return res.status(401).send({ error: 'Wrong email or password' });
@@ -107,6 +119,19 @@ router.put('/edit-profile', authenticationMiddleware, editProfiledMiddleware, as
   const user = await usersController.editProfile(req.userDataToEdit, req.user);
 
   return res.status(200).send(user);
+});
+
+router.put('/edit-profile/image', authenticationMiddleware, upload.single('image'), async (req, res) => {
+  const isImageSended = req.file;
+  if (!isImageSended) {
+    return res.status(400).send({ error: 'Image its required' });
+  }
+
+  const { buffer, mimetype } = req.file;
+
+  const imageUrl = await imagesController.createImage({ buffer, mimetype }, req.userId);
+
+  return res.status(200).send({ imageUrl });
 });
 
 module.exports = router;
