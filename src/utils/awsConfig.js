@@ -33,14 +33,13 @@ async function dentroyFromS3(key) {
   });
 }
 
-function getSignedUrl(bucket, key, expires = 3600) {
+function getSignedUrl(bucket, key) {
   return new Promise((resolve) => {
     s3.getSignedUrl(
       'getObject',
       {
         Bucket: bucket,
         Key: key,
-        Expires: expires,
       },
       (err, url) => {
         if (err) throw new Error(err);
