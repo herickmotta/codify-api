@@ -1,6 +1,6 @@
 const { v4: uuidv4 } = require('uuid');
 const Image = require('../models/Image');
-const { uploadToS3, getSignedUrl, dentroyFromS3 } = require('../utils/awsConfig');
+const { uploadToS3, getSignedUrl, destroyFromS3 } = require('../utils/awsConfig');
 
 class ImagesController {
   async createImage(file, userId) {
@@ -28,7 +28,7 @@ class ImagesController {
     const image = await Image.findOne({ where: { userId } });
     if (image) {
       const { key } = image;
-      await dentroyFromS3(key);
+      await destroyFromS3(key);
       await image.destroy();
     }
   }

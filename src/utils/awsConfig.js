@@ -21,7 +21,7 @@ async function uploadToS3(key, buffer, mimetype) {
   });
 }
 
-async function dentroyFromS3(key) {
+async function destroyFromS3(key) {
   return new Promise((resolve) => {
     s3.deleteObject(
       {
@@ -50,4 +50,4 @@ function getSignedUrl(bucket, key) {
   });
 }
 
-module.exports = { uploadToS3, getSignedUrl, dentroyFromS3 };
+module.exports = { uploadToS3, getSignedUrl, destroyFromS3 };
